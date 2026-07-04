@@ -1,83 +1,14 @@
 import argparse
 import json
-from collections import defaultdict, deque
 
-
-SPECIAL_DEPS = {"problem", "given", "definition"}
-
-
-def read_jsonl(path):
-    records = []
-    with open(path, "r", encoding="utf-8") as f:
-        for i, line in enumerate(f, 1):
-            line = line.strip()
-            if not line:
-                continue
-            try:
-                records.append(json.loads(line))
-            except json.JSONDecodeError as e:
-                raise ValueError(f"Bad JSON on line {i}: {e}")
-    return records
-
-
-def spu_ids(record):
-    return [s["id"] for s in record.get("spus", [])]
-
-
-def dependency_errors(record):
-    ids = spu_ids(record)
-    id_set = set(ids)
-    seen = set()
-    errors = []
-
-    for spu in record.get("spus", []):
-        sid = spu["id"]
-        for dep in spu.get("depends_on", []):
-            if dep in SPECIAL_DEPS:
-                continue
-            if dep.startswith("external:"):
-                continue
-            if dep not in id_set:
-                errors.append((sid, dep, "unknown_dependency"))
-            elif dep not in seen:
-                errors.append((sid, dep, "forward_dependency"))
-        seen.add(sid)
-
-    return errors
-
-
-def has_cycle(record):
-    ids = spu_ids(record)
-    id_set = set(ids)
-
-    graph = defaultdict(list)
-    indeg = {sid: 0 for sid in ids}
-
-    for spu in record.get("spus", []):
-        sid = spu["id"]
-        for dep in spu.get("depends_on", []):
-            if dep in id_set:
-                graph[dep].append(sid)
-                indeg[sid] += 1
-
-    q = deque([sid for sid in ids if indeg[sid] == 0])
-    seen = 0
-
-    while q:
-        x = q.popleft()
-        seen += 1
-        for y in graph[x]:
-            indeg[y] -= 1
-            if indeg[y] == 0:
-                q.append(y)
-
-    return seen != len(ids)
-
-
-def first_break_exists(record):
-    fb = record.get("first_break", {})
-    sid = fb.get("spu_id")
-    return sid in set(spu_ids(record))
+from spu_utils import (
+    case_scope_errors,
+    dependency_closure_errors,
+    dependency_errors,
+    first_break_exists,
+    has_cycle,
+    read_jsonl,
+)
 
 
 def eval_records(gold_records, pred_records):
@@ -105,6 +36,8 @@ def eval_records(gold_records, pred_records):
         pred_fb = pred.get("first_break", {})
 
         dep_errs = dependency_errors(pred)
+        closure_errs = dependency_closure_errors(pred)
+        scope_errs = case_scope_errors(pred)
 
         rows.append({
             "sample_id": sid,
@@ -118,7 +51,13 @@ def eval_records(gold_records, pred_records):
             "dag_ok": not has_cycle(pred),
             "first_break_exists": first_break_exists(pred),
             "dependency_error_count": len(dep_errs),
-            "dependency_errors": dep_errs
+            "dependency_errors": dep_errs,
+            "closure_ok": not closure_errs,
+            "closure_error_count": len(closure_errs),
+            "closure_errors": closure_errs,
+            "case_scope_ok": not scope_errs,
+            "case_scope_error_count": len(scope_errs),
+            "case_scope_errors": scope_errs,
         })
 
     return rows
@@ -135,6 +74,8 @@ def summarize(rows):
         "break_type_accuracy": sum(r["break_type_correct"] for r in rows) / n,
         "dag_ok_rate": sum(r["dag_ok"] for r in rows) / n,
         "first_break_exists_rate": sum(r["first_break_exists"] for r in rows) / n,
+        "closure_ok_rate": sum(r.get("closure_ok", False) for r in rows) / n,
+        "case_scope_ok_rate": sum(r.get("case_scope_ok", False) for r in rows) / n,
         "missing_predictions": sum(r["missing_pred"] for r in rows)
     }
 
