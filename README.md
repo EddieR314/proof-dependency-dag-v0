@@ -24,6 +24,8 @@ Lean should be attached later only to selected high-risk SPUs or local subgraphs
   Model predictions generated with the revised prompt.
 - `data/raw_wrong_solutions_demo.jsonl`  
   Minimal raw-input demo for the heuristic extractor.
+- `data/synthetic_wrong_solutions_v0.jsonl`  
+  Generated synthetic wrong-solution dataset. It contains one wrong solution per source problem from `proof_dag_problem_dataset`.
 - `data/proof_dag_problem_dataset/`  
   Correct-solution problem dataset for SPU decomposition and synthetic wrong-solution generation.
 - `scripts/eval_spu_dependency.py`  
@@ -85,6 +87,14 @@ python scripts\error-generator\generate_wrong_solutions.py --input data\proof_da
 ```
 
 The generator is heuristic. Its output is useful for synthetic negative samples and DPO rejected-pair scaffolding, but generated labels still need human audit before being treated as gold.
+
+The generated v0 file is tracked at:
+
+```text
+data/synthetic_wrong_solutions_v0.jsonl
+```
+
+It was generated with `--num-per-problem 1`, so the current version has 286 synthetic wrong solutions from 286 source problems.
 
 ## Data Notes
 
