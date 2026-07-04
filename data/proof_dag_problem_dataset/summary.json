@@ -1,0 +1,32 @@
+{
+  "schema_version": "proof_dag_problem_dataset_v1",
+  "records_jsonl": "proof_dag_problems.jsonl",
+  "spu_ready_jsonl": "problems_for_spu_decomposition.jsonl",
+  "total_records": 286,
+  "usable_records": 286,
+  "unusable_records": 0,
+  "records_by_source": {
+    "IMO_eng.pdf": 156,
+    "CMO(1).pdf": 27,
+    "TST(1).pdf": 103
+  },
+  "records_by_competition": {
+    "IMO": 156,
+    "CMO": 27,
+    "TST": 103
+  },
+  "records_by_topic": {
+    "geometry": 106,
+    "algebra": 93,
+    "combinatorics": 21,
+    "number_theory": 66
+  },
+  "quality_issues": {
+    "formula_corruption": 168
+  },
+  "notes": [
+    "Each row is one problem with a problem statement and a correct solution.",
+    "Images are referenced by page_image_refs only; image bytes are not embedded.",
+    "This dataset is intended as the direct input layer for SPU decomposition, Proof DAG construction, and wrong-solution generation."
+  ]
+}
