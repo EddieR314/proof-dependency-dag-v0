@@ -1,0 +1,224 @@
+{
+  "reviewed_samples": 59,
+  "first_break_valid_rate": 1.0,
+  "break_type_valid_rate": 1.0,
+  "single_error_valid_rate": 0.9830508474576272,
+  "usable_as_gold_rate": 0.7457627118644068,
+  "average_naturalness_score": 3.6440677966101696,
+  "average_plausibility_before_break_score": 3.2203389830508473,
+  "average_post_break_consistency_score": 3.559322033898305,
+  "accuracy_by_topic": {
+    "algebra": {
+      "reviewed_samples": 20,
+      "first_break_valid_rate": 1.0,
+      "break_type_valid_rate": 1.0,
+      "single_error_valid_rate": 1.0,
+      "usable_as_gold_rate": 0.9
+    },
+    "combinatorics": {
+      "reviewed_samples": 5,
+      "first_break_valid_rate": 1.0,
+      "break_type_valid_rate": 1.0,
+      "single_error_valid_rate": 1.0,
+      "usable_as_gold_rate": 0.6
+    },
+    "geometry": {
+      "reviewed_samples": 21,
+      "first_break_valid_rate": 1.0,
+      "break_type_valid_rate": 1.0,
+      "single_error_valid_rate": 1.0,
+      "usable_as_gold_rate": 0.6666666666666666
+    },
+    "number_theory": {
+      "reviewed_samples": 13,
+      "first_break_valid_rate": 1.0,
+      "break_type_valid_rate": 1.0,
+      "single_error_valid_rate": 0.9230769230769231,
+      "usable_as_gold_rate": 0.6923076923076923
+    }
+  },
+  "accuracy_by_error_type": {
+    "case_overlap": {
+      "reviewed_samples": 3,
+      "first_break_valid_rate": 1.0,
+      "break_type_valid_rate": 1.0,
+      "single_error_valid_rate": 1.0,
+      "usable_as_gold_rate": 1.0
+    },
+    "circular_reasoning": {
+      "reviewed_samples": 20,
+      "first_break_valid_rate": 1.0,
+      "break_type_valid_rate": 1.0,
+      "single_error_valid_rate": 0.95,
+      "usable_as_gold_rate": 0.4
+    },
+    "diagram_assumption": {
+      "reviewed_samples": 3,
+      "first_break_valid_rate": 1.0,
+      "break_type_valid_rate": 1.0,
+      "single_error_valid_rate": 1.0,
+      "usable_as_gold_rate": 1.0
+    },
+    "domain_error": {
+      "reviewed_samples": 3,
+      "first_break_valid_rate": 1.0,
+      "break_type_valid_rate": 1.0,
+      "single_error_valid_rate": 1.0,
+      "usable_as_gold_rate": 0.6666666666666666
+    },
+    "false_claim": {
+      "reviewed_samples": 3,
+      "first_break_valid_rate": 1.0,
+      "break_type_valid_rate": 1.0,
+      "single_error_valid_rate": 1.0,
+      "usable_as_gold_rate": 1.0
+    },
+    "invalid_wlog": {
+      "reviewed_samples": 3,
+      "first_break_valid_rate": 1.0,
+      "break_type_valid_rate": 1.0,
+      "single_error_valid_rate": 1.0,
+      "usable_as_gold_rate": 1.0
+    },
+    "missing_case": {
+      "reviewed_samples": 3,
+      "first_break_valid_rate": 1.0,
+      "break_type_valid_rate": 1.0,
+      "single_error_valid_rate": 1.0,
+      "usable_as_gold_rate": 0.6666666666666666
+    },
+    "missing_dependency": {
+      "reviewed_samples": 3,
+      "first_break_valid_rate": 1.0,
+      "break_type_valid_rate": 1.0,
+      "single_error_valid_rate": 1.0,
+      "usable_as_gold_rate": 1.0
+    },
+    "overgeneralization": {
+      "reviewed_samples": 3,
+      "first_break_valid_rate": 1.0,
+      "break_type_valid_rate": 1.0,
+      "single_error_valid_rate": 1.0,
+      "usable_as_gold_rate": 0.6666666666666666
+    },
+    "quantifier_error": {
+      "reviewed_samples": 3,
+      "first_break_valid_rate": 1.0,
+      "break_type_valid_rate": 1.0,
+      "single_error_valid_rate": 1.0,
+      "usable_as_gold_rate": 1.0
+    },
+    "sign_error": {
+      "reviewed_samples": 3,
+      "first_break_valid_rate": 1.0,
+      "break_type_valid_rate": 1.0,
+      "single_error_valid_rate": 1.0,
+      "usable_as_gold_rate": 1.0
+    },
+    "unproved_existence": {
+      "reviewed_samples": 3,
+      "first_break_valid_rate": 1.0,
+      "break_type_valid_rate": 1.0,
+      "single_error_valid_rate": 1.0,
+      "usable_as_gold_rate": 1.0
+    },
+    "wrong_dependency": {
+      "reviewed_samples": 3,
+      "first_break_valid_rate": 1.0,
+      "break_type_valid_rate": 1.0,
+      "single_error_valid_rate": 1.0,
+      "usable_as_gold_rate": 1.0
+    },
+    "wrong_theorem": {
+      "reviewed_samples": 3,
+      "first_break_valid_rate": 1.0,
+      "break_type_valid_rate": 1.0,
+      "single_error_valid_rate": 1.0,
+      "usable_as_gold_rate": 1.0
+    }
+  },
+  "accuracy_by_generator_name": {
+    "generate_wrong_solutions.py": {
+      "reviewed_samples": 59,
+      "first_break_valid_rate": 1.0,
+      "break_type_valid_rate": 1.0,
+      "single_error_valid_rate": 0.9830508474576272,
+      "usable_as_gold_rate": 0.7457627118644068
+    }
+  },
+  "most_common_corrected_break_types": [],
+  "most_common_failure_modes": [
+    {
+      "failure_mode": "usable_as_gold:revise",
+      "count": 9
+    },
+    {
+      "failure_mode": "usable_as_gold:no",
+      "count": 6
+    },
+    {
+      "failure_mode": "reviewer_note:reject: first break/type are detectable, but the sample is too malformed and answer text is incomplete.",
+      "count": 1
+    },
+    {
+      "failure_mode": "reviewer_note:needs revision: circular dependency is correct, but ocr fragments make the steps hard to audit cleanly.",
+      "count": 1
+    },
+    {
+      "failure_mode": "reviewer_note:reject: circular dependency is detectable, but the generated proof contains irrelevant anecdotal material and is not gol",
+      "count": 1
+    },
+    {
+      "failure_mode": "single_error_valid:no",
+      "count": 1
+    },
+    {
+      "failure_mode": "reviewer_note:reject: the wrong solution is mostly an unverified computational assertion, so the injected dependency is not the only m",
+      "count": 1
+    },
+    {
+      "failure_mode": "reviewer_note:needs revision: first break/type are correct, but long commentary and ocr artifacts reduce gold quality.",
+      "count": 1
+    },
+    {
+      "failure_mode": "reviewer_note:needs revision: first break/type are correct, but mathematical text is heavily fragmented.",
+      "count": 1
+    },
+    {
+      "failure_mode": "reviewer_note:reject: the injected overgeneralization sits in a meta-comment/source citation rather than a mathematical step.",
+      "count": 1
+    },
+    {
+      "failure_mode": "reviewer_note:needs revision: circular dependency is valid but the selected spu is ocr-corrupted.",
+      "count": 1
+    },
+    {
+      "failure_mode": "reviewer_note:reject: the selected break is a diagram aside/fractured sentence, not a clean mathematical spu.",
+      "count": 1
+    },
+    {
+      "failure_mode": "reviewer_note:needs revision: missing case is plausible, but the very long dependency chain should be cleaned before silver use.",
+      "count": 1
+    },
+    {
+      "failure_mode": "reviewer_note:reject: first break is just a remark marker, so the sample is not useful as gold despite the dependency metadata.",
+      "count": 1
+    },
+    {
+      "failure_mode": "reviewer_note:needs revision: circular dependency is detectable, but the sample is too long/ocr-heavy for clean silver.",
+      "count": 1
+    },
+    {
+      "failure_mode": "reviewer_note:needs revision: circular dependency is correct, but notation is too garbled for direct gold use.",
+      "count": 1
+    },
+    {
+      "failure_mode": "reviewer_note:needs revision: domain error is identifiable, but the theorem statement is mangled and should be cleaned.",
+      "count": 1
+    },
+    {
+      "failure_mode": "reviewer_note:needs revision: circular dependency is present, but first-break text is vague and proof needs cleanup.",
+      "count": 1
+    }
+  ]
+}
