@@ -26,6 +26,8 @@ Lean should be attached later only to selected high-risk SPUs or local subgraphs
   Minimal raw-input demo for the heuristic extractor.
 - `data/synthetic_wrong_solutions_v0.jsonl`  
   Generated synthetic wrong-solution dataset. It contains one wrong solution per source problem from `proof_dag_problem_dataset`.
+- `data/audit/`  
+  Human-audit task files for checking synthetic wrong solutions.
 - `data/proof_dag_problem_dataset/`  
   Correct-solution problem dataset for SPU decomposition and synthetic wrong-solution generation.
 - `scripts/eval_spu_dependency.py`  
@@ -42,6 +44,8 @@ Lean should be attached later only to selected high-risk SPUs or local subgraphs
   Heuristic extractor demo. This is an I/O scaffold, not the final LLM extractor.
 - `scripts/error-generator/`  
   Prototype synthetic wrong-solution generator.
+- `scripts/audit/`  
+  Audit, analysis, promotion, and repair tools for synthetic wrong-solution labels.
 
 ## Run Core Evaluation
 
@@ -95,6 +99,27 @@ data/synthetic_wrong_solutions_v0.jsonl
 ```
 
 It was generated with `--num-per-problem 1`, so the current version has 286 synthetic wrong solutions from 286 source problems.
+
+## Human Audit And Promotion
+
+The audit tools live in `scripts/audit/`.
+
+Current round-2 audit task files are tracked under:
+
+```text
+data/audit/audit_tasks_round2.jsonl
+data/audit/audit_tasks_round2.csv
+data/audit/audit_cards_round2.md
+```
+
+After reviewers fill the `human_review` fields, use:
+
+```powershell
+python scripts\audit\analyze_audit_results.py --input outputs\audit_tasks_reviewed.jsonl --out-json outputs\audit_summary.json --out-md outputs\audit_summary.md
+python scripts\audit\promote_reviewed_samples.py --synthetic data\synthetic_wrong_solutions_v0.jsonl --reviewed outputs\audit_tasks_reviewed.jsonl --out-silver data\wrong_solutions_silver.jsonl --out-rejected data\wrong_solutions_rejected.jsonl --out-needs-revision data\wrong_solutions_needs_revision.jsonl --reviewer-id reviewer_1
+```
+
+Only `silver_verified` samples should enter the usable silver training/evaluation pool. `rejected` and `needs_revision` should be kept for failure analysis.
 
 ## Data Notes
 
