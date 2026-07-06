@@ -7,15 +7,14 @@ import json
 from pathlib import Path
 from typing import Any
 
+from error_injector import canonicalize_error_type, taxonomy_by_name
+from spu_quality import is_good_error_target, quality_issues
 from wrong_solution_writer import REVEALING_PHRASES
 
 
 STRUCTURAL_ERROR_TYPES = {
-    "missing_step",
     "missing_dependency",
     "wrong_dependency",
-    "invalid_dependency",
-    "case_missing",
     "missing_case",
     "circular_reasoning",
     "false_claim",
@@ -28,7 +27,7 @@ def validate_generated_sample(sample: dict[str, Any]) -> tuple[bool, list[dict[s
     injected = sample.get("injected_error", {})
     wrong_spus = sample.get("wrong_spus", [])
     wrong_solution = sample.get("wrong_solution", "")
-    error_type = injected.get("error_type")
+    error_type = canonicalize_error_type(injected.get("error_type"))
     first_break_detail = sample.get("first_break_detail", {})
     diff = sample.get("diff", {})
 
@@ -89,6 +88,49 @@ def validate_generated_sample(sample: dict[str, Any]) -> tuple[bool, list[dict[s
                 "type": "incompatible_error_type",
                 "error_type": error_type,
                 "target_spu_type": target_spu.get("type") if target_spu else None,
+            }
+        )
+
+    for spu in wrong_spus:
+        if not isinstance(spu, dict):
+            continue
+        hard_issues = [
+            issue
+            for issue in quality_issues(spu, target_context=False)
+            if issue
+            in {
+                "empty_spu_text",
+                "malformed_or_cid_text",
+                "high_ocr_garbage_ratio",
+                "commentary_or_source_note",
+            }
+        ]
+        if hard_issues:
+            errors.append(
+                {
+                    "type": "low_quality_spu",
+                    "spu_id": spu.get("id"),
+                    "issues": hard_issues,
+                    "text": str(spu.get("text", ""))[:160],
+                }
+            )
+
+    if target_spu and not is_good_error_target(target_spu):
+        errors.append(
+            {
+                "type": "low_quality_first_break_spu",
+                "spu_id": target_spu.get("id"),
+                "issues": quality_issues(target_spu, target_context=True),
+                "text": str(target_spu.get("text", ""))[:160],
+            }
+        )
+
+    if error_type == "circular_reasoning" and target_spu and not is_good_error_target(target_spu):
+        errors.append(
+            {
+                "type": "bad_circular_reasoning_target",
+                "spu_id": target_spu.get("id"),
+                "spu_type": target_spu.get("type"),
             }
         )
 
@@ -170,6 +212,7 @@ def _has_structural_diff(diff: dict[str, Any]) -> bool:
 
 
 def _error_type_compatible(error_type: str | None, target_spu: dict[str, Any] | None) -> bool:
+    error_type = canonicalize_error_type(error_type)
     if not error_type or not target_spu:
         return False
     taxonomy = _load_taxonomy()
@@ -184,4 +227,4 @@ def _load_taxonomy() -> dict[str, dict[str, Any]]:
     path = Path(__file__).resolve().with_name("error_taxonomy.json")
     if not path.exists():
         return {}
-    return {entry["name"]: entry for entry in json.loads(path.read_text(encoding="utf-8"))}
+    return taxonomy_by_name(json.loads(path.read_text(encoding="utf-8")))

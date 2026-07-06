@@ -5,11 +5,13 @@ from __future__ import annotations
 
 import argparse
 import json
+import random
+import zlib
 from pathlib import Path
 from typing import Any
 
 from dag_build import build_dependency_dag, edges_from_spus
-from error_injector import inject_error, load_error_taxonomy
+from error_injector import canonicalize_error_type, inject_error, load_error_taxonomy
 from geometry_tables import geometry_tables
 from quality_filter import validate_generated_sample
 from sample_enrichment import (
@@ -67,6 +69,7 @@ def generate_for_problem(
     num_samples: int,
     error_types: list[str],
     taxonomy: list[dict[str, Any]],
+    rng: random.Random,
     keep_failed: bool = False,
     error_type_offset: int = 0,
 ) -> list[dict[str, Any]]:
@@ -90,7 +93,7 @@ def generate_for_problem(
         error_type = error_types[(error_type_offset + attempts) % len(error_types)]
         attempts += 1
         try:
-            mutation = inject_error(correct_spus, error_type, taxonomy=taxonomy)
+            mutation = inject_error(correct_spus, error_type, taxonomy=taxonomy, rng=rng)
         except ValueError:
             continue
 
@@ -152,7 +155,21 @@ def generate_for_problem(
 def parse_error_types(value: str) -> list[str]:
     if value == "auto":
         return DEFAULT_ERROR_TYPES[:]
-    return [part.strip() for part in value.split(",") if part.strip()]
+    out = []
+    seen = set()
+    for part in value.split(","):
+        name = canonicalize_error_type(part.strip())
+        if not name or name in seen:
+            continue
+        seen.add(name)
+        out.append(name)
+    return out
+
+
+def rng_for_problem(seed: int, problem_id: str) -> random.Random:
+    problem_hash = zlib.crc32(problem_id.encode("utf-8")) & 0xFFFFFFFF
+    mixed_seed = ((seed & 0xFFFFFFFF) << 32) | problem_hash
+    return random.Random(mixed_seed)
 
 
 def main() -> None:
@@ -170,6 +187,7 @@ def main() -> None:
         action="store_true",
         help="Save samples even if quality checks fail, with errors in metadata.",
     )
+    parser.add_argument("--seed", type=int, default=0, help="Seed for reproducible generation.")
     args = parser.parse_args()
 
     input_path = Path(args.input)
@@ -180,12 +198,14 @@ def main() -> None:
     records = read_jsonl(input_path)
     generated = []
     for record_index, record in enumerate(records):
+        problem_id = str(record.get("problem_id") or record.get("sample_id") or record_index)
         generated.extend(
             generate_for_problem(
                 record,
                 num_samples=args.num_per_problem,
                 error_types=error_types,
                 taxonomy=taxonomy,
+                rng=rng_for_problem(args.seed, problem_id),
                 keep_failed=args.keep_failed,
                 error_type_offset=record_index * args.num_per_problem,
             )

@@ -10,6 +10,8 @@ from __future__ import annotations
 import re
 from typing import Any
 
+from spu_quality import clean_or_drop_spu
+
 
 ALLOWED_SPU_TYPES = {
     "Given",
@@ -53,9 +55,9 @@ THEOREM_PATTERNS = (
 
 ALGEBRA_PATTERNS = (
     r"=",
-    r"\\le|\\ge|<=|>=",
+    r"\\le|\\ge|<=|>=|≤|≥",
     r"<|>",
-    r"\+|-|\*|/",
+    r"\d\s*[-+*/^]\s*\d|\d\s*[-+*/^]|[-+*/^]\s*\d",
     r"\bsum\b",
     r"\bproduct\b",
     r"化简",
@@ -83,6 +85,17 @@ FINAL_PATTERNS = (
     r"因此",
     r"所以",
     r"证毕",
+)
+
+COMMENTARY_PATTERNS = (
+    r"^\s*remark\.?\s*$",
+    r"^\s*note\.?\s*$",
+    r"\bfirst solution\b",
+    r"\bsecond solution\b",
+    r"\bsolution using\b",
+    r"\bgood diagram\b",
+    r"\bsource\b",
+    r"\breference\b",
 )
 
 
@@ -117,11 +130,13 @@ def classify_spu_type(text: str, index: int, total: int) -> str:
 
     if index == total - 1:
         return "Final"
+    if _matches(COMMENTARY_PATTERNS, lowered):
+        return "Remark"
     if index >= max(0, total - 2) and _matches(FINAL_PATTERNS, lowered):
         return "Final"
     if index == 0 and re.search(r"\bassume\b|假设", lowered):
         return "Construction"
-    if _matches(CASE_PATTERNS, lowered):
+    if _is_case_statement(lowered):
         return "Case"
     if re.search(r"\bclaim\b|命题|断言", lowered):
         return "Claim"
@@ -140,6 +155,17 @@ def _matches(patterns: tuple[str, ...], text: str) -> bool:
     return any(re.search(pattern, text, flags=re.IGNORECASE) for pattern in patterns)
 
 
+def _is_case_statement(text: str) -> bool:
+    return bool(
+        re.search(
+            r"^\s*(case\b|if\b|suppose\b|assume\b|when\b|consider the case\b|若|如果|假设|情况)",
+            text,
+            flags=re.IGNORECASE,
+        )
+        or re.search(r"\bcase\s+\d+\b|\bcase\s+[ivx]+\b", text, flags=re.IGNORECASE)
+    )
+
+
 def decompose_solution(
     correct_solution: str,
     problem: str | None = None,
@@ -150,14 +176,15 @@ def decompose_solution(
     spus = []
     total = len(chunks)
     for idx, text in enumerate(chunks):
-        spus.append(
-            {
-                "id": f"{prefix}{idx + 1}",
-                "text": text,
-                "type": classify_spu_type(text, idx, total),
-                "depends_on": [],
-            }
-        )
+        spu = {
+            "id": f"{prefix}{idx + 1}",
+            "text": text,
+            "type": classify_spu_type(text, idx, total),
+            "depends_on": [],
+        }
+        cleaned = clean_or_drop_spu(spu)
+        if cleaned is not None and cleaned.get("type") != "Remark":
+            spus.append(cleaned)
 
     if problem and not spus:
         spus.append(

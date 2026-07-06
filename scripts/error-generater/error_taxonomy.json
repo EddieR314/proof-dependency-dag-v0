@@ -1,15 +1,8 @@
 [
   {
-    "name": "missing_step",
-    "description": "A necessary premise or intermediate step is omitted, so a later conclusion is used without enough support.",
-    "suitable_spu_types": ["TheoremUse", "Claim", "Lemma", "Algebra"],
-    "example": "Apply SSS congruence while omitting one required side equality.",
-    "changes_dag_structure": true,
-    "changes_node_text_only": false
-  },
-  {
     "name": "missing_dependency",
-    "description": "A necessary dependency edge is removed from the target SPU.",
+    "aliases": ["missing_step"],
+    "description": "A necessary premise, dependency edge, or intermediate support is omitted, so a later conclusion is used without enough support.",
     "suitable_spu_types": ["TheoremUse", "Claim", "Lemma", "Algebra"],
     "example": "Use AM-GM without depending on positivity of the variables.",
     "changes_dag_structure": true,
@@ -17,6 +10,7 @@
   },
   {
     "name": "wrong_theorem",
+    "aliases": ["invalid_theorem_use"],
     "description": "A theorem, lemma, or named rule is replaced by a similar but invalid rule.",
     "suitable_spu_types": ["TheoremUse", "Lemma", "Claim"],
     "example": "Use AAA as if it proved triangle congruence.",
@@ -24,7 +18,8 @@
     "changes_node_text_only": true
   },
   {
-    "name": "invalid_dependency",
+    "name": "wrong_dependency",
+    "aliases": ["invalid_dependency"],
     "description": "A proof step depends on an irrelevant, unknown, or logically insufficient earlier step.",
     "suitable_spu_types": ["TheoremUse", "Claim", "Algebra", "Lemma"],
     "example": "Derive a divisibility claim from an unrelated parity observation.",
@@ -32,15 +27,8 @@
     "changes_node_text_only": false
   },
   {
-    "name": "wrong_dependency",
-    "description": "A wrong dependency edge is added or substituted in the proof DAG.",
-    "suitable_spu_types": ["TheoremUse", "Claim", "Algebra", "Lemma"],
-    "example": "Use a later conclusion as the premise of an earlier estimate.",
-    "changes_dag_structure": true,
-    "changes_node_text_only": false
-  },
-  {
     "name": "false_claim",
+    "aliases": [],
     "description": "A false or unsupported intermediate claim is inserted and then used as if it were proved.",
     "suitable_spu_types": ["Claim", "Lemma", "TheoremUse", "Algebra"],
     "example": "Assert that every three consecutive integers have product divisible by 12.",
@@ -48,23 +36,17 @@
     "changes_node_text_only": true
   },
   {
-    "name": "case_missing",
-    "description": "One branch of a case split is omitted while the proof proceeds as if all cases were covered.",
+    "name": "missing_case",
+    "aliases": ["case_missing", "case_omission"],
+    "description": "One necessary branch of a case split is omitted while the proof proceeds as if all cases were covered.",
     "suitable_spu_types": ["Case"],
     "example": "Treat only the even case and forget the odd case.",
     "changes_dag_structure": true,
     "changes_node_text_only": false
   },
   {
-    "name": "missing_case",
-    "description": "A necessary case branch is missing from a proof by cases.",
-    "suitable_spu_types": ["Case"],
-    "example": "Prove the red-neighbor case but omit the blue-neighbor case.",
-    "changes_dag_structure": true,
-    "changes_node_text_only": false
-  },
-  {
     "name": "sign_error",
+    "aliases": [],
     "description": "An algebraic sign, inequality direction, or arithmetic relation is changed incorrectly.",
     "suitable_spu_types": ["Algebra", "Claim"],
     "example": "Change x-y into x+y, or change <= into >=.",
@@ -73,6 +55,7 @@
   },
   {
     "name": "invalid_wlog",
+    "aliases": [],
     "description": "A without-loss-of-generality reduction is made without a valid symmetry or coverage argument.",
     "suitable_spu_types": ["Case", "Claim", "Construction"],
     "example": "Assume a>=b>=c even though the expression is not symmetric.",
@@ -81,14 +64,16 @@
   },
   {
     "name": "circular_reasoning",
+    "aliases": [],
     "description": "A step directly or indirectly depends on the final conclusion it is supposed to prove.",
-    "suitable_spu_types": ["Claim", "Lemma", "TheoremUse", "Final"],
+    "suitable_spu_types": ["Claim", "Lemma", "TheoremUse", "Algebra"],
     "example": "Use the desired conclusion as a premise for an intermediate lemma.",
     "changes_dag_structure": true,
     "changes_node_text_only": false
   },
   {
     "name": "overgeneralization",
+    "aliases": [],
     "description": "A statement proved in a special situation is applied to all cases.",
     "suitable_spu_types": ["Claim", "Lemma", "TheoremUse", "Case"],
     "example": "Use a result shown for odd n as if it held for every n.",
@@ -97,6 +82,7 @@
   },
   {
     "name": "domain_error",
+    "aliases": [],
     "description": "A theorem or expression is used outside its valid domain.",
     "suitable_spu_types": ["Algebra", "TheoremUse", "Claim"],
     "example": "Divide by a quantity that might be zero, or apply AM-GM to nonpositive terms.",
@@ -105,6 +91,7 @@
   },
   {
     "name": "quantifier_error",
+    "aliases": [],
     "description": "A statement about all objects is weakened to some objects, or an existence statement is used as universal.",
     "suitable_spu_types": ["Claim", "Lemma", "TheoremUse"],
     "example": "Use a property that holds for one constructed point as if it held for every point.",
@@ -113,6 +100,7 @@
   },
   {
     "name": "unproved_existence",
+    "aliases": [],
     "description": "An object or parameter is introduced and used without proving it exists.",
     "suitable_spu_types": ["Construction", "Claim", "TheoremUse"],
     "example": "Choose an intersection point without proving the two lines intersect.",
@@ -121,6 +109,7 @@
   },
   {
     "name": "case_overlap",
+    "aliases": [],
     "description": "The proof uses cases that overlap or fail to partition all possibilities cleanly.",
     "suitable_spu_types": ["Case"],
     "example": "Split into n even and n prime, which are neither disjoint nor exhaustive.",
@@ -129,6 +118,7 @@
   },
   {
     "name": "diagram_assumption",
+    "aliases": [],
     "description": "A geometric relation suggested by a diagram is assumed without proof.",
     "suitable_spu_types": ["Construction", "Claim", "TheoremUse"],
     "example": "Assume two lines are parallel because they look parallel.",
