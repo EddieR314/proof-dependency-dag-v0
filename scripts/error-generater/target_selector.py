@@ -3,7 +3,10 @@
 from __future__ import annotations
 
 from collections import defaultdict
+from random import Random
 from typing import Any
+
+from spu_quality import is_usable_spu
 
 
 TYPE_PRIORITY = {
@@ -26,7 +29,9 @@ def reachable_counts(spus: list[dict[str, Any]]) -> dict[str, int]:
         for dep in spu.get("depends_on", []):
             if dep in ids:
                 graph[dep].append(sid)
-    return {sid: _count_reachable(graph, sid) for sid in ids}
+    for targets in graph.values():
+        targets.sort(key=_id_sort_key)
+    return {sid: _count_reachable(graph, sid) for sid in sorted(ids, key=_id_sort_key)}
 
 
 def _count_reachable(graph: dict[str, list[str]], start: str) -> int:
@@ -48,12 +53,23 @@ def critical_nodes(spus: list[dict[str, Any]], top_fraction: float = 0.2) -> lis
     top_k = max(1, int(len(counts) * top_fraction + 0.999))
     sorted_counts = sorted(counts.values(), reverse=True)
     cutoff = sorted_counts[min(top_k, len(sorted_counts)) - 1]
-    return [sid for sid, count in counts.items() if count >= cutoff and count > 0]
+    return sorted(
+        [sid for sid, count in counts.items() if count >= cutoff and count > 0],
+        key=_id_sort_key,
+    )
+
+
+def _id_sort_key(value: str) -> tuple[str, int | str]:
+    prefix = "".join(ch for ch in value if not ch.isdigit())
+    suffix = "".join(ch for ch in value if ch.isdigit())
+    return prefix, int(suffix) if suffix else value
 
 
 def select_target_spu(
     spus: list[dict[str, Any]],
     error_type: dict[str, Any] | str | None = None,
+    rng: Random | None = None,
+    top_k: int = 3,
 ) -> dict[str, Any] | None:
     suitable_types = None
     if isinstance(error_type, dict):
@@ -66,6 +82,8 @@ def select_target_spu(
     for idx, spu in enumerate(spus):
         stype = spu.get("type", "Claim")
         if stype in {"Given", "Final"}:
+            continue
+        if not is_usable_spu(spu):
             continue
         if suitable_types and stype not in suitable_types:
             continue
@@ -88,6 +106,7 @@ def select_target_spu(
             (TYPE_PRIORITY.get(spu.get("type", "Claim"), 0.0), idx, spu)
             for idx, spu in enumerate(spus)
             if spu.get("type") not in {"Given", "Final"}
+            and is_usable_spu(spu)
         ]
         candidates = fallback
 
@@ -95,4 +114,7 @@ def select_target_spu(
         return None
 
     candidates.sort(key=lambda item: item[0], reverse=True)
-    return candidates[0][2]
+    if rng is None:
+        return candidates[0][2]
+    pool = candidates[: max(1, min(top_k, len(candidates)))]
+    return rng.choice(pool)[2]

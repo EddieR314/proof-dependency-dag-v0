@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from typing import Any
 
+from spu_quality import normalize_spu_text
 
 REVEALING_PHRASES = (
     "this step is wrong",
@@ -12,6 +13,12 @@ REVEALING_PHRASES = (
     "wrong solution",
     "false on purpose",
     "deliberately",
+    "after changing the sign",
+    "this error",
+    "the injected",
+    "the intended mistake",
+    "invalid step",
+    "mistake is",
 )
 
 
@@ -50,7 +57,7 @@ def write_wrong_solution_steps(wrong_spus: list[dict[str, Any]]) -> list[dict[st
 
 
 def _clean_spu_text(text: str) -> str:
-    text = " ".join(str(text).split())
+    text = normalize_spu_text(text)
     if not text:
         return ""
     if text[-1] not in ".!?。":

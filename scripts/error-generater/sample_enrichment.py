@@ -5,16 +5,15 @@ from __future__ import annotations
 from typing import Any
 
 from dag_build import edges_from_spus
+from error_injector import canonicalize_error_type
 
 
 STRUCTURAL_ERROR_TYPES = {
-    "missing_step",
     "missing_dependency",
     "wrong_dependency",
-    "invalid_dependency",
-    "case_missing",
     "missing_case",
     "circular_reasoning",
+    "false_claim",
 }
 
 
@@ -33,7 +32,6 @@ TEXT_ONLY_ERROR_TYPES = {
 WRONG_FINAL_ANSWER_TYPES = {
     "sign_error",
     "missing_case",
-    "case_missing",
     "overgeneralization",
     "domain_error",
     "case_overlap",
@@ -42,13 +40,10 @@ WRONG_FINAL_ANSWER_TYPES = {
 
 SUBTLETY = {
     "missing_dependency": 3,
-    "missing_step": 3,
     "wrong_dependency": 4,
-    "invalid_dependency": 4,
     "wrong_theorem": 2,
     "false_claim": 3,
     "missing_case": 3,
-    "case_missing": 3,
     "sign_error": 2,
     "circular_reasoning": 4,
     "overgeneralization": 4,
@@ -140,7 +135,7 @@ def build_first_break_detail(
 ) -> dict[str, Any]:
     spu_id = first_break.get("spu_id")
     target = next((spu for spu in wrong_spus if spu.get("id") == spu_id), {})
-    break_type = first_break.get("break_type") or injected_error.get("error_type")
+    break_type = canonicalize_error_type(first_break.get("break_type") or injected_error.get("error_type"))
     why_wrong = injected_error.get("description", "")
     minimal_fix = minimal_fix_for_error(break_type, injected_error)
     return {
@@ -156,7 +151,7 @@ def expected_feedback_for_error(
     first_break_detail: dict[str, Any],
     injected_error: dict[str, Any],
 ) -> dict[str, str]:
-    break_type = first_break_detail.get("break_type", "")
+    break_type = canonicalize_error_type(first_break_detail.get("break_type", ""))
     diagnosis = first_break_detail.get("why_wrong") or f"The step has a {break_type} error."
     minimal_fix = first_break_detail.get("minimal_fix", "")
     missing_reasoning = _missing_reasoning_for_error(break_type, injected_error)
@@ -168,16 +163,17 @@ def expected_feedback_for_error(
 
 
 def minimal_fix_for_error(error_type: str, injected_error: dict[str, Any]) -> str:
+    error_type = canonicalize_error_type(error_type)
     target = injected_error.get("target_spu_id", "the target step")
-    if error_type in {"missing_step", "missing_dependency"}:
+    if error_type == "missing_dependency":
         return f"Restore the omitted prerequisite before using {target}."
-    if error_type in {"wrong_dependency", "invalid_dependency"}:
+    if error_type == "wrong_dependency":
         return f"Replace the irrelevant dependency with the actual premise needed for {target}."
     if error_type == "wrong_theorem":
         return "Use a theorem whose hypotheses match the established premises."
     if error_type == "false_claim":
         return "Either prove the inserted claim or remove it from the proof."
-    if error_type in {"case_missing", "missing_case"}:
+    if error_type == "missing_case":
         return "Add the omitted case branch and aggregate all cases only after every branch is proved."
     if error_type == "sign_error":
         return "Correct the sign, inequality direction, or arithmetic transformation at the marked step."
@@ -201,6 +197,7 @@ def minimal_fix_for_error(error_type: str, injected_error: dict[str, Any]) -> st
 
 
 def classify_difficulty(error_type: str, variant: str) -> tuple[str, int]:
+    error_type = canonicalize_error_type(error_type)
     subtlety = SUBTLETY.get(error_type, 3)
     if variant == "wrong_final_answer" and subtlety <= 2:
         difficulty = "easy"
@@ -216,12 +213,14 @@ def classify_difficulty(error_type: str, variant: str) -> tuple[str, int]:
 
 
 def classify_variant(error_type: str) -> str:
+    error_type = canonicalize_error_type(error_type)
     if error_type in WRONG_FINAL_ANSWER_TYPES:
         return "wrong_final_answer"
     return "invalid_proof_same_answer"
 
 
 def _missing_reasoning_for_error(error_type: str, injected_error: dict[str, Any]) -> str:
+    error_type = canonicalize_error_type(error_type)
     if error_type in STRUCTURAL_ERROR_TYPES:
         return "The dependency graph does not supply the required earlier support for the marked SPU."
     if error_type in TEXT_ONLY_ERROR_TYPES:
@@ -237,4 +236,3 @@ def _id_sort_key(value: str) -> tuple[str, int | str]:
     prefix = "".join(ch for ch in value if not ch.isdigit())
     suffix = "".join(ch for ch in value if ch.isdigit())
     return prefix, int(suffix) if suffix else value
-

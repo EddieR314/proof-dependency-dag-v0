@@ -16,6 +16,7 @@ def build_dependency_dag(spus: list[dict[str, Any]]) -> list[dict[str, Any]]:
     result = copy.deepcopy(spus)
     previous_reasoning: list[str] = []
     last_case_id: str | None = None
+    token_sets = [_math_tokens(spu.get("text", "")) for spu in result]
 
     for i, spu in enumerate(result):
         sid = spu["id"]
@@ -25,7 +26,7 @@ def build_dependency_dag(spus: list[dict[str, Any]]) -> list[dict[str, Any]]:
         if i == 0 and not deps:
             deps = ["problem"] if stype != "Given" else []
         elif not deps:
-            deps = _infer_deps(result, i, previous_reasoning, last_case_id)
+            deps = _infer_deps(result, i, previous_reasoning, last_case_id, token_sets)
 
         spu["depends_on"] = _dedupe_preserve_order(deps)
 
@@ -48,6 +49,7 @@ def _infer_deps(
     index: int,
     previous_reasoning: list[str],
     last_case_id: str | None,
+    token_sets: list[set[str]],
 ) -> list[str]:
     spu = spus[index]
     stype = spu.get("type", "Claim")
@@ -65,13 +67,13 @@ def _infer_deps(
 
     deps: list[str] = []
 
-    referenced = _referenced_prior_spus(text, prior)
+    referenced = _referenced_prior_spus(text, prior, token_sets[index], token_sets[:index])
     deps.extend(referenced[-2:])
 
     if last_case_id and stype in {"Claim", "TheoremUse", "Algebra", "Lemma"}:
         deps.append(last_case_id)
 
-    if previous_reasoning:
+    if not referenced and previous_reasoning:
         deps.append(previous_reasoning[-1])
 
     if stype == "Final" and len(previous_reasoning) >= 2:
@@ -83,16 +85,51 @@ def _infer_deps(
     return deps
 
 
-def _referenced_prior_spus(text: str, prior: list[dict[str, Any]]) -> list[str]:
+def _referenced_prior_spus(
+    text: str,
+    prior: list[dict[str, Any]],
+    tokens: set[str] | None = None,
+    prior_token_sets: list[set[str]] | None = None,
+) -> list[str]:
     refs = []
-    tokens = set(re.findall(r"[A-Za-z][A-Za-z0-9_]*|\\[a-zA-Z]+|[a-zA-Z]\d+", text))
-    for spu in prior:
-        prior_tokens = set(
-            re.findall(r"[A-Za-z][A-Za-z0-9_]*|\\[a-zA-Z]+|[a-zA-Z]\d+", spu.get("text", ""))
-        )
+    tokens = tokens if tokens is not None else _math_tokens(text)
+    prior_token_sets = prior_token_sets or [_math_tokens(spu.get("text", "")) for spu in prior]
+    if not tokens:
+        return refs
+    for spu, prior_tokens in zip(prior, prior_token_sets):
         if tokens & prior_tokens:
             refs.append(spu["id"])
     return refs
+
+
+LAYOUT_LATEX_COMMANDS = {
+    "frac",
+    "left",
+    "right",
+    "cdot",
+    "times",
+    "mathbb",
+    "mathrm",
+    "operatorname",
+    "begin",
+    "end",
+    "text",
+}
+NOISY_SINGLE_LETTERS = {"a", "i"}
+
+
+def _math_tokens(text: str) -> set[str]:
+    tokens: set[str] = set()
+    for command in re.findall(r"\\([A-Za-z]+)", text):
+        command = command.lower()
+        if command not in LAYOUT_LATEX_COMMANDS:
+            tokens.add(f"\\{command}")
+    tokens.update(token.lower() for token in re.findall(r"\b[A-Za-z]\d+\b", text))
+    tokens.update(token for token in re.findall(r"\b[A-Z]{1,4}\b", text))
+    for token in re.findall(r"\b[a-z]\b", text):
+        if token not in NOISY_SINGLE_LETTERS:
+            tokens.add(token)
+    return tokens
 
 
 def _dedupe_preserve_order(items: list[str]) -> list[str]:
@@ -115,4 +152,3 @@ def edges_from_spus(spus: list[dict[str, Any]]) -> list[dict[str, str]]:
             if dep in ids:
                 edges.append({"source": dep, "target": sid})
     return edges
-
