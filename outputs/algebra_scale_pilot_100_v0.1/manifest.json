@@ -1,0 +1,53 @@
+{
+  "protocol": "algebra-scale-pilot-100-v0.1",
+  "skill_version": "0.2",
+  "seed": 20260729,
+  "source": "C:\\Users\\RHC\\Documents\\xwechat_files\\wxid_umuui4k7aem822_7b33\\msg\\file\\2026-07\\proof_750_non_geometry_sample_v4(1).csv",
+  "raw_source_count": 750,
+  "eligible_deduplicated_count": 242,
+  "excluded_splits": [
+    "calibration",
+    "heldout"
+  ],
+  "excluded_problem_count": 33,
+  "candidate_pool_count": 200,
+  "sample_count": 100,
+  "module_quotas": {
+    "functional_equations": 24,
+    "inequalities": 24,
+    "polynomials": 18,
+    "recurrences_sequences": 17,
+    "complex_algebra": 9,
+    "discrete_algebra": 8
+  },
+  "module_available_after_exclusion": {
+    "functional_equations": 60,
+    "inequalities": 68,
+    "polynomials": 30,
+    "recurrences_sequences": 25,
+    "complex_algebra": 9,
+    "discrete_algebra": 8
+  },
+  "human_audit_count": 30,
+  "human_audit_per_module": 5,
+  "quality_flag_counts": {
+    "competition_missing": 1
+  },
+  "unique_source_keys_by_module": {
+    "functional_equations": 22,
+    "inequalities": 21,
+    "polynomials": 18,
+    "recurrences_sequences": 16,
+    "complex_algebra": 9,
+    "discrete_algebra": 7
+  },
+  "reference_policy": "Keep references sealed until predictions are frozen and hashed.",
+  "frozen_skill_policy": "Do not revise olympiad-algebra-expert-v0.2 from pilot outputs.",
+  "checksums": {
+    "statements_only": "dc5cc1f03cf7792022c0f5c37fbb7e15ac352c445aab678f31f12b4ad9bffa93",
+    "predictions_template": "a880db4fb4187e191cbc302330e357239beadeabfefea6981cea8ddf53f975ad",
+    "human_audit_30_reviewer_a": "0a7d20a1ad32e4b73a7cf5f891da139ff22171efcd592a0b797dc094657c11ad",
+    "human_audit_30_reviewer_b": "0568017d5fc155976df05568c03aaf53a3f091fb1d5bc6b4a8bc77a4e78b9f5d",
+    "reference_index": "204fc6e0ba0deeb12d32f3e4b8c2e9ef37e51141001cbc71905c02ff0b5e7e50"
+  }
+}
