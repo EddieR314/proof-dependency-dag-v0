@@ -1,0 +1,1834 @@
+{
+  "schema_version": "proof-dag-schema-v0.4",
+  "graph_kind": "reference",
+  "graph_id": "00q2-reference-v0.1",
+  "problem_id": "00q2",
+  "target_fact_ids": [
+    "F28"
+  ],
+  "versions": {
+    "skill_standard": "0.3",
+    "dag_schema": "proof-dag-schema-v0.4",
+    "fact_schema": "fact-v0.4",
+    "inference_schema": "inference-v0.4",
+    "scope_schema": "scope-v0.4",
+    "mutation_schema": "mutation-v0.4",
+    "canonicalizer": "math-expression-v1",
+    "rule_registry": "polynomial-extreme-degree-rules-v1",
+    "common_tooling": "proof-dag-lean-v0.4",
+    "domain_skill": "olympiad-algebra-expert-v0.1"
+  },
+  "source_record": {
+    "problem_source": "HuggingFace:ShadenA/MathNet problem 00q2",
+    "solution_source": "human-reviewed blind proof in problem.md",
+    "source_record_id": "mathnet:all:train:22204:e577c87c164f",
+    "source_hash": "3f8d257b3e334d889b80dcbc81aca4684537329c0142168815e909ad5f58278d",
+    "candidate_reference_solution_hash": "dc4ac519e59f0ce29b25ee281a292bb175d141f14cfd48437459b0912a6f51bf",
+    "reviewed_solution_hash": "dc4ac519e59f0ce29b25ee281a292bb175d141f14cfd48437459b0912a6f51bf"
+  },
+  "scopes": [
+    {
+      "id": "global",
+      "parent_id": null,
+      "kind": "global"
+    },
+    {
+      "id": "global/necessity",
+      "parent_id": "global",
+      "kind": "lemma"
+    },
+    {
+      "id": "global/necessity/case_gt_one",
+      "parent_id": "global/necessity",
+      "kind": "contradiction"
+    },
+    {
+      "id": "global/sufficiency",
+      "parent_id": "global",
+      "kind": "case"
+    }
+  ],
+  "rule_schemas": [
+    {
+      "rule_id": "quotient_witness",
+      "name": "Expand polynomial divisibility as a quotient identity",
+      "category": "polynomial",
+      "input_patterns": [
+        {
+          "premise_role": "divisibility",
+          "predicate": "Divisibility"
+        }
+      ],
+      "variables": [
+        "fn",
+        "gn",
+        "h"
+      ],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "QuotientIdentity",
+        "canonical_form": "QuotientIdentity(fn,gn,h)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "split_extreme_components",
+      "name": "Identify the degree-2 and degree-2n components of f_n when n>1",
+      "category": "polynomial",
+      "input_patterns": [
+        {
+          "premise_role": "definitions",
+          "predicate": "PolynomialDefinitions"
+        },
+        {
+          "premise_role": "case",
+          "predicate": "GreaterThanOne"
+        }
+      ],
+      "variables": [
+        "fn",
+        "n"
+      ],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "ExtremeDegreeDecomposition",
+        "canonical_form": "ExtremeDegreeDecomposition(fn,2,2n)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "quotient_extreme_degrees",
+      "name": "Choose the lowest and highest nonzero homogeneous parts of h",
+      "category": "polynomial",
+      "input_patterns": [
+        {
+          "premise_role": "quotient",
+          "predicate": "QuotientIdentity"
+        }
+      ],
+      "variables": [
+        "h",
+        "l",
+        "u"
+      ],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "QuotientExtremeDegrees",
+        "canonical_form": "QuotientExtremeDegrees(h,l,u)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "extreme_index_order",
+      "name": "The lowest nonzero degree does not exceed the highest",
+      "category": "polynomial",
+      "input_patterns": [
+        {
+          "premise_role": "extrema",
+          "predicate": "QuotientExtremeDegrees"
+        }
+      ],
+      "variables": [
+        "l",
+        "u"
+      ],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "IndexOrder",
+        "canonical_form": "IndexOrder(l,u)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "lowest_product_component",
+      "name": "The unique lowest product component is F_2 h_l",
+      "category": "polynomial",
+      "input_patterns": [
+        {
+          "premise_role": "decomposition",
+          "predicate": "ExtremeDegreeDecomposition"
+        },
+        {
+          "premise_role": "extrema",
+          "predicate": "QuotientExtremeDegrees"
+        },
+        {
+          "premise_role": "quotient",
+          "predicate": "QuotientIdentity"
+        }
+      ],
+      "variables": [
+        "fn",
+        "gn",
+        "h",
+        "l",
+        "n"
+      ],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "LowestProductDegree",
+        "canonical_form": "LowestProductDegree(l+2)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "highest_product_component",
+      "name": "The unique highest product component is F_2n h_u",
+      "category": "polynomial",
+      "input_patterns": [
+        {
+          "premise_role": "decomposition",
+          "predicate": "ExtremeDegreeDecomposition"
+        },
+        {
+          "premise_role": "extrema",
+          "predicate": "QuotientExtremeDegrees"
+        },
+        {
+          "premise_role": "quotient",
+          "predicate": "QuotientIdentity"
+        }
+      ],
+      "variables": [
+        "fn",
+        "gn",
+        "h",
+        "u",
+        "n"
+      ],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "HighestProductDegree",
+        "canonical_form": "HighestProductDegree(u+2n)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "match_lowest_degree",
+      "name": "A nonzero component of a homogeneous polynomial has degree 5n",
+      "category": "polynomial",
+      "input_patterns": [
+        {
+          "premise_role": "definitions",
+          "predicate": "PolynomialDefinitions"
+        },
+        {
+          "premise_role": "lowest",
+          "predicate": "LowestProductDegree"
+        }
+      ],
+      "variables": [
+        "gn",
+        "l",
+        "n"
+      ],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "LowestDegreeEquation",
+        "canonical_form": "LowestDegreeEquation(l+2,5n)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "match_highest_degree",
+      "name": "The highest component also has homogeneous degree 5n",
+      "category": "polynomial",
+      "input_patterns": [
+        {
+          "premise_role": "definitions",
+          "predicate": "PolynomialDefinitions"
+        },
+        {
+          "premise_role": "highest",
+          "predicate": "HighestProductDegree"
+        }
+      ],
+      "variables": [
+        "gn",
+        "u",
+        "n"
+      ],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "HighestDegreeEquation",
+        "canonical_form": "HighestDegreeEquation(u+2n,5n)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "solve_lowest_index",
+      "name": "Solve l+2=5n",
+      "category": "arithmetic",
+      "input_patterns": [
+        {
+          "premise_role": "equation",
+          "predicate": "LowestDegreeEquation"
+        }
+      ],
+      "variables": [
+        "l",
+        "n"
+      ],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "LowestIndexValue",
+        "canonical_form": "LowestIndexValue(l,5n-2)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "solve_highest_index",
+      "name": "Solve u+2n=5n",
+      "category": "arithmetic",
+      "input_patterns": [
+        {
+          "premise_role": "equation",
+          "predicate": "HighestDegreeEquation"
+        }
+      ],
+      "variables": [
+        "u",
+        "n"
+      ],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "HighestIndexValue",
+        "canonical_form": "HighestIndexValue(u,3n)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "index_order_bounds_n",
+      "name": "Combine l<=u with the solved extreme degrees",
+      "category": "arithmetic",
+      "input_patterns": [
+        {
+          "premise_role": "order",
+          "predicate": "IndexOrder"
+        },
+        {
+          "premise_role": "lowest_value",
+          "predicate": "LowestIndexValue"
+        },
+        {
+          "premise_role": "highest_value",
+          "predicate": "HighestIndexValue"
+        }
+      ],
+      "variables": [
+        "l",
+        "u",
+        "n"
+      ],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "UpperBoundOnN",
+        "canonical_form": "UpperBoundOnN(n,1)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "case_contradiction",
+      "name": "The assumptions n>1 and n<=1 contradict",
+      "category": "logic",
+      "input_patterns": [
+        {
+          "premise_role": "case",
+          "predicate": "GreaterThanOne"
+        },
+        {
+          "premise_role": "bound",
+          "predicate": "UpperBoundOnN"
+        }
+      ],
+      "variables": [
+        "n"
+      ],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "Contradiction",
+        "canonical_form": "Contradiction(n>1,n<=1)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "discharge_gt_one",
+      "name": "Discharge the n>1 contradiction inside the necessity branch",
+      "category": "logic",
+      "input_patterns": [
+        {
+          "premise_role": "case",
+          "predicate": "GreaterThanOne"
+        },
+        {
+          "premise_role": "contradiction",
+          "predicate": "Contradiction"
+        }
+      ],
+      "variables": [
+        "n"
+      ],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "UpperBoundOnN",
+        "canonical_form": "UpperBoundOnN(n,1)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope",
+        "allow_scope_discharge"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "positive_integer_bound",
+      "name": "A positive integer not exceeding 1 equals 1",
+      "category": "arithmetic",
+      "input_patterns": [
+        {
+          "premise_role": "positive_integer",
+          "predicate": "PositiveInteger"
+        },
+        {
+          "premise_role": "bound",
+          "predicate": "UpperBoundOnN"
+        }
+      ],
+      "variables": [
+        "n"
+      ],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "EqualsOne",
+        "canonical_form": "EqualsOne(n)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "discharge_necessity",
+      "name": "Discharge the divisibility assumption as the necessity implication",
+      "category": "logic",
+      "input_patterns": [
+        {
+          "premise_role": "divisibility",
+          "predicate": "Divisibility"
+        },
+        {
+          "premise_role": "equals_one",
+          "predicate": "EqualsOne"
+        }
+      ],
+      "variables": [
+        "fn",
+        "gn",
+        "n"
+      ],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "DividesImpliesOne",
+        "canonical_form": "DividesImpliesOne(fn,gn,n)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope",
+        "allow_scope_discharge"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "difference_substitution",
+      "name": "Introduce p=x-y, q=y-z, r=z-x for n=1",
+      "category": "polynomial",
+      "input_patterns": [
+        {
+          "premise_role": "case",
+          "predicate": "EqualsOne"
+        },
+        {
+          "premise_role": "definitions",
+          "predicate": "PolynomialDefinitions"
+        }
+      ],
+      "variables": [
+        "p",
+        "q",
+        "r",
+        "x",
+        "y",
+        "z"
+      ],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "DifferenceVariables",
+        "canonical_form": "DifferenceVariables(p,q,r,x,y,z)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "difference_sum_zero",
+      "name": "The cyclic differences sum to zero",
+      "category": "algebraic_identity",
+      "input_patterns": [
+        {
+          "premise_role": "differences",
+          "predicate": "DifferenceVariables"
+        }
+      ],
+      "variables": [
+        "p",
+        "q",
+        "r"
+      ],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "DifferenceSumZero",
+        "canonical_form": "DifferenceSumZero(p,q,r)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "fifth_power_identity",
+      "name": "Apply the fifth-power identity under p+q+r=0",
+      "category": "algebraic_identity",
+      "input_patterns": [
+        {
+          "premise_role": "sum_zero",
+          "predicate": "DifferenceSumZero"
+        }
+      ],
+      "variables": [
+        "p",
+        "q",
+        "r"
+      ],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "FifthPowerIdentity",
+        "canonical_form": "FifthPowerIdentity(p,q,r)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "quadratic_difference_identity",
+      "name": "Rewrite f_1 as half the cyclic squared-difference sum",
+      "category": "algebraic_identity",
+      "input_patterns": [
+        {
+          "premise_role": "definitions",
+          "predicate": "PolynomialDefinitions"
+        },
+        {
+          "premise_role": "differences",
+          "predicate": "DifferenceVariables"
+        }
+      ],
+      "variables": [
+        "f1",
+        "p",
+        "q",
+        "r"
+      ],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "QuadraticDifferenceIdentity",
+        "canonical_form": "QuadraticDifferenceIdentity(f1,p,q,r)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "factor_g1",
+      "name": "Combine the two identities to factor g_1 by f_1",
+      "category": "factorization",
+      "input_patterns": [
+        {
+          "premise_role": "fifth_identity",
+          "predicate": "FifthPowerIdentity"
+        },
+        {
+          "premise_role": "quadratic_identity",
+          "predicate": "QuadraticDifferenceIdentity"
+        },
+        {
+          "premise_role": "definitions",
+          "predicate": "PolynomialDefinitions"
+        }
+      ],
+      "variables": [
+        "g1",
+        "f1",
+        "p",
+        "q",
+        "r"
+      ],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "G1Factorization",
+        "canonical_form": "G1Factorization(g1,f1,p,q,r)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "factorization_implies_divisibility",
+      "name": "An explicit polynomial factorization proves divisibility",
+      "category": "polynomial",
+      "input_patterns": [
+        {
+          "premise_role": "factorization",
+          "predicate": "G1Factorization"
+        }
+      ],
+      "variables": [
+        "f1",
+        "g1"
+      ],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "Divisibility",
+        "canonical_form": "Divisibility(f1,g1)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "discharge_sufficiency",
+      "name": "Discharge n=1 as the sufficiency implication",
+      "category": "logic",
+      "input_patterns": [
+        {
+          "premise_role": "case",
+          "predicate": "EqualsOne"
+        },
+        {
+          "premise_role": "divisibility",
+          "predicate": "Divisibility"
+        }
+      ],
+      "variables": [
+        "fn",
+        "gn",
+        "n"
+      ],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "OneImpliesDivides",
+        "canonical_form": "OneImpliesDivides(fn,gn,n)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope",
+        "allow_scope_discharge"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "necessity_and_sufficiency",
+      "name": "Combine both implications into the exact classification",
+      "category": "logic",
+      "input_patterns": [
+        {
+          "premise_role": "necessity",
+          "predicate": "DividesImpliesOne"
+        },
+        {
+          "premise_role": "sufficiency",
+          "predicate": "OneImpliesDivides"
+        }
+      ],
+      "variables": [
+        "fn",
+        "gn",
+        "n"
+      ],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "ExactClassification",
+        "canonical_form": "ExactClassification(fn,gn,n)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    }
+  ],
+  "facts": [
+    {
+      "id": "F1",
+      "statement": "n is a positive integer.",
+      "canonical_form": "PositiveInteger(n)",
+      "introduction_kind": "given",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "objects": [
+        "n"
+      ],
+      "source_spans": [
+        "problem:n-positive"
+      ]
+    },
+    {
+      "id": "F2",
+      "statement": "f_n and g_n are the polynomials in the problem; g_n is homogeneous of degree 5n.",
+      "canonical_form": "PolynomialDefinitions(fn,gn,n)",
+      "introduction_kind": "given",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "objects": [
+        "fn",
+        "gn",
+        "n",
+        "x",
+        "y",
+        "z"
+      ],
+      "source_spans": [
+        "problem:definitions"
+      ]
+    },
+    {
+      "id": "F3",
+      "statement": "Assume f_n divides g_n.",
+      "canonical_form": "Divisibility(fn,gn)",
+      "introduction_kind": "assumed",
+      "roles": [
+        "case_condition"
+      ],
+      "scope": "global/necessity",
+      "objects": [
+        "fn",
+        "gn"
+      ],
+      "source_spans": [
+        "proof:necessity-assumption"
+      ]
+    },
+    {
+      "id": "F4",
+      "statement": "There is a nonzero polynomial h such that g_n=f_n h.",
+      "canonical_form": "QuotientIdentity(fn,gn,h)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global/necessity",
+      "objects": [
+        "fn",
+        "gn",
+        "h"
+      ],
+      "source_spans": [
+        "proof:quotient"
+      ]
+    },
+    {
+      "id": "F5",
+      "statement": "Assume n>1 inside the contradiction subcase.",
+      "canonical_form": "GreaterThanOne(n)",
+      "introduction_kind": "case_assumed",
+      "roles": [
+        "case_condition"
+      ],
+      "scope": "global/necessity/case_gt_one",
+      "objects": [
+        "n"
+      ],
+      "source_spans": [
+        "proof:case-n-gt-one"
+      ]
+    },
+    {
+      "id": "F6",
+      "statement": "For n>1, f_n has nonzero extreme homogeneous components of degrees 2 and 2n.",
+      "canonical_form": "ExtremeDegreeDecomposition(fn,2,2n)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global/necessity/case_gt_one",
+      "objects": [
+        "fn",
+        "n"
+      ],
+      "source_spans": [
+        "proof:split-f"
+      ]
+    },
+    {
+      "id": "F7",
+      "statement": "Let l and u be the lowest and highest nonzero homogeneous degrees of h.",
+      "canonical_form": "QuotientExtremeDegrees(h,l,u)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global/necessity/case_gt_one",
+      "objects": [
+        "h",
+        "l",
+        "u"
+      ],
+      "source_spans": [
+        "proof:extreme-h"
+      ]
+    },
+    {
+      "id": "F8",
+      "statement": "The extreme indices satisfy l<=u.",
+      "canonical_form": "IndexOrder(l,u)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global/necessity/case_gt_one",
+      "objects": [
+        "l",
+        "u"
+      ],
+      "source_spans": [
+        "proof:index-order"
+      ]
+    },
+    {
+      "id": "F9",
+      "statement": "The nonzero lowest homogeneous component of f_n h has degree l+2.",
+      "canonical_form": "LowestProductDegree(l+2)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global/necessity/case_gt_one",
+      "objects": [
+        "fn",
+        "h",
+        "l"
+      ],
+      "source_spans": [
+        "proof:lowest-product"
+      ]
+    },
+    {
+      "id": "F10",
+      "statement": "The nonzero highest homogeneous component of f_n h has degree u+2n.",
+      "canonical_form": "HighestProductDegree(u+2n)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global/necessity/case_gt_one",
+      "objects": [
+        "fn",
+        "h",
+        "u",
+        "n"
+      ],
+      "source_spans": [
+        "proof:highest-product"
+      ]
+    },
+    {
+      "id": "F11",
+      "statement": "The lowest-degree comparison gives l+2=5n.",
+      "canonical_form": "LowestDegreeEquation(l+2,5n)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global/necessity/case_gt_one",
+      "objects": [
+        "l",
+        "n"
+      ],
+      "source_spans": [
+        "proof:lowest-equation"
+      ]
+    },
+    {
+      "id": "F12",
+      "statement": "The highest-degree comparison gives u+2n=5n.",
+      "canonical_form": "HighestDegreeEquation(u+2n,5n)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global/necessity/case_gt_one",
+      "objects": [
+        "u",
+        "n"
+      ],
+      "source_spans": [
+        "proof:highest-equation"
+      ]
+    },
+    {
+      "id": "F13",
+      "statement": "l=5n-2.",
+      "canonical_form": "LowestIndexValue(l,5n-2)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global/necessity/case_gt_one",
+      "objects": [
+        "l",
+        "n"
+      ],
+      "source_spans": [
+        "proof:solve-l"
+      ]
+    },
+    {
+      "id": "F14",
+      "statement": "u=3n.",
+      "canonical_form": "HighestIndexValue(u,3n)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global/necessity/case_gt_one",
+      "objects": [
+        "u",
+        "n"
+      ],
+      "source_spans": [
+        "proof:solve-u"
+      ]
+    },
+    {
+      "id": "F15",
+      "statement": "The extreme-index order forces n<=1.",
+      "canonical_form": "UpperBoundOnN(n,1)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global/necessity/case_gt_one",
+      "objects": [
+        "n"
+      ],
+      "source_spans": [
+        "proof:n-bound"
+      ]
+    },
+    {
+      "id": "F16",
+      "statement": "The assumptions n>1 and n<=1 contradict.",
+      "canonical_form": "Contradiction(n>1,n<=1)",
+      "introduction_kind": "derived",
+      "roles": [
+        "contradiction"
+      ],
+      "scope": "global/necessity/case_gt_one",
+      "objects": [
+        "n"
+      ],
+      "source_spans": [
+        "proof:contradiction"
+      ]
+    },
+    {
+      "id": "F17",
+      "statement": "Within the divisibility branch, n<=1.",
+      "canonical_form": "UpperBoundOnN(n,1)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global/necessity",
+      "objects": [
+        "n"
+      ],
+      "source_spans": [
+        "proof:discharge-gt-one"
+      ]
+    },
+    {
+      "id": "F18",
+      "statement": "Within the divisibility branch, n=1.",
+      "canonical_form": "EqualsOne(n)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global/necessity",
+      "objects": [
+        "n"
+      ],
+      "source_spans": [
+        "proof:necessity-one"
+      ]
+    },
+    {
+      "id": "F19",
+      "statement": "If f_n divides g_n, then n=1.",
+      "canonical_form": "DividesImpliesOne(fn,gn,n)",
+      "introduction_kind": "derived",
+      "roles": [
+        "lemma_output"
+      ],
+      "scope": "global",
+      "objects": [
+        "fn",
+        "gn",
+        "n"
+      ],
+      "source_spans": [
+        "proof:necessity"
+      ]
+    },
+    {
+      "id": "F20",
+      "statement": "Assume n=1 for the sufficiency branch.",
+      "canonical_form": "EqualsOne(n)",
+      "introduction_kind": "case_assumed",
+      "roles": [
+        "case_condition"
+      ],
+      "scope": "global/sufficiency",
+      "objects": [
+        "n"
+      ],
+      "source_spans": [
+        "proof:sufficiency-assumption"
+      ]
+    },
+    {
+      "id": "F21",
+      "statement": "Define p=x-y, q=y-z, and r=z-x.",
+      "canonical_form": "DifferenceVariables(p,q,r,x,y,z)",
+      "introduction_kind": "constructed",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global/sufficiency",
+      "objects": [
+        "p",
+        "q",
+        "r",
+        "x",
+        "y",
+        "z"
+      ],
+      "source_spans": [
+        "proof:differences"
+      ]
+    },
+    {
+      "id": "F22",
+      "statement": "p+q+r=0.",
+      "canonical_form": "DifferenceSumZero(p,q,r)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global/sufficiency",
+      "objects": [
+        "p",
+        "q",
+        "r"
+      ],
+      "source_spans": [
+        "proof:sum-zero"
+      ]
+    },
+    {
+      "id": "F23",
+      "statement": "p^5+q^5+r^5=(5/2)pqr(p^2+q^2+r^2).",
+      "canonical_form": "FifthPowerIdentity(p,q,r)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global/sufficiency",
+      "objects": [
+        "p",
+        "q",
+        "r"
+      ],
+      "source_spans": [
+        "proof:fifth-identity"
+      ]
+    },
+    {
+      "id": "F24",
+      "statement": "f_1=(1/2)(p^2+q^2+r^2).",
+      "canonical_form": "QuadraticDifferenceIdentity(f1,p,q,r)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global/sufficiency",
+      "objects": [
+        "f1",
+        "p",
+        "q",
+        "r"
+      ],
+      "source_spans": [
+        "proof:quadratic-identity"
+      ]
+    },
+    {
+      "id": "F25",
+      "statement": "g_1=5pqr f_1.",
+      "canonical_form": "G1Factorization(g1,f1,p,q,r)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global/sufficiency",
+      "objects": [
+        "g1",
+        "f1",
+        "p",
+        "q",
+        "r"
+      ],
+      "source_spans": [
+        "proof:factorization"
+      ]
+    },
+    {
+      "id": "F26",
+      "statement": "f_1 divides g_1.",
+      "canonical_form": "Divisibility(f1,g1)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global/sufficiency",
+      "objects": [
+        "f1",
+        "g1"
+      ],
+      "source_spans": [
+        "proof:divisibility-n1"
+      ]
+    },
+    {
+      "id": "F27",
+      "statement": "If n=1, then f_n divides g_n.",
+      "canonical_form": "OneImpliesDivides(fn,gn,n)",
+      "introduction_kind": "derived",
+      "roles": [
+        "lemma_output"
+      ],
+      "scope": "global",
+      "objects": [
+        "fn",
+        "gn",
+        "n"
+      ],
+      "source_spans": [
+        "proof:sufficiency"
+      ]
+    },
+    {
+      "id": "F28",
+      "statement": "For positive integers n, f_n divides g_n if and only if n=1.",
+      "canonical_form": "ExactClassification(fn,gn,n)",
+      "introduction_kind": "derived",
+      "roles": [
+        "goal"
+      ],
+      "scope": "global",
+      "objects": [
+        "fn",
+        "gn",
+        "n"
+      ],
+      "source_spans": [
+        "proof:conclusion"
+      ]
+    }
+  ],
+  "inferences": [
+    {
+      "id": "I1",
+      "spu_id": "SPU1",
+      "source_order": 1,
+      "rule_id": "quotient_witness",
+      "scope": "global/necessity",
+      "input_bindings": [
+        {
+          "fact_id": "F3",
+          "premise_role": "divisibility"
+        }
+      ],
+      "variable_bindings": {
+        "fn": "f_n",
+        "gn": "g_n",
+        "h": "h"
+      },
+      "output_fact_id": "F4",
+      "source_spans": [
+        "proof:S1"
+      ],
+      "risk_flags": []
+    },
+    {
+      "id": "I2",
+      "spu_id": "SPU2",
+      "source_order": 2,
+      "rule_id": "split_extreme_components",
+      "scope": "global/necessity/case_gt_one",
+      "input_bindings": [
+        {
+          "fact_id": "F2",
+          "premise_role": "definitions"
+        },
+        {
+          "fact_id": "F5",
+          "premise_role": "case"
+        }
+      ],
+      "variable_bindings": {
+        "fn": "f_n",
+        "n": "n"
+      },
+      "output_fact_id": "F6",
+      "source_spans": [
+        "proof:S2"
+      ],
+      "risk_flags": []
+    },
+    {
+      "id": "I3",
+      "spu_id": "SPU3",
+      "source_order": 3,
+      "rule_id": "quotient_extreme_degrees",
+      "scope": "global/necessity/case_gt_one",
+      "input_bindings": [
+        {
+          "fact_id": "F4",
+          "premise_role": "quotient"
+        }
+      ],
+      "variable_bindings": {
+        "h": "h",
+        "l": "l",
+        "u": "u"
+      },
+      "output_fact_id": "F7",
+      "source_spans": [
+        "proof:S3"
+      ],
+      "risk_flags": []
+    },
+    {
+      "id": "I4",
+      "spu_id": "SPU4",
+      "source_order": 4,
+      "rule_id": "extreme_index_order",
+      "scope": "global/necessity/case_gt_one",
+      "input_bindings": [
+        {
+          "fact_id": "F7",
+          "premise_role": "extrema"
+        }
+      ],
+      "variable_bindings": {
+        "l": "l",
+        "u": "u"
+      },
+      "output_fact_id": "F8",
+      "source_spans": [
+        "proof:S4"
+      ],
+      "risk_flags": []
+    },
+    {
+      "id": "I5",
+      "spu_id": "SPU5",
+      "source_order": 5,
+      "rule_id": "lowest_product_component",
+      "scope": "global/necessity/case_gt_one",
+      "input_bindings": [
+        {
+          "fact_id": "F6",
+          "premise_role": "decomposition"
+        },
+        {
+          "fact_id": "F7",
+          "premise_role": "extrema"
+        },
+        {
+          "fact_id": "F4",
+          "premise_role": "quotient"
+        }
+      ],
+      "variable_bindings": {
+        "fn": "f_n",
+        "gn": "g_n",
+        "h": "h",
+        "l": "l",
+        "n": "n"
+      },
+      "output_fact_id": "F9",
+      "source_spans": [
+        "proof:S5"
+      ],
+      "risk_flags": [
+        "hidden_domain_condition",
+        "large_lemma_compression"
+      ]
+    },
+    {
+      "id": "I6",
+      "spu_id": "SPU6",
+      "source_order": 6,
+      "rule_id": "highest_product_component",
+      "scope": "global/necessity/case_gt_one",
+      "input_bindings": [
+        {
+          "fact_id": "F6",
+          "premise_role": "decomposition"
+        },
+        {
+          "fact_id": "F7",
+          "premise_role": "extrema"
+        },
+        {
+          "fact_id": "F4",
+          "premise_role": "quotient"
+        }
+      ],
+      "variable_bindings": {
+        "fn": "f_n",
+        "gn": "g_n",
+        "h": "h",
+        "u": "u",
+        "n": "n"
+      },
+      "output_fact_id": "F10",
+      "source_spans": [
+        "proof:S6"
+      ],
+      "risk_flags": [
+        "hidden_domain_condition",
+        "large_lemma_compression"
+      ]
+    },
+    {
+      "id": "I7",
+      "spu_id": "SPU7",
+      "source_order": 7,
+      "rule_id": "match_lowest_degree",
+      "scope": "global/necessity/case_gt_one",
+      "input_bindings": [
+        {
+          "fact_id": "F2",
+          "premise_role": "definitions"
+        },
+        {
+          "fact_id": "F9",
+          "premise_role": "lowest"
+        }
+      ],
+      "variable_bindings": {
+        "gn": "g_n",
+        "l": "l",
+        "n": "n"
+      },
+      "output_fact_id": "F11",
+      "source_spans": [
+        "proof:S7"
+      ],
+      "risk_flags": []
+    },
+    {
+      "id": "I8",
+      "spu_id": "SPU8",
+      "source_order": 8,
+      "rule_id": "match_highest_degree",
+      "scope": "global/necessity/case_gt_one",
+      "input_bindings": [
+        {
+          "fact_id": "F2",
+          "premise_role": "definitions"
+        },
+        {
+          "fact_id": "F10",
+          "premise_role": "highest"
+        }
+      ],
+      "variable_bindings": {
+        "gn": "g_n",
+        "u": "u",
+        "n": "n"
+      },
+      "output_fact_id": "F12",
+      "source_spans": [
+        "proof:S8"
+      ],
+      "risk_flags": []
+    },
+    {
+      "id": "I9",
+      "spu_id": "SPU9",
+      "source_order": 9,
+      "rule_id": "solve_lowest_index",
+      "scope": "global/necessity/case_gt_one",
+      "input_bindings": [
+        {
+          "fact_id": "F11",
+          "premise_role": "equation"
+        }
+      ],
+      "variable_bindings": {
+        "l": "l",
+        "n": "n"
+      },
+      "output_fact_id": "F13",
+      "source_spans": [
+        "proof:S9"
+      ],
+      "risk_flags": []
+    },
+    {
+      "id": "I10",
+      "spu_id": "SPU10",
+      "source_order": 10,
+      "rule_id": "solve_highest_index",
+      "scope": "global/necessity/case_gt_one",
+      "input_bindings": [
+        {
+          "fact_id": "F12",
+          "premise_role": "equation"
+        }
+      ],
+      "variable_bindings": {
+        "u": "u",
+        "n": "n"
+      },
+      "output_fact_id": "F14",
+      "source_spans": [
+        "proof:S10"
+      ],
+      "risk_flags": []
+    },
+    {
+      "id": "I11",
+      "spu_id": "SPU11",
+      "source_order": 11,
+      "rule_id": "index_order_bounds_n",
+      "scope": "global/necessity/case_gt_one",
+      "input_bindings": [
+        {
+          "fact_id": "F8",
+          "premise_role": "order"
+        },
+        {
+          "fact_id": "F13",
+          "premise_role": "lowest_value"
+        },
+        {
+          "fact_id": "F14",
+          "premise_role": "highest_value"
+        }
+      ],
+      "variable_bindings": {
+        "l": "l",
+        "u": "u",
+        "n": "n"
+      },
+      "output_fact_id": "F15",
+      "source_spans": [
+        "proof:S11"
+      ],
+      "risk_flags": []
+    },
+    {
+      "id": "I12",
+      "spu_id": "SPU12",
+      "source_order": 12,
+      "rule_id": "case_contradiction",
+      "scope": "global/necessity/case_gt_one",
+      "input_bindings": [
+        {
+          "fact_id": "F5",
+          "premise_role": "case"
+        },
+        {
+          "fact_id": "F15",
+          "premise_role": "bound"
+        }
+      ],
+      "variable_bindings": {
+        "n": "n"
+      },
+      "output_fact_id": "F16",
+      "source_spans": [
+        "proof:S12"
+      ],
+      "risk_flags": []
+    },
+    {
+      "id": "I13",
+      "spu_id": "SPU13",
+      "source_order": 13,
+      "rule_id": "discharge_gt_one",
+      "scope": "global/necessity/case_gt_one",
+      "input_bindings": [
+        {
+          "fact_id": "F5",
+          "premise_role": "case"
+        },
+        {
+          "fact_id": "F16",
+          "premise_role": "contradiction"
+        }
+      ],
+      "variable_bindings": {
+        "n": "n"
+      },
+      "output_fact_id": "F17",
+      "source_spans": [
+        "proof:S13"
+      ],
+      "risk_flags": []
+    },
+    {
+      "id": "I14",
+      "spu_id": "SPU14",
+      "source_order": 14,
+      "rule_id": "positive_integer_bound",
+      "scope": "global/necessity",
+      "input_bindings": [
+        {
+          "fact_id": "F1",
+          "premise_role": "positive_integer"
+        },
+        {
+          "fact_id": "F17",
+          "premise_role": "bound"
+        }
+      ],
+      "variable_bindings": {
+        "n": "n"
+      },
+      "output_fact_id": "F18",
+      "source_spans": [
+        "proof:S14"
+      ],
+      "risk_flags": []
+    },
+    {
+      "id": "I15",
+      "spu_id": "SPU15",
+      "source_order": 15,
+      "rule_id": "discharge_necessity",
+      "scope": "global/necessity",
+      "input_bindings": [
+        {
+          "fact_id": "F3",
+          "premise_role": "divisibility"
+        },
+        {
+          "fact_id": "F18",
+          "premise_role": "equals_one"
+        }
+      ],
+      "variable_bindings": {
+        "fn": "f_n",
+        "gn": "g_n",
+        "n": "n"
+      },
+      "output_fact_id": "F19",
+      "source_spans": [
+        "proof:S15"
+      ],
+      "risk_flags": []
+    },
+    {
+      "id": "I16",
+      "spu_id": "SPU16",
+      "source_order": 16,
+      "rule_id": "difference_substitution",
+      "scope": "global/sufficiency",
+      "input_bindings": [
+        {
+          "fact_id": "F20",
+          "premise_role": "case"
+        },
+        {
+          "fact_id": "F2",
+          "premise_role": "definitions"
+        }
+      ],
+      "variable_bindings": {
+        "p": "p",
+        "q": "q",
+        "r": "r",
+        "x": "x",
+        "y": "y",
+        "z": "z"
+      },
+      "output_fact_id": "F21",
+      "source_spans": [
+        "proof:S16"
+      ],
+      "risk_flags": []
+    },
+    {
+      "id": "I17",
+      "spu_id": "SPU17",
+      "source_order": 17,
+      "rule_id": "difference_sum_zero",
+      "scope": "global/sufficiency",
+      "input_bindings": [
+        {
+          "fact_id": "F21",
+          "premise_role": "differences"
+        }
+      ],
+      "variable_bindings": {
+        "p": "p",
+        "q": "q",
+        "r": "r"
+      },
+      "output_fact_id": "F22",
+      "source_spans": [
+        "proof:S17"
+      ],
+      "risk_flags": []
+    },
+    {
+      "id": "I18",
+      "spu_id": "SPU18",
+      "source_order": 18,
+      "rule_id": "fifth_power_identity",
+      "scope": "global/sufficiency",
+      "input_bindings": [
+        {
+          "fact_id": "F22",
+          "premise_role": "sum_zero"
+        }
+      ],
+      "variable_bindings": {
+        "p": "p",
+        "q": "q",
+        "r": "r"
+      },
+      "output_fact_id": "F23",
+      "source_spans": [
+        "proof:S18"
+      ],
+      "risk_flags": []
+    },
+    {
+      "id": "I19",
+      "spu_id": "SPU19",
+      "source_order": 19,
+      "rule_id": "quadratic_difference_identity",
+      "scope": "global/sufficiency",
+      "input_bindings": [
+        {
+          "fact_id": "F2",
+          "premise_role": "definitions"
+        },
+        {
+          "fact_id": "F21",
+          "premise_role": "differences"
+        }
+      ],
+      "variable_bindings": {
+        "f1": "f_1",
+        "p": "p",
+        "q": "q",
+        "r": "r"
+      },
+      "output_fact_id": "F24",
+      "source_spans": [
+        "proof:S19"
+      ],
+      "risk_flags": []
+    },
+    {
+      "id": "I20",
+      "spu_id": "SPU20",
+      "source_order": 20,
+      "rule_id": "factor_g1",
+      "scope": "global/sufficiency",
+      "input_bindings": [
+        {
+          "fact_id": "F23",
+          "premise_role": "fifth_identity"
+        },
+        {
+          "fact_id": "F24",
+          "premise_role": "quadratic_identity"
+        },
+        {
+          "fact_id": "F2",
+          "premise_role": "definitions"
+        }
+      ],
+      "variable_bindings": {
+        "g1": "g_1",
+        "f1": "f_1",
+        "p": "p",
+        "q": "q",
+        "r": "r"
+      },
+      "output_fact_id": "F25",
+      "source_spans": [
+        "proof:S20"
+      ],
+      "risk_flags": []
+    },
+    {
+      "id": "I21",
+      "spu_id": "SPU21",
+      "source_order": 21,
+      "rule_id": "factorization_implies_divisibility",
+      "scope": "global/sufficiency",
+      "input_bindings": [
+        {
+          "fact_id": "F25",
+          "premise_role": "factorization"
+        }
+      ],
+      "variable_bindings": {
+        "f1": "f_1",
+        "g1": "g_1"
+      },
+      "output_fact_id": "F26",
+      "source_spans": [
+        "proof:S21"
+      ],
+      "risk_flags": []
+    },
+    {
+      "id": "I22",
+      "spu_id": "SPU22",
+      "source_order": 22,
+      "rule_id": "discharge_sufficiency",
+      "scope": "global/sufficiency",
+      "input_bindings": [
+        {
+          "fact_id": "F20",
+          "premise_role": "case"
+        },
+        {
+          "fact_id": "F26",
+          "premise_role": "divisibility"
+        }
+      ],
+      "variable_bindings": {
+        "fn": "f_n",
+        "gn": "g_n",
+        "n": "n"
+      },
+      "output_fact_id": "F27",
+      "source_spans": [
+        "proof:S22"
+      ],
+      "risk_flags": []
+    },
+    {
+      "id": "I23",
+      "spu_id": "SPU23",
+      "source_order": 23,
+      "rule_id": "necessity_and_sufficiency",
+      "scope": "global",
+      "input_bindings": [
+        {
+          "fact_id": "F19",
+          "premise_role": "necessity"
+        },
+        {
+          "fact_id": "F27",
+          "premise_role": "sufficiency"
+        }
+      ],
+      "variable_bindings": {
+        "fn": "f_n",
+        "gn": "g_n",
+        "n": "n"
+      },
+      "output_fact_id": "F28",
+      "source_spans": [
+        "proof:S23"
+      ],
+      "risk_flags": []
+    }
+  ],
+  "provenance": {
+    "source": "data/algebra_skill_curriculum + reviewed problem.md",
+    "current_annotation_level": "synthetic",
+    "requested_target_level": "silver_verified",
+    "achieved_annotation_level": "pending",
+    "promotion_profile": "algebra-reference-dag-v0.1",
+    "proof_review": {
+      "method": "human",
+      "status": "passed",
+      "reviewer": "Ruan Haochen (Eddie)",
+      "review_date": "2026-07-28"
+    },
+    "dag_semantic_review": {
+      "method": "human",
+      "status": "not_run",
+      "evidence": "dag_semantic_review.md"
+    },
+    "alternative_paths": {
+      "status": "none_claimed",
+      "notes": "Necessity and sufficiency are separate branches; no intermediate Fact has an alternative producer."
+    }
+  }
+}

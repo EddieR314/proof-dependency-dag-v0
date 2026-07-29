@@ -1,0 +1,4 @@
+interface:
+  display_name: "Olympiad Algebra Expert"
+  short_description: "Solve and formalize olympiad algebra proofs"
+  default_prompt: "Use $olympiad-algebra-expert to classify, solve, audit, and prepare this olympiad algebra proof for Proof DAG and Lean."

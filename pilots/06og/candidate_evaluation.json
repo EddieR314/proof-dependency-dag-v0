@@ -1,0 +1,280 @@
+{
+  "schema_version": "proof-dag-schema-v0.4",
+  "graph_id": "06og-candidate-v0.1",
+  "blocked_node": null,
+  "fact_evaluations": [
+    {
+      "graph_id": "06og-candidate-v0.1",
+      "fact_id": "F1",
+      "support_status": "supported",
+      "availability_cache": "unknown",
+      "computed_by": "dag_core.py",
+      "evaluation_version": "proof-dag-schema-v0.4"
+    },
+    {
+      "graph_id": "06og-candidate-v0.1",
+      "fact_id": "F2",
+      "support_status": "supported",
+      "availability_cache": "unknown",
+      "computed_by": "dag_core.py",
+      "evaluation_version": "proof-dag-schema-v0.4"
+    },
+    {
+      "graph_id": "06og-candidate-v0.1",
+      "fact_id": "F3",
+      "support_status": "supported",
+      "availability_cache": "unknown",
+      "computed_by": "dag_core.py",
+      "evaluation_version": "proof-dag-schema-v0.4"
+    },
+    {
+      "graph_id": "06og-candidate-v0.1",
+      "fact_id": "F4",
+      "support_status": "supported",
+      "availability_cache": "unknown",
+      "computed_by": "dag_core.py",
+      "evaluation_version": "proof-dag-schema-v0.4"
+    },
+    {
+      "graph_id": "06og-candidate-v0.1",
+      "fact_id": "F5",
+      "support_status": "supported",
+      "availability_cache": "unknown",
+      "computed_by": "dag_core.py",
+      "evaluation_version": "proof-dag-schema-v0.4"
+    },
+    {
+      "graph_id": "06og-candidate-v0.1",
+      "fact_id": "F6",
+      "support_status": "supported",
+      "availability_cache": "unknown",
+      "computed_by": "dag_core.py",
+      "evaluation_version": "proof-dag-schema-v0.4"
+    },
+    {
+      "graph_id": "06og-candidate-v0.1",
+      "fact_id": "F7",
+      "support_status": "supported",
+      "availability_cache": "unknown",
+      "computed_by": "dag_core.py",
+      "evaluation_version": "proof-dag-schema-v0.4"
+    },
+    {
+      "graph_id": "06og-candidate-v0.1",
+      "fact_id": "F8",
+      "support_status": "supported",
+      "availability_cache": "unknown",
+      "computed_by": "dag_core.py",
+      "evaluation_version": "proof-dag-schema-v0.4"
+    },
+    {
+      "graph_id": "06og-candidate-v0.1",
+      "fact_id": "F9",
+      "support_status": "supported",
+      "availability_cache": "unknown",
+      "computed_by": "dag_core.py",
+      "evaluation_version": "proof-dag-schema-v0.4"
+    },
+    {
+      "graph_id": "06og-candidate-v0.1",
+      "fact_id": "F10",
+      "support_status": "unsupported",
+      "availability_cache": "unknown",
+      "computed_by": "dag_core.py",
+      "evaluation_version": "proof-dag-schema-v0.4"
+    },
+    {
+      "graph_id": "06og-candidate-v0.1",
+      "fact_id": "F11",
+      "support_status": "unsupported",
+      "availability_cache": "unknown",
+      "computed_by": "dag_core.py",
+      "evaluation_version": "proof-dag-schema-v0.4"
+    },
+    {
+      "graph_id": "06og-candidate-v0.1",
+      "fact_id": "F12",
+      "support_status": "unsupported",
+      "availability_cache": "unknown",
+      "computed_by": "dag_core.py",
+      "evaluation_version": "proof-dag-schema-v0.4"
+    }
+  ],
+  "inference_evaluations": [
+    {
+      "graph_id": "06og-candidate-v0.1",
+      "inference_id": "I1",
+      "source_order": 1,
+      "intrinsic_status": "valid",
+      "effective_status": "executable",
+      "reason_codes": [],
+      "unsupported_input_fact_ids": [],
+      "computed_by": "dag_core.py",
+      "evaluation_version": "proof-dag-schema-v0.4"
+    },
+    {
+      "graph_id": "06og-candidate-v0.1",
+      "inference_id": "I2",
+      "source_order": 2,
+      "intrinsic_status": "valid",
+      "effective_status": "executable",
+      "reason_codes": [],
+      "unsupported_input_fact_ids": [],
+      "computed_by": "dag_core.py",
+      "evaluation_version": "proof-dag-schema-v0.4"
+    },
+    {
+      "graph_id": "06og-candidate-v0.1",
+      "inference_id": "I3",
+      "source_order": 3,
+      "intrinsic_status": "valid",
+      "effective_status": "executable",
+      "reason_codes": [],
+      "unsupported_input_fact_ids": [],
+      "computed_by": "dag_core.py",
+      "evaluation_version": "proof-dag-schema-v0.4"
+    },
+    {
+      "graph_id": "06og-candidate-v0.1",
+      "inference_id": "I4",
+      "source_order": 4,
+      "intrinsic_status": "valid",
+      "effective_status": "executable",
+      "reason_codes": [],
+      "unsupported_input_fact_ids": [],
+      "computed_by": "dag_core.py",
+      "evaluation_version": "proof-dag-schema-v0.4"
+    },
+    {
+      "graph_id": "06og-candidate-v0.1",
+      "inference_id": "I5",
+      "source_order": 5,
+      "intrinsic_status": "valid",
+      "effective_status": "executable",
+      "reason_codes": [],
+      "unsupported_input_fact_ids": [],
+      "computed_by": "dag_core.py",
+      "evaluation_version": "proof-dag-schema-v0.4"
+    },
+    {
+      "graph_id": "06og-candidate-v0.1",
+      "inference_id": "I6",
+      "source_order": 6,
+      "intrinsic_status": "valid",
+      "effective_status": "executable",
+      "reason_codes": [],
+      "unsupported_input_fact_ids": [],
+      "computed_by": "dag_core.py",
+      "evaluation_version": "proof-dag-schema-v0.4"
+    },
+    {
+      "graph_id": "06og-candidate-v0.1",
+      "inference_id": "I7",
+      "source_order": 7,
+      "intrinsic_status": "valid",
+      "effective_status": "executable",
+      "reason_codes": [],
+      "unsupported_input_fact_ids": [],
+      "computed_by": "dag_core.py",
+      "evaluation_version": "proof-dag-schema-v0.4"
+    },
+    {
+      "graph_id": "06og-candidate-v0.1",
+      "inference_id": "I8",
+      "source_order": 8,
+      "intrinsic_status": "invalid",
+      "effective_status": "invalid",
+      "reason_codes": [
+        "missing_premise_role:count_identity"
+      ],
+      "unsupported_input_fact_ids": [],
+      "computed_by": "dag_core.py",
+      "evaluation_version": "proof-dag-schema-v0.4"
+    },
+    {
+      "graph_id": "06og-candidate-v0.1",
+      "inference_id": "I9",
+      "source_order": 9,
+      "intrinsic_status": "valid",
+      "effective_status": "blocked",
+      "reason_codes": [
+        "unsupported_input"
+      ],
+      "unsupported_input_fact_ids": [
+        "F10"
+      ],
+      "computed_by": "dag_core.py",
+      "evaluation_version": "proof-dag-schema-v0.4"
+    },
+    {
+      "graph_id": "06og-candidate-v0.1",
+      "inference_id": "I10",
+      "source_order": 10,
+      "intrinsic_status": "valid",
+      "effective_status": "blocked",
+      "reason_codes": [
+        "unsupported_input"
+      ],
+      "unsupported_input_fact_ids": [
+        "F11"
+      ],
+      "computed_by": "dag_core.py",
+      "evaluation_version": "proof-dag-schema-v0.4"
+    }
+  ],
+  "computed_first_break": {
+    "type": "inference",
+    "id": "I8"
+  },
+  "target_status": {
+    "F12": false
+  },
+  "all_targets_derivable": false,
+  "scope_check": {
+    "passed": true,
+    "scope_count": 1,
+    "local_scope_count": 0,
+    "violations": []
+  },
+  "declared_expected_first_break": {
+    "type": "inference",
+    "id": "I8"
+  },
+  "first_break_match": true,
+  "mutation_evaluation": {
+    "base_graph_id": "06og-reference-v0.1",
+    "operation": "remove_required_premise",
+    "primary_site": {
+      "type": "edge",
+      "id": "F9->I8"
+    },
+    "injection_anchor": {
+      "type": "inference",
+      "id": "I8"
+    },
+    "declared_expected_first_break": {
+      "type": "inference",
+      "id": "I8"
+    },
+    "before": {
+      "fact_id": "F9",
+      "premise_role": "count_identity"
+    },
+    "after": {
+      "edge_removed": true,
+      "remaining_claim": "The proof bounds the residual without using the n-2 pair multiplicity identity."
+    },
+    "graph_changed": true,
+    "target_effect": "target_breaking",
+    "seed": 0,
+    "provenance": {
+      "generator": "pilots/build_algebra_coverage_pilots.py",
+      "intent": "single realistic missing-dependency error"
+    },
+    "computed_first_break": {
+      "type": "inference",
+      "id": "I8"
+    },
+    "first_break_match": true
+  }
+}

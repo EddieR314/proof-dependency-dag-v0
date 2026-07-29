@@ -1,0 +1,150 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Olympiad Algebra Problem Review",
+  "type": "object",
+  "required": [
+    "problem_id",
+    "normalized_hash",
+    "routing",
+    "proof_review",
+    "patterns",
+    "failure_modes",
+    "spu_proposal",
+    "formalization",
+    "verification_components"
+  ],
+  "properties": {
+    "problem_id": {"type": "string", "minLength": 1},
+    "normalized_hash": {"type": "string", "minLength": 1},
+    "routing": {
+      "type": "object",
+      "required": ["primary_module", "secondary_modules", "confidence"],
+      "properties": {
+        "primary_module": {
+          "enum": [
+            "functional_equations",
+            "inequalities",
+            "polynomials",
+            "recurrences_sequences",
+            "complex_algebra",
+            "discrete_algebra"
+          ]
+        },
+        "secondary_modules": {
+          "type": "array",
+          "items": {"type": "string"},
+          "uniqueItems": true
+        },
+        "confidence": {
+          "enum": ["low", "medium", "high"]
+        },
+        "notes": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "proof_review": {
+      "type": "object",
+      "required": ["status", "method", "reviewer_ids"],
+      "properties": {
+        "status": {
+          "enum": ["not_run", "passed", "failed", "partial"]
+        },
+        "method": {
+          "enum": ["automatic", "human", "hybrid"]
+        },
+        "reviewer_ids": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "reviewed_solution_hash": {"type": "string"},
+        "unresolved_gaps": {
+          "type": "array",
+          "items": {"type": "string"}
+        }
+      },
+      "additionalProperties": false
+    },
+    "patterns": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "evidence", "reusable"],
+        "properties": {
+          "name": {"type": "string", "minLength": 1},
+          "evidence": {"type": "string", "minLength": 1},
+          "reusable": {"type": "boolean"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "failure_modes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "first_break_candidate", "realism"],
+        "properties": {
+          "name": {"type": "string", "minLength": 1},
+          "first_break_candidate": {"type": "string"},
+          "realism": {"enum": ["low", "medium", "high"]},
+          "notes": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "spu_proposal": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["source_order", "claim", "premise_roles"],
+        "properties": {
+          "source_order": {"type": "integer", "minimum": 1},
+          "claim": {"type": "string", "minLength": 1},
+          "premise_roles": {
+            "type": "array",
+            "items": {"type": "string"}
+          },
+          "risk_flags": {
+            "type": "array",
+            "items": {"type": "string"}
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "formalization": {
+      "type": "object",
+      "required": ["recommended_coverage", "status", "blockers"],
+      "properties": {
+        "recommended_coverage": {
+          "enum": ["none", "local", "end_to_end"]
+        },
+        "status": {
+          "enum": ["not_run", "candidate", "compiled", "blocked"]
+        },
+        "blockers": {
+          "type": "array",
+          "items": {"type": "string"}
+        }
+      },
+      "additionalProperties": false
+    },
+    "verification_components": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["method", "status"],
+        "properties": {
+          "method": {
+            "enum": ["automatic", "human", "hybrid"]
+          },
+          "status": {
+            "enum": ["not_run", "passed", "failed", "partial", "not_applicable"]
+          },
+          "evidence": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

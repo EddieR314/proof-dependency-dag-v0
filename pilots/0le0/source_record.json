@@ -1,0 +1,8 @@
+{
+  "problem_source": "HuggingFace:ShadenA/MathNet problem 0le0",
+  "solution_source": "human-reviewed blind proof in algebra curriculum",
+  "source_record_id": "mathnet:0le0",
+  "source_hash": "ea67bcdd2fc804044b069710371bb3e2c13397af6b69532b5e33135c772208d2",
+  "candidate_reference_solution_hash": "ea67bcdd2fc804044b069710371bb3e2c13397af6b69532b5e33135c772208d2",
+  "reviewed_solution_hash": "ea67bcdd2fc804044b069710371bb3e2c13397af6b69532b5e33135c772208d2"
+}

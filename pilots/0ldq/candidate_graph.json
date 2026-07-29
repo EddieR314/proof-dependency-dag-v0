@@ -1,0 +1,767 @@
+{
+  "schema_version": "proof-dag-schema-v0.4",
+  "graph_kind": "candidate",
+  "graph_id": "0ldq-candidate-v0.1",
+  "problem_id": "0ldq",
+  "target_fact_ids": [
+    "F12"
+  ],
+  "versions": {
+    "skill_standard": "0.3",
+    "dag_schema": "proof-dag-schema-v0.4",
+    "fact_schema": "fact-v0.4",
+    "inference_schema": "inference-v0.4",
+    "scope_schema": "scope-v0.4",
+    "mutation_schema": "mutation-v0.4",
+    "canonicalizer": "math-expression-v1",
+    "rule_registry": "recurrences_sequences-pilot-rules-v1",
+    "common_tooling": "proof-dag-lean-v0.4",
+    "domain_skill": "olympiad-algebra-expert-v0.1"
+  },
+  "source_record": {
+    "problem_source": "HuggingFace:ShadenA/MathNet problem 0ldq",
+    "solution_source": "human-reviewed blind proof in algebra curriculum",
+    "source_record_id": "mathnet:0ldq",
+    "source_hash": "39ffc14e5e1bc68d07dbbc4f44a5341cd89feba8b0b59d184719160fc12bd4e2",
+    "candidate_reference_solution_hash": "39ffc14e5e1bc68d07dbbc4f44a5341cd89feba8b0b59d184719160fc12bd4e2",
+    "reviewed_solution_hash": "39ffc14e5e1bc68d07dbbc4f44a5341cd89feba8b0b59d184719160fc12bd4e2"
+  },
+  "scopes": [
+    {
+      "id": "global",
+      "parent_id": null,
+      "kind": "global"
+    }
+  ],
+  "rule_schemas": [
+    {
+      "rule_id": "R1",
+      "name": "Positivity is preserved by the recurrence",
+      "category": "recurrences_sequences",
+      "input_patterns": [
+        {
+          "premise_role": "recurrence",
+          "predicate": "Recurrence"
+        }
+      ],
+      "variables": [],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "PositiveOrbit",
+        "canonical_form": "PositiveOrbit(x)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "R2",
+      "name": "Identify the fixed point",
+      "category": "recurrences_sequences",
+      "input_patterns": [
+        {
+          "premise_role": "recurrence",
+          "predicate": "Recurrence"
+        }
+      ],
+      "variables": [],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "FixedPointMap",
+        "canonical_form": "FixedPointMap(F)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "R3",
+      "name": "Rationalize both differences from the fixed point",
+      "category": "recurrences_sequences",
+      "input_patterns": [
+        {
+          "premise_role": "recurrence",
+          "predicate": "Recurrence"
+        },
+        {
+          "premise_role": "fixed_point",
+          "predicate": "FixedPointMap"
+        }
+      ],
+      "variables": [],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "SignedDeviationIdentity",
+        "canonical_form": "SignedDeviationIdentity(x,rho)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "R4",
+      "name": "Bound the signed multiplier pointwise",
+      "category": "recurrences_sequences",
+      "input_patterns": [
+        {
+          "premise_role": "positivity",
+          "predicate": "PositiveOrbit"
+        },
+        {
+          "premise_role": "identity",
+          "predicate": "SignedDeviationIdentity"
+        }
+      ],
+      "variables": [],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "PointwiseContraction",
+        "canonical_form": "PointwiseContraction(rho)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "R5",
+      "name": "Read sign alternation and magnitude monotonicity",
+      "category": "recurrences_sequences",
+      "input_patterns": [
+        {
+          "premise_role": "identity",
+          "predicate": "SignedDeviationIdentity"
+        },
+        {
+          "premise_role": "pointwise_bound",
+          "predicate": "PointwiseContraction"
+        }
+      ],
+      "variables": [],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "AlternatingDeviations",
+        "canonical_form": "AlternatingDeviations(x)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "R6",
+      "name": "Prove the orbit remains in [0,2]",
+      "category": "recurrences_sequences",
+      "input_patterns": [
+        {
+          "premise_role": "recurrence",
+          "predicate": "Recurrence"
+        },
+        {
+          "premise_role": "positivity",
+          "predicate": "PositiveOrbit"
+        }
+      ],
+      "variables": [],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "InvariantCompactInterval",
+        "canonical_form": "InvariantCompactInterval(x)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "R7",
+      "name": "Upgrade pointwise contraction to a uniform one on a compact invariant interval",
+      "category": "recurrences_sequences",
+      "input_patterns": [
+        {
+          "premise_role": "pointwise_bound",
+          "predicate": "PointwiseContraction"
+        },
+        {
+          "premise_role": "compact_invariant",
+          "predicate": "InvariantCompactInterval"
+        }
+      ],
+      "variables": [],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "UniformContraction",
+        "canonical_form": "UniformContraction(rho,q)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "R8",
+      "name": "Iterate the uniform contraction",
+      "category": "recurrences_sequences",
+      "input_patterns": [
+        {
+          "premise_role": "identity",
+          "predicate": "SignedDeviationIdentity"
+        },
+        {
+          "premise_role": "uniform_bound",
+          "predicate": "UniformContraction"
+        }
+      ],
+      "variables": [],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "ConvergenceToOne",
+        "canonical_form": "ConvergenceToOne(x)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "R9",
+      "name": "Apply the finite alternating-sum estimate",
+      "category": "recurrences_sequences",
+      "input_patterns": [
+        {
+          "premise_role": "alternation",
+          "predicate": "AlternatingDeviations"
+        },
+        {
+          "premise_role": "initial_value",
+          "predicate": "Recurrence"
+        }
+      ],
+      "variables": [],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "AlternatingPartialSumBound",
+        "canonical_form": "AlternatingPartialSumBound(x)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "R10",
+      "name": "Translate deviation sums back to x_i",
+      "category": "recurrences_sequences",
+      "input_patterns": [
+        {
+          "premise_role": "deviation_sum",
+          "predicate": "AlternatingPartialSumBound"
+        }
+      ],
+      "variables": [],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "SequenceSumBound",
+        "canonical_form": "SequenceSumBound(x,n)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "R11",
+      "name": "Combine the limit and sum conclusions",
+      "category": "recurrences_sequences",
+      "input_patterns": [
+        {
+          "premise_role": "limit",
+          "predicate": "ConvergenceToOne"
+        },
+        {
+          "premise_role": "sum_bound",
+          "predicate": "SequenceSumBound"
+        }
+      ],
+      "variables": [],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "SequenceTarget",
+        "canonical_form": "SequenceTarget(x,n)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    }
+  ],
+  "facts": [
+    {
+      "id": "F1",
+      "statement": "x_1=2 and x_{n+1}=sqrt(x_n+8)-sqrt(x_n+3).",
+      "canonical_form": "Recurrence(x)",
+      "introduction_kind": "given",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "objects": [],
+      "source_spans": [
+        "reviewed-proof:F1"
+      ]
+    },
+    {
+      "id": "F2",
+      "statement": "All x_n are positive.",
+      "canonical_form": "PositiveOrbit(x)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "objects": [],
+      "source_spans": [
+        "reviewed-proof:F2"
+      ]
+    },
+    {
+      "id": "F3",
+      "statement": "F(x)=sqrt(x+8)-sqrt(x+3) and F(1)=1.",
+      "canonical_form": "FixedPointMap(F)",
+      "introduction_kind": "constructed",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "objects": [],
+      "source_spans": [
+        "reviewed-proof:F3"
+      ]
+    },
+    {
+      "id": "F4",
+      "statement": "x_{n+1}-1=-rho(x_n)(x_n-1) with the stated rho.",
+      "canonical_form": "SignedDeviationIdentity(x,rho)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "objects": [],
+      "source_spans": [
+        "reviewed-proof:F4"
+      ]
+    },
+    {
+      "id": "F5",
+      "statement": "For x>=0, 0<rho(x)<1.",
+      "canonical_form": "PointwiseContraction(rho)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "objects": [],
+      "source_spans": [
+        "reviewed-proof:F5"
+      ]
+    },
+    {
+      "id": "F6",
+      "statement": "The deviations alternate sign and have nonincreasing magnitude.",
+      "canonical_form": "AlternatingDeviations(x)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "objects": [],
+      "source_spans": [
+        "reviewed-proof:F6"
+      ]
+    },
+    {
+      "id": "F7",
+      "statement": "The orbit remains in the compact interval [0,2].",
+      "canonical_form": "InvariantCompactInterval(x)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "objects": [],
+      "source_spans": [
+        "reviewed-proof:F7"
+      ]
+    },
+    {
+      "id": "F8",
+      "statement": "There is q<1 with rho(x)<=q throughout the orbit.",
+      "canonical_form": "UniformContraction(rho,q)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "objects": [],
+      "source_spans": [
+        "reviewed-proof:F8"
+      ]
+    },
+    {
+      "id": "F9",
+      "statement": "|x_n-1| <= q^(n-1), hence x_n tends to 1.",
+      "canonical_form": "ConvergenceToOne(x)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "objects": [],
+      "source_spans": [
+        "reviewed-proof:F9"
+      ]
+    },
+    {
+      "id": "F10",
+      "statement": "Every partial sum of d_i=x_i-1 lies in [0,1].",
+      "canonical_form": "AlternatingPartialSumBound(x)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "objects": [],
+      "source_spans": [
+        "reviewed-proof:F10"
+      ]
+    },
+    {
+      "id": "F11",
+      "statement": "n <= sum_{i=1}^n x_i <= n+1.",
+      "canonical_form": "SequenceSumBound(x,n)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "objects": [],
+      "source_spans": [
+        "reviewed-proof:F11"
+      ]
+    },
+    {
+      "id": "F12",
+      "statement": "The limit is 1 and the required sum bound holds for every n.",
+      "canonical_form": "SequenceTarget(x,n)",
+      "introduction_kind": "derived",
+      "roles": [
+        "goal"
+      ],
+      "scope": "global",
+      "objects": [],
+      "source_spans": [
+        "reviewed-proof:F12"
+      ]
+    }
+  ],
+  "inferences": [
+    {
+      "id": "I1",
+      "spu_id": "SPU1",
+      "source_order": 1,
+      "rule_id": "R1",
+      "scope": "global",
+      "input_bindings": [
+        {
+          "fact_id": "F1",
+          "premise_role": "recurrence"
+        }
+      ],
+      "variable_bindings": {},
+      "output_fact_id": "F2",
+      "source_spans": [
+        "reviewed-proof:SPU1"
+      ],
+      "risk_flags": [
+        "hidden_domain_condition"
+      ]
+    },
+    {
+      "id": "I2",
+      "spu_id": "SPU2",
+      "source_order": 2,
+      "rule_id": "R2",
+      "scope": "global",
+      "input_bindings": [
+        {
+          "fact_id": "F1",
+          "premise_role": "recurrence"
+        }
+      ],
+      "variable_bindings": {},
+      "output_fact_id": "F3",
+      "source_spans": [
+        "reviewed-proof:SPU2"
+      ],
+      "risk_flags": []
+    },
+    {
+      "id": "I3",
+      "spu_id": "SPU3",
+      "source_order": 3,
+      "rule_id": "R3",
+      "scope": "global",
+      "input_bindings": [
+        {
+          "fact_id": "F1",
+          "premise_role": "recurrence"
+        },
+        {
+          "fact_id": "F3",
+          "premise_role": "fixed_point"
+        }
+      ],
+      "variable_bindings": {},
+      "output_fact_id": "F4",
+      "source_spans": [
+        "reviewed-proof:SPU3"
+      ],
+      "risk_flags": [
+        "nonlinear_arithmetic"
+      ]
+    },
+    {
+      "id": "I4",
+      "spu_id": "SPU4",
+      "source_order": 4,
+      "rule_id": "R4",
+      "scope": "global",
+      "input_bindings": [
+        {
+          "fact_id": "F2",
+          "premise_role": "positivity"
+        },
+        {
+          "fact_id": "F4",
+          "premise_role": "identity"
+        }
+      ],
+      "variable_bindings": {},
+      "output_fact_id": "F5",
+      "source_spans": [
+        "reviewed-proof:SPU4"
+      ],
+      "risk_flags": [
+        "hidden_domain_condition"
+      ]
+    },
+    {
+      "id": "I5",
+      "spu_id": "SPU5",
+      "source_order": 5,
+      "rule_id": "R5",
+      "scope": "global",
+      "input_bindings": [
+        {
+          "fact_id": "F4",
+          "premise_role": "identity"
+        },
+        {
+          "fact_id": "F5",
+          "premise_role": "pointwise_bound"
+        }
+      ],
+      "variable_bindings": {},
+      "output_fact_id": "F6",
+      "source_spans": [
+        "reviewed-proof:SPU5"
+      ],
+      "risk_flags": []
+    },
+    {
+      "id": "I6",
+      "spu_id": "SPU6",
+      "source_order": 6,
+      "rule_id": "R6",
+      "scope": "global",
+      "input_bindings": [
+        {
+          "fact_id": "F1",
+          "premise_role": "recurrence"
+        },
+        {
+          "fact_id": "F2",
+          "premise_role": "positivity"
+        }
+      ],
+      "variable_bindings": {},
+      "output_fact_id": "F7",
+      "source_spans": [
+        "reviewed-proof:SPU6"
+      ],
+      "risk_flags": []
+    },
+    {
+      "id": "I7",
+      "spu_id": "SPU7",
+      "source_order": 7,
+      "rule_id": "R7",
+      "scope": "global",
+      "input_bindings": [
+        {
+          "fact_id": "F5",
+          "premise_role": "pointwise_bound"
+        }
+      ],
+      "variable_bindings": {},
+      "output_fact_id": "F8",
+      "source_spans": [
+        "reviewed-proof:SPU7"
+      ],
+      "risk_flags": [
+        "hidden_domain_condition",
+        "external_theorem_dependency"
+      ]
+    },
+    {
+      "id": "I8",
+      "spu_id": "SPU8",
+      "source_order": 8,
+      "rule_id": "R8",
+      "scope": "global",
+      "input_bindings": [
+        {
+          "fact_id": "F4",
+          "premise_role": "identity"
+        },
+        {
+          "fact_id": "F8",
+          "premise_role": "uniform_bound"
+        }
+      ],
+      "variable_bindings": {},
+      "output_fact_id": "F9",
+      "source_spans": [
+        "reviewed-proof:SPU8"
+      ],
+      "risk_flags": []
+    },
+    {
+      "id": "I9",
+      "spu_id": "SPU9",
+      "source_order": 9,
+      "rule_id": "R9",
+      "scope": "global",
+      "input_bindings": [
+        {
+          "fact_id": "F6",
+          "premise_role": "alternation"
+        },
+        {
+          "fact_id": "F1",
+          "premise_role": "initial_value"
+        }
+      ],
+      "variable_bindings": {},
+      "output_fact_id": "F10",
+      "source_spans": [
+        "reviewed-proof:SPU9"
+      ],
+      "risk_flags": [
+        "external_theorem_dependency"
+      ]
+    },
+    {
+      "id": "I10",
+      "spu_id": "SPU10",
+      "source_order": 10,
+      "rule_id": "R10",
+      "scope": "global",
+      "input_bindings": [
+        {
+          "fact_id": "F10",
+          "premise_role": "deviation_sum"
+        }
+      ],
+      "variable_bindings": {},
+      "output_fact_id": "F11",
+      "source_spans": [
+        "reviewed-proof:SPU10"
+      ],
+      "risk_flags": []
+    },
+    {
+      "id": "I11",
+      "spu_id": "SPU11",
+      "source_order": 11,
+      "rule_id": "R11",
+      "scope": "global",
+      "input_bindings": [
+        {
+          "fact_id": "F9",
+          "premise_role": "limit"
+        },
+        {
+          "fact_id": "F11",
+          "premise_role": "sum_bound"
+        }
+      ],
+      "variable_bindings": {},
+      "output_fact_id": "F12",
+      "source_spans": [
+        "reviewed-proof:SPU11"
+      ],
+      "risk_flags": []
+    }
+  ],
+  "provenance": {
+    "source": "controlled mutation of 0ldq-reference-v0.1",
+    "current_annotation_level": "synthetic",
+    "requested_target_level": "silver_verified",
+    "achieved_annotation_level": "pending",
+    "promotion_profile": "algebra-candidate-mutation-v0.1",
+    "reference_dag_semantics": {
+      "method": "human",
+      "status": "not_run"
+    },
+    "mutation_realism": {
+      "method": "human",
+      "status": "not_run"
+    }
+  },
+  "mutation": {
+    "base_graph_id": "0ldq-reference-v0.1",
+    "operation": "remove_required_premise",
+    "primary_site": {
+      "type": "edge",
+      "id": "F7->I7"
+    },
+    "injection_anchor": {
+      "type": "inference",
+      "id": "I7"
+    },
+    "declared_expected_first_break": {
+      "type": "inference",
+      "id": "I7"
+    },
+    "before": {
+      "fact_id": "F7",
+      "premise_role": "compact_invariant"
+    },
+    "after": {
+      "edge_removed": true,
+      "remaining_claim": "The proof claims a uniform q<1 from pointwise rho(x)<1 without a compact invariant interval."
+    },
+    "graph_changed": true,
+    "target_effect": "target_breaking",
+    "seed": 0,
+    "provenance": {
+      "generator": "pilots/build_algebra_coverage_pilots.py",
+      "intent": "single realistic missing-dependency error"
+    }
+  }
+}

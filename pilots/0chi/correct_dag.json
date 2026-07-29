@@ -1,0 +1,879 @@
+{
+  "schema_version": "proof-dag-v0.3",
+  "graph_id": "0chi-correct-v2",
+  "problem_id": "0chi",
+  "canonicalizer_version": "math-expression-v1",
+  "target_fact_ids": [
+    "F14"
+  ],
+  "scopes": [
+    {
+      "id": "global",
+      "parent_id": null,
+      "kind": "global",
+      "availability_status": "active"
+    }
+  ],
+  "scope_evaluations": [
+    {
+      "scope_id": "global",
+      "consistency_status": "consistent",
+      "conflicting_fact_ids": []
+    }
+  ],
+  "rule_schemas": [
+    {
+      "rule_id": "second_symmetric_is_real",
+      "name": "Equal modulus and real symmetric sums",
+      "category": "complex_algebra",
+      "input_patterns": [
+        {
+          "premise_role": "nonzero_anchor",
+          "predicate": "Nonzero"
+        },
+        {
+          "premise_role": "equal_norm_ab",
+          "predicate": "EqualNorm"
+        },
+        {
+          "premise_role": "equal_norm_ac",
+          "predicate": "EqualNorm"
+        },
+        {
+          "premise_role": "real_first_sum",
+          "predicate": "IsReal"
+        },
+        {
+          "premise_role": "real_product",
+          "predicate": "IsReal"
+        },
+        {
+          "premise_role": "definition_A",
+          "predicate": "Definition"
+        },
+        {
+          "premise_role": "definition_B",
+          "predicate": "Definition"
+        },
+        {
+          "premise_role": "definition_S",
+          "predicate": "Definition"
+        }
+      ],
+      "variables": [
+        "a",
+        "b",
+        "c",
+        "A",
+        "B",
+        "S"
+      ],
+      "variable_constraints": [
+        "a != 0",
+        "norm(a)=norm(b)=norm(c)"
+      ],
+      "output_pattern": {
+        "predicate": "IsReal",
+        "canonical_form": "IsReal(S)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "power_sum_zero_is_real",
+      "name": "Expand C(0)",
+      "category": "definition_expansion",
+      "input_patterns": [
+        {
+          "premise_role": "definition_C",
+          "predicate": "Definition"
+        }
+      ],
+      "variables": [
+        "a",
+        "b",
+        "c",
+        "C"
+      ],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "IsReal",
+        "canonical_form": "IsReal(C(0))"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "power_sum_one_is_real",
+      "name": "Rewrite C(1) as A",
+      "category": "definition_expansion",
+      "input_patterns": [
+        {
+          "premise_role": "real_A",
+          "predicate": "IsReal"
+        },
+        {
+          "premise_role": "definition_A",
+          "predicate": "Definition"
+        },
+        {
+          "premise_role": "definition_C",
+          "predicate": "Definition"
+        }
+      ],
+      "variables": [
+        "a",
+        "b",
+        "c",
+        "A",
+        "C"
+      ],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "IsReal",
+        "canonical_form": "IsReal(C(1))"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "power_sum_two_is_real",
+      "name": "Use C(2)=A^2-2S",
+      "category": "symmetric_identity",
+      "input_patterns": [
+        {
+          "premise_role": "real_A",
+          "predicate": "IsReal"
+        },
+        {
+          "premise_role": "real_S",
+          "predicate": "IsReal"
+        },
+        {
+          "premise_role": "definition_A",
+          "predicate": "Definition"
+        },
+        {
+          "premise_role": "definition_S",
+          "predicate": "Definition"
+        },
+        {
+          "premise_role": "definition_C",
+          "predicate": "Definition"
+        }
+      ],
+      "variables": [
+        "a",
+        "b",
+        "c",
+        "A",
+        "S",
+        "C"
+      ],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "IsReal",
+        "canonical_form": "IsReal(C(2))"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "power_sum_recurrence",
+      "name": "Vieta power-sum recurrence",
+      "category": "polynomial_identity",
+      "input_patterns": [
+        {
+          "premise_role": "definition_A",
+          "predicate": "Definition"
+        },
+        {
+          "premise_role": "definition_B",
+          "predicate": "Definition"
+        },
+        {
+          "premise_role": "definition_S",
+          "predicate": "Definition"
+        },
+        {
+          "premise_role": "definition_C",
+          "predicate": "Definition"
+        }
+      ],
+      "variables": [
+        "a",
+        "b",
+        "c",
+        "A",
+        "B",
+        "S",
+        "C",
+        "n"
+      ],
+      "variable_constraints": [
+        "n is a natural number"
+      ],
+      "output_pattern": {
+        "predicate": "Recurrence",
+        "canonical_form": "Recurrence(C(n+3),Add(Sub(Mul(A,C(n+2)),Mul(S,C(n+1))),Mul(B,C(n))))"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "strong_induction_real_power_sums",
+      "name": "Strong induction over the recurrence",
+      "category": "induction",
+      "input_patterns": [
+        {
+          "premise_role": "real_A",
+          "predicate": "IsReal"
+        },
+        {
+          "premise_role": "real_B",
+          "predicate": "IsReal"
+        },
+        {
+          "premise_role": "real_S",
+          "predicate": "IsReal"
+        },
+        {
+          "premise_role": "base_C0",
+          "predicate": "IsReal"
+        },
+        {
+          "premise_role": "base_C1",
+          "predicate": "IsReal"
+        },
+        {
+          "premise_role": "base_C2",
+          "predicate": "IsReal"
+        },
+        {
+          "premise_role": "recurrence",
+          "predicate": "Recurrence"
+        }
+      ],
+      "variables": [
+        "A",
+        "B",
+        "S",
+        "C",
+        "n"
+      ],
+      "variable_constraints": [
+        "n is a natural number"
+      ],
+      "output_pattern": {
+        "predicate": "ForAll",
+        "canonical_form": "ForAll(n,IsReal(C(n)))"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    }
+  ],
+  "facts": [
+    {
+      "id": "F1",
+      "statement": "a is nonzero.",
+      "canonical_form": "Nonzero(a)",
+      "introduction_kind": "given",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "support_status": "supported",
+      "availability_status": "active",
+      "objects": [
+        "a"
+      ],
+      "source_spans": [
+        "problem"
+      ]
+    },
+    {
+      "id": "F1b",
+      "statement": "b is nonzero.",
+      "canonical_form": "Nonzero(b)",
+      "introduction_kind": "given",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "support_status": "supported",
+      "availability_status": "active",
+      "objects": [
+        "b"
+      ],
+      "source_spans": [
+        "problem"
+      ]
+    },
+    {
+      "id": "F1c",
+      "statement": "c is nonzero.",
+      "canonical_form": "Nonzero(c)",
+      "introduction_kind": "given",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "support_status": "supported",
+      "availability_status": "active",
+      "objects": [
+        "c"
+      ],
+      "source_spans": [
+        "problem"
+      ]
+    },
+    {
+      "id": "F2",
+      "statement": "a and b have the same modulus.",
+      "canonical_form": "EqualNorm(a,b)",
+      "introduction_kind": "given",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "support_status": "supported",
+      "availability_status": "active",
+      "objects": [
+        "a",
+        "b"
+      ],
+      "source_spans": [
+        "problem"
+      ]
+    },
+    {
+      "id": "F2c",
+      "statement": "a and c have the same modulus.",
+      "canonical_form": "EqualNorm(a,c)",
+      "introduction_kind": "given",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "support_status": "supported",
+      "availability_status": "active",
+      "objects": [
+        "a",
+        "c"
+      ],
+      "source_spans": [
+        "problem"
+      ]
+    },
+    {
+      "id": "F3",
+      "statement": "A is real.",
+      "canonical_form": "IsReal(A)",
+      "introduction_kind": "given",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "support_status": "supported",
+      "availability_status": "active",
+      "objects": [
+        "A"
+      ],
+      "source_spans": [
+        "problem"
+      ]
+    },
+    {
+      "id": "F4",
+      "statement": "B is real.",
+      "canonical_form": "IsReal(B)",
+      "introduction_kind": "given",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "support_status": "supported",
+      "availability_status": "active",
+      "objects": [
+        "B"
+      ],
+      "source_spans": [
+        "problem"
+      ]
+    },
+    {
+      "id": "F5",
+      "statement": "A = a + b + c.",
+      "canonical_form": "Definition(A,Add(a,b,c))",
+      "introduction_kind": "definition",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "support_status": "supported",
+      "availability_status": "active",
+      "objects": [
+        "A",
+        "a",
+        "b",
+        "c"
+      ],
+      "source_spans": [
+        "problem"
+      ]
+    },
+    {
+      "id": "F6",
+      "statement": "B = a*b*c.",
+      "canonical_form": "Definition(B,Mul(a,b,c))",
+      "introduction_kind": "definition",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "support_status": "supported",
+      "availability_status": "active",
+      "objects": [
+        "B",
+        "a",
+        "b",
+        "c"
+      ],
+      "source_spans": [
+        "problem"
+      ]
+    },
+    {
+      "id": "F7",
+      "statement": "S = a*b + b*c + c*a.",
+      "canonical_form": "Definition(S,Add(Mul(a,b),Mul(b,c),Mul(c,a)))",
+      "introduction_kind": "definition",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "support_status": "supported",
+      "availability_status": "active",
+      "objects": [
+        "S",
+        "a",
+        "b",
+        "c"
+      ],
+      "source_spans": [
+        "proof:S1"
+      ]
+    },
+    {
+      "id": "F8",
+      "statement": "For every n, C_n = a^n + b^n + c^n.",
+      "canonical_form": "Definition(C(n),Add(Pow(a,n),Pow(b,n),Pow(c,n)))",
+      "introduction_kind": "definition",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "support_status": "supported",
+      "availability_status": "active",
+      "objects": [
+        "C",
+        "n",
+        "a",
+        "b",
+        "c"
+      ],
+      "source_spans": [
+        "problem"
+      ]
+    },
+    {
+      "id": "F9",
+      "statement": "S is real.",
+      "canonical_form": "IsReal(S)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "support_status": "supported",
+      "availability_status": "active",
+      "objects": [
+        "S"
+      ],
+      "source_spans": [
+        "proof:S2"
+      ],
+      "lean_declaration": "ProofDag0chi.secondSymmetric_isReal"
+    },
+    {
+      "id": "F10",
+      "statement": "C_0 is real.",
+      "canonical_form": "IsReal(C(0))",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "support_status": "supported",
+      "availability_status": "active",
+      "objects": [
+        "C"
+      ],
+      "source_spans": [
+        "proof:S3"
+      ]
+    },
+    {
+      "id": "F11",
+      "statement": "C_1 is real.",
+      "canonical_form": "IsReal(C(1))",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "support_status": "supported",
+      "availability_status": "active",
+      "objects": [
+        "C"
+      ],
+      "source_spans": [
+        "proof:S4"
+      ]
+    },
+    {
+      "id": "F12",
+      "statement": "C_2 is real.",
+      "canonical_form": "IsReal(C(2))",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "support_status": "supported",
+      "availability_status": "active",
+      "objects": [
+        "C"
+      ],
+      "source_spans": [
+        "proof:S5"
+      ]
+    },
+    {
+      "id": "F13",
+      "statement": "For every n, C_(n+3) = A*C_(n+2) - S*C_(n+1) + B*C_n.",
+      "canonical_form": "Recurrence(C(n+3),Add(Sub(Mul(A,C(n+2)),Mul(S,C(n+1))),Mul(B,C(n))))",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "support_status": "supported",
+      "availability_status": "active",
+      "objects": [
+        "A",
+        "B",
+        "S",
+        "C",
+        "n"
+      ],
+      "source_spans": [
+        "proof:S6"
+      ],
+      "lean_declaration": "ProofDag0chi.powerSum_recurrence"
+    },
+    {
+      "id": "F14",
+      "statement": "For every natural number n, C_n is real.",
+      "canonical_form": "ForAll(n,IsReal(C(n)))",
+      "introduction_kind": "derived",
+      "roles": [
+        "goal"
+      ],
+      "scope": "global",
+      "support_status": "supported",
+      "availability_status": "active",
+      "objects": [
+        "C",
+        "n"
+      ],
+      "source_spans": [
+        "problem",
+        "proof:S7"
+      ],
+      "lean_declaration": "ProofDag0chi.all_powerSums_real"
+    }
+  ],
+  "inferences": [
+    {
+      "id": "I1",
+      "spu_id": "SPU1",
+      "order": 1,
+      "rule_id": "second_symmetric_is_real",
+      "scope": "global",
+      "input_bindings": [
+        {
+          "fact_id": "F1",
+          "premise_role": "nonzero_anchor"
+        },
+        {
+          "fact_id": "F2",
+          "premise_role": "equal_norm_ab"
+        },
+        {
+          "fact_id": "F2c",
+          "premise_role": "equal_norm_ac"
+        },
+        {
+          "fact_id": "F3",
+          "premise_role": "real_first_sum"
+        },
+        {
+          "fact_id": "F4",
+          "premise_role": "real_product"
+        },
+        {
+          "fact_id": "F5",
+          "premise_role": "definition_A"
+        },
+        {
+          "fact_id": "F6",
+          "premise_role": "definition_B"
+        },
+        {
+          "fact_id": "F7",
+          "premise_role": "definition_S"
+        }
+      ],
+      "variable_bindings": {
+        "a": "a",
+        "b": "b",
+        "c": "c",
+        "A": "A",
+        "B": "B",
+        "S": "S"
+      },
+      "output_fact_id": "F9",
+      "validation_status": "valid",
+      "invalid_reason_codes": [],
+      "source_spans": [
+        "proof:S2"
+      ],
+      "lean_declaration": "ProofDag0chi.secondSymmetric_isReal"
+    },
+    {
+      "id": "I2",
+      "spu_id": "SPU2",
+      "order": 2,
+      "rule_id": "power_sum_zero_is_real",
+      "scope": "global",
+      "input_bindings": [
+        {
+          "fact_id": "F8",
+          "premise_role": "definition_C"
+        }
+      ],
+      "variable_bindings": {
+        "a": "a",
+        "b": "b",
+        "c": "c",
+        "C": "C"
+      },
+      "output_fact_id": "F10",
+      "validation_status": "valid",
+      "invalid_reason_codes": [],
+      "source_spans": [
+        "proof:S3"
+      ]
+    },
+    {
+      "id": "I3",
+      "spu_id": "SPU3",
+      "order": 3,
+      "rule_id": "power_sum_one_is_real",
+      "scope": "global",
+      "input_bindings": [
+        {
+          "fact_id": "F3",
+          "premise_role": "real_A"
+        },
+        {
+          "fact_id": "F5",
+          "premise_role": "definition_A"
+        },
+        {
+          "fact_id": "F8",
+          "premise_role": "definition_C"
+        }
+      ],
+      "variable_bindings": {
+        "a": "a",
+        "b": "b",
+        "c": "c",
+        "A": "A",
+        "C": "C"
+      },
+      "output_fact_id": "F11",
+      "validation_status": "valid",
+      "invalid_reason_codes": [],
+      "source_spans": [
+        "proof:S4"
+      ]
+    },
+    {
+      "id": "I4",
+      "spu_id": "SPU4",
+      "order": 4,
+      "rule_id": "power_sum_two_is_real",
+      "scope": "global",
+      "input_bindings": [
+        {
+          "fact_id": "F3",
+          "premise_role": "real_A"
+        },
+        {
+          "fact_id": "F9",
+          "premise_role": "real_S"
+        },
+        {
+          "fact_id": "F5",
+          "premise_role": "definition_A"
+        },
+        {
+          "fact_id": "F7",
+          "premise_role": "definition_S"
+        },
+        {
+          "fact_id": "F8",
+          "premise_role": "definition_C"
+        }
+      ],
+      "variable_bindings": {
+        "a": "a",
+        "b": "b",
+        "c": "c",
+        "A": "A",
+        "S": "S",
+        "C": "C"
+      },
+      "output_fact_id": "F12",
+      "validation_status": "valid",
+      "invalid_reason_codes": [],
+      "source_spans": [
+        "proof:S5"
+      ]
+    },
+    {
+      "id": "I5",
+      "spu_id": "SPU5",
+      "order": 5,
+      "rule_id": "power_sum_recurrence",
+      "scope": "global",
+      "input_bindings": [
+        {
+          "fact_id": "F5",
+          "premise_role": "definition_A"
+        },
+        {
+          "fact_id": "F6",
+          "premise_role": "definition_B"
+        },
+        {
+          "fact_id": "F7",
+          "premise_role": "definition_S"
+        },
+        {
+          "fact_id": "F8",
+          "premise_role": "definition_C"
+        }
+      ],
+      "variable_bindings": {
+        "a": "a",
+        "b": "b",
+        "c": "c",
+        "A": "A",
+        "B": "B",
+        "S": "S",
+        "C": "C",
+        "n": "n"
+      },
+      "output_fact_id": "F13",
+      "validation_status": "valid",
+      "invalid_reason_codes": [],
+      "source_spans": [
+        "proof:S6"
+      ],
+      "lean_declaration": "ProofDag0chi.powerSum_recurrence"
+    },
+    {
+      "id": "I6",
+      "spu_id": "SPU6",
+      "order": 6,
+      "rule_id": "strong_induction_real_power_sums",
+      "scope": "global",
+      "input_bindings": [
+        {
+          "fact_id": "F3",
+          "premise_role": "real_A"
+        },
+        {
+          "fact_id": "F4",
+          "premise_role": "real_B"
+        },
+        {
+          "fact_id": "F9",
+          "premise_role": "real_S"
+        },
+        {
+          "fact_id": "F10",
+          "premise_role": "base_C0"
+        },
+        {
+          "fact_id": "F11",
+          "premise_role": "base_C1"
+        },
+        {
+          "fact_id": "F12",
+          "premise_role": "base_C2"
+        },
+        {
+          "fact_id": "F13",
+          "premise_role": "recurrence"
+        }
+      ],
+      "variable_bindings": {
+        "A": "A",
+        "B": "B",
+        "S": "S",
+        "C": "C",
+        "n": "n"
+      },
+      "output_fact_id": "F14",
+      "validation_status": "valid",
+      "invalid_reason_codes": [],
+      "source_spans": [
+        "proof:S7"
+      ],
+      "lean_declaration": "ProofDag0chi.all_powerSums_real"
+    }
+  ],
+  "provenance": {
+    "source": "proof_750_non_geometry_sample_v4(1).csv:0chi",
+    "annotation_level": "synthetic",
+    "reviewers": [],
+    "lean_coverage": "end_to_end",
+    "team_spec_alignment": "Node normalization draft + critical-node v1 + error-injection v1"
+  }
+}

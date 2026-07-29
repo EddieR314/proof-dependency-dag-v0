@@ -1,0 +1,69 @@
+{
+  "problem_id": "00q2",
+  "graph_id": "00q2-reference-v0.1",
+  "verification_components": {
+    "proof_review": {
+      "method": "human",
+      "status": "passed",
+      "evidence": "../../data/algebra_skill_curriculum/human_review_13_results_v0.1.csv"
+    },
+    "dag_schema": {
+      "method": "automatic",
+      "status": "passed",
+      "evidence": "validation_report.json"
+    },
+    "dag_derivability": {
+      "method": "automatic",
+      "status": "passed",
+      "evidence": "correct_evaluation.json"
+    },
+    "scope_structural": {
+      "method": "automatic",
+      "status": "passed",
+      "evidence": "correct_evaluation.json"
+    },
+    "dag_semantics": {
+      "method": "human",
+      "status": "not_run",
+      "evidence": "dag_semantic_review.md"
+    },
+    "mutation_structure": {
+      "method": "automatic",
+      "status": "passed",
+      "evidence": [
+        "candidate_validation_report.json",
+        "mutation_check.json"
+      ]
+    },
+    "first_break": {
+      "method": "automatic",
+      "status": "passed",
+      "evidence": [
+        "candidate_evaluation.json",
+        "mutation_check.json"
+      ],
+      "computed_first_break": {
+        "type": "inference",
+        "id": "I5"
+      }
+    },
+    "mutation_realism": {
+      "method": "human",
+      "status": "not_run",
+      "evidence": "mutation_review.md"
+    },
+    "formal_mapping": {
+      "method": "automatic",
+      "status": "not_applicable",
+      "reason": "Lean is intentionally deferred for this module-coverage DAG."
+    },
+    "lean_build": {
+      "method": "automatic",
+      "status": "not_applicable",
+      "reason": "Lean is intentionally deferred for this module-coverage DAG."
+    }
+  },
+  "current_annotation_level": "synthetic",
+  "requested_annotation_level": "silver_verified",
+  "achieved_annotation_level": "pending"
+}

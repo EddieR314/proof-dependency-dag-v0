@@ -1,0 +1,78 @@
+{
+  "release_candidate": "olympiad-algebra-expert-v0.2-rc1",
+  "skill_standard": "0.3",
+  "dag_schema": "proof-dag-schema-v0.4",
+  "heldout_used_for_revision": false,
+  "pilots": {
+    "0gif": {
+      "role": "sealed functional-iteration exemplar",
+      "status": "silver_verified",
+      "lean": "passed"
+    },
+    "00q2": {
+      "module": "polynomials",
+      "reference_schema": "passed",
+      "reference_target": "derivable",
+      "candidate_schema": "passed",
+      "candidate_target": "underivable",
+      "first_break": "I5",
+      "human_dag_review": "pending",
+      "human_mutation_review": "pending",
+      "lean": "deferred"
+    },
+    "06og": {
+      "module": "inequalities",
+      "reference_schema": "passed",
+      "reference_target": "derivable",
+      "candidate_schema": "passed",
+      "candidate_target": "underivable",
+      "first_break": "I8",
+      "human_dag_review": "pending",
+      "human_mutation_review": "pending",
+      "lean": "deferred"
+    },
+    "0ldq": {
+      "module": "recurrences_sequences",
+      "reference_schema": "passed",
+      "reference_target": "derivable",
+      "candidate_schema": "passed",
+      "candidate_target": "underivable",
+      "first_break": "I7",
+      "human_dag_review": "pending",
+      "human_mutation_review": "pending",
+      "lean": "deferred"
+    },
+    "0le0": {
+      "module": "discrete_algebra",
+      "reference_schema": "passed",
+      "reference_target": "derivable",
+      "candidate_schema": "passed",
+      "candidate_target": "underivable",
+      "first_break": "I1",
+      "scope_check": "passed with two local case scopes",
+      "human_dag_review": "pending",
+      "human_mutation_review": "pending",
+      "lean": "deferred"
+    },
+    "0chi": {
+      "module": "complex_algebra",
+      "schema_migration": "proof-dag-v0.3 to proof-dag-schema-v0.4",
+      "reference_schema": "passed",
+      "reference_target": "derivable",
+      "candidate_schema": "passed",
+      "candidate_target": "underivable",
+      "first_break": "I5",
+      "human_dag_review": "pending for migrated graph",
+      "human_mutation_review": "pending for migrated graph",
+      "lean": "passed"
+    }
+  },
+  "automatic_tests": {
+    "proof_dag_unit_tests": "15 passed",
+    "algebra_curriculum_tests": "4 passed",
+    "skill_validator": "passed",
+    "0chi_lean_build": "passed, 8315 jobs"
+  },
+  "release_status": "candidate",
+  "freeze_blocker": "five DAG semantic reviews and five mutation realism reviews require human sign-off"
+}

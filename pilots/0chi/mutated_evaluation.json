@@ -1,0 +1,97 @@
+{
+  "evaluation": {
+    "graph_id": "0chi-wrong-sign-v2",
+    "blocked_node": null,
+    "derived_fact_ids": [
+      "F1",
+      "F10",
+      "F11",
+      "F12",
+      "F1b",
+      "F1c",
+      "F2",
+      "F2c",
+      "F3",
+      "F4",
+      "F5",
+      "F6",
+      "F7",
+      "F8",
+      "F9"
+    ],
+    "unsupported_fact_ids": [
+      "F13",
+      "F14"
+    ],
+    "enabled_inference_ids": [
+      "I1",
+      "I2",
+      "I3",
+      "I4"
+    ],
+    "inference_checks": {
+      "I1": {
+        "ok": true,
+        "validation_status": "valid",
+        "reason_codes": []
+      },
+      "I2": {
+        "ok": true,
+        "validation_status": "valid",
+        "reason_codes": []
+      },
+      "I3": {
+        "ok": true,
+        "validation_status": "valid",
+        "reason_codes": []
+      },
+      "I4": {
+        "ok": true,
+        "validation_status": "valid",
+        "reason_codes": []
+      },
+      "I5": {
+        "ok": false,
+        "validation_status": "invalid",
+        "reason_codes": [
+          "output_mismatch",
+          "wrong_sign"
+        ]
+      },
+      "I6": {
+        "ok": false,
+        "validation_status": "invalid",
+        "reason_codes": [
+          "unsupported_input"
+        ]
+      }
+    },
+    "computed_fact_support_status": {
+      "F1": "supported",
+      "F1b": "supported",
+      "F1c": "supported",
+      "F2": "supported",
+      "F2c": "supported",
+      "F3": "supported",
+      "F4": "supported",
+      "F5": "supported",
+      "F6": "supported",
+      "F7": "supported",
+      "F8": "supported",
+      "F9": "supported",
+      "F10": "supported",
+      "F11": "supported",
+      "F12": "supported",
+      "F13": "unsupported",
+      "F14": "unsupported"
+    },
+    "state_mismatches": [],
+    "first_break": "I5",
+    "target_status": {
+      "F14": false
+    },
+    "all_targets_derivable": false,
+    "expected_first_break": "I5",
+    "first_break_matches_expected": true
+  }
+}

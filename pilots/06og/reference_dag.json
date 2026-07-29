@@ -1,0 +1,692 @@
+{
+  "schema_version": "proof-dag-schema-v0.4",
+  "graph_kind": "reference",
+  "graph_id": "06og-reference-v0.1",
+  "problem_id": "06og",
+  "target_fact_ids": [
+    "F12"
+  ],
+  "versions": {
+    "skill_standard": "0.3",
+    "dag_schema": "proof-dag-schema-v0.4",
+    "fact_schema": "fact-v0.4",
+    "inference_schema": "inference-v0.4",
+    "scope_schema": "scope-v0.4",
+    "mutation_schema": "mutation-v0.4",
+    "canonicalizer": "math-expression-v1",
+    "rule_registry": "inequalities-pilot-rules-v1",
+    "common_tooling": "proof-dag-lean-v0.4",
+    "domain_skill": "olympiad-algebra-expert-v0.1"
+  },
+  "source_record": {
+    "problem_source": "HuggingFace:ShadenA/MathNet problem 06og",
+    "solution_source": "human-reviewed blind proof in algebra curriculum",
+    "source_record_id": "mathnet:06og",
+    "source_hash": "c893a7e5b392b907f83a81f17bc287df6109e64ea8ef1bc9012267930368840d",
+    "candidate_reference_solution_hash": "c893a7e5b392b907f83a81f17bc287df6109e64ea8ef1bc9012267930368840d",
+    "reviewed_solution_hash": "c893a7e5b392b907f83a81f17bc287df6109e64ea8ef1bc9012267930368840d"
+  },
+  "scopes": [
+    {
+      "id": "global",
+      "parent_id": null,
+      "kind": "global"
+    }
+  ],
+  "rule_schemas": [
+    {
+      "rule_id": "R1",
+      "name": "Scale by the positive total sum",
+      "category": "inequalities",
+      "input_patterns": [
+        {
+          "premise_role": "positivity",
+          "predicate": "PositiveFamily"
+        },
+        {
+          "premise_role": "definitions",
+          "predicate": "SumDefinitions"
+        }
+      ],
+      "variables": [],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "ScaledTargetEquivalent",
+        "canonical_form": "ScaledTargetEquivalent(S,L,n,E2)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "R2",
+      "name": "Expand the total sum and regroup by unordered triples",
+      "category": "inequalities",
+      "input_patterns": [
+        {
+          "premise_role": "definitions",
+          "predicate": "SumDefinitions"
+        }
+      ],
+      "variables": [],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "TripleExpansion",
+        "canonical_form": "TripleExpansion(S,L,E2,T)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "R3",
+      "name": "Apply AM-HM to each reciprocal pair",
+      "category": "inequalities",
+      "input_patterns": [
+        {
+          "premise_role": "positivity",
+          "predicate": "PositiveFamily"
+        }
+      ],
+      "variables": [],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "PairReciprocalBound",
+        "canonical_form": "PairReciprocalBound(a,b)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "R4",
+      "name": "Sum three cyclic bounds and multiply by abc",
+      "category": "inequalities",
+      "input_patterns": [
+        {
+          "premise_role": "pair_bound",
+          "predicate": "PairReciprocalBound"
+        },
+        {
+          "premise_role": "positivity",
+          "predicate": "PositiveFamily"
+        }
+      ],
+      "variables": [],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "TripleReciprocalBound",
+        "canonical_form": "TripleReciprocalBound(a,b,c)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "R5",
+      "name": "Sum the local inequality over all triples",
+      "category": "inequalities",
+      "input_patterns": [
+        {
+          "premise_role": "local_bound",
+          "predicate": "TripleReciprocalBound"
+        }
+      ],
+      "variables": [],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "SummedTripleBound",
+        "canonical_form": "SummedTripleBound(T,P)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "R6",
+      "name": "Count how many triples contain a fixed pair",
+      "category": "inequalities",
+      "input_patterns": [
+        {
+          "premise_role": "index_range",
+          "predicate": "PositiveFamily"
+        }
+      ],
+      "variables": [],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "PairTripleMultiplicity",
+        "canonical_form": "PairTripleMultiplicity(n)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "R7",
+      "name": "Convert the triple pair sum to (n-2)E2",
+      "category": "inequalities",
+      "input_patterns": [
+        {
+          "premise_role": "multiplicity",
+          "predicate": "PairTripleMultiplicity"
+        },
+        {
+          "premise_role": "definitions",
+          "predicate": "SumDefinitions"
+        }
+      ],
+      "variables": [],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "TriplePairIdentity",
+        "canonical_form": "TriplePairIdentity(P,n,E2)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "R8",
+      "name": "Combine the local bound with pair multiplicity",
+      "category": "inequalities",
+      "input_patterns": [
+        {
+          "premise_role": "summed_bound",
+          "predicate": "SummedTripleBound"
+        },
+        {
+          "premise_role": "count_identity",
+          "predicate": "TriplePairIdentity"
+        }
+      ],
+      "variables": [],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "ResidualBound",
+        "canonical_form": "ResidualBound(T,n,E2)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "R9",
+      "name": "Insert the residual estimate into the expansion",
+      "category": "inequalities",
+      "input_patterns": [
+        {
+          "premise_role": "expansion",
+          "predicate": "TripleExpansion"
+        },
+        {
+          "premise_role": "residual_bound",
+          "predicate": "ResidualBound"
+        }
+      ],
+      "variables": [],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "ScaledInequality",
+        "canonical_form": "ScaledInequality(S,L,n,E2)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "R10",
+      "name": "Undo the positive scaling",
+      "category": "inequalities",
+      "input_patterns": [
+        {
+          "premise_role": "equivalence",
+          "predicate": "ScaledTargetEquivalent"
+        },
+        {
+          "premise_role": "scaled_result",
+          "predicate": "ScaledInequality"
+        }
+      ],
+      "variables": [],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "TargetInequality",
+        "canonical_form": "TargetInequality(a,n)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    }
+  ],
+  "facts": [
+    {
+      "id": "F1",
+      "statement": "n>=2 and all a_i are positive.",
+      "canonical_form": "PositiveFamily(a,n)",
+      "introduction_kind": "given",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "objects": [],
+      "source_spans": [
+        "reviewed-proof:F1"
+      ]
+    },
+    {
+      "id": "F2",
+      "statement": "S=sum a_i, E2=sum_{i<j} a_i a_j, and L is the left side.",
+      "canonical_form": "SumDefinitions(S,E2,L)",
+      "introduction_kind": "constructed",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "objects": [],
+      "source_spans": [
+        "reviewed-proof:F2"
+      ]
+    },
+    {
+      "id": "F3",
+      "statement": "The target is equivalent to 2SL <= nE2 because 2S>0.",
+      "canonical_form": "ScaledTargetEquivalent(S,L,n,E2)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "objects": [],
+      "source_spans": [
+        "reviewed-proof:F3"
+      ]
+    },
+    {
+      "id": "F4",
+      "statement": "2SL equals 2E2 plus the residual sum collected by triples.",
+      "canonical_form": "TripleExpansion(S,L,E2,T)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "objects": [],
+      "source_spans": [
+        "reviewed-proof:F4"
+      ]
+    },
+    {
+      "id": "F5",
+      "statement": "For positive a,b,c, 1/a+1/b >= 4/(a+b).",
+      "canonical_form": "PairReciprocalBound(a,b)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "objects": [],
+      "source_spans": [
+        "reviewed-proof:F5"
+      ]
+    },
+    {
+      "id": "F6",
+      "statement": "For each positive triple, 2abc sum_cyc 1/(a+b) <= ab+bc+ca.",
+      "canonical_form": "TripleReciprocalBound(a,b,c)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "objects": [],
+      "source_spans": [
+        "reviewed-proof:F6"
+      ]
+    },
+    {
+      "id": "F7",
+      "statement": "Summing the local triple inequality bounds the residual triple sum.",
+      "canonical_form": "SummedTripleBound(T,P)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "objects": [],
+      "source_spans": [
+        "reviewed-proof:F7"
+      ]
+    },
+    {
+      "id": "F8",
+      "statement": "Every unordered pair occurs in exactly n-2 unordered triples.",
+      "canonical_form": "PairTripleMultiplicity(n)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "objects": [],
+      "source_spans": [
+        "reviewed-proof:F8"
+      ]
+    },
+    {
+      "id": "F9",
+      "statement": "The pair sum over all triples equals (n-2)E2.",
+      "canonical_form": "TriplePairIdentity(P,n,E2)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "objects": [],
+      "source_spans": [
+        "reviewed-proof:F9"
+      ]
+    },
+    {
+      "id": "F10",
+      "statement": "The residual triple sum is at most (n-2)E2.",
+      "canonical_form": "ResidualBound(T,n,E2)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "objects": [],
+      "source_spans": [
+        "reviewed-proof:F10"
+      ]
+    },
+    {
+      "id": "F11",
+      "statement": "2SL <= nE2.",
+      "canonical_form": "ScaledInequality(S,L,n,E2)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "objects": [],
+      "source_spans": [
+        "reviewed-proof:F11"
+      ]
+    },
+    {
+      "id": "F12",
+      "statement": "The required inequality holds.",
+      "canonical_form": "TargetInequality(a,n)",
+      "introduction_kind": "derived",
+      "roles": [
+        "goal"
+      ],
+      "scope": "global",
+      "objects": [],
+      "source_spans": [
+        "reviewed-proof:F12"
+      ]
+    }
+  ],
+  "inferences": [
+    {
+      "id": "I1",
+      "spu_id": "SPU1",
+      "source_order": 1,
+      "rule_id": "R1",
+      "scope": "global",
+      "input_bindings": [
+        {
+          "fact_id": "F1",
+          "premise_role": "positivity"
+        },
+        {
+          "fact_id": "F2",
+          "premise_role": "definitions"
+        }
+      ],
+      "variable_bindings": {},
+      "output_fact_id": "F3",
+      "source_spans": [
+        "reviewed-proof:SPU1"
+      ],
+      "risk_flags": [
+        "hidden_domain_condition"
+      ]
+    },
+    {
+      "id": "I2",
+      "spu_id": "SPU2",
+      "source_order": 2,
+      "rule_id": "R2",
+      "scope": "global",
+      "input_bindings": [
+        {
+          "fact_id": "F2",
+          "premise_role": "definitions"
+        }
+      ],
+      "variable_bindings": {},
+      "output_fact_id": "F4",
+      "source_spans": [
+        "reviewed-proof:SPU2"
+      ],
+      "risk_flags": [
+        "large_lemma_compression"
+      ]
+    },
+    {
+      "id": "I3",
+      "spu_id": "SPU3",
+      "source_order": 3,
+      "rule_id": "R3",
+      "scope": "global",
+      "input_bindings": [
+        {
+          "fact_id": "F1",
+          "premise_role": "positivity"
+        }
+      ],
+      "variable_bindings": {},
+      "output_fact_id": "F5",
+      "source_spans": [
+        "reviewed-proof:SPU3"
+      ],
+      "risk_flags": [
+        "external_theorem_dependency"
+      ]
+    },
+    {
+      "id": "I4",
+      "spu_id": "SPU4",
+      "source_order": 4,
+      "rule_id": "R4",
+      "scope": "global",
+      "input_bindings": [
+        {
+          "fact_id": "F5",
+          "premise_role": "pair_bound"
+        },
+        {
+          "fact_id": "F1",
+          "premise_role": "positivity"
+        }
+      ],
+      "variable_bindings": {},
+      "output_fact_id": "F6",
+      "source_spans": [
+        "reviewed-proof:SPU4"
+      ],
+      "risk_flags": [
+        "nonlinear_arithmetic"
+      ]
+    },
+    {
+      "id": "I5",
+      "spu_id": "SPU5",
+      "source_order": 5,
+      "rule_id": "R5",
+      "scope": "global",
+      "input_bindings": [
+        {
+          "fact_id": "F6",
+          "premise_role": "local_bound"
+        }
+      ],
+      "variable_bindings": {},
+      "output_fact_id": "F7",
+      "source_spans": [
+        "reviewed-proof:SPU5"
+      ],
+      "risk_flags": []
+    },
+    {
+      "id": "I6",
+      "spu_id": "SPU6",
+      "source_order": 6,
+      "rule_id": "R6",
+      "scope": "global",
+      "input_bindings": [
+        {
+          "fact_id": "F1",
+          "premise_role": "index_range"
+        }
+      ],
+      "variable_bindings": {},
+      "output_fact_id": "F8",
+      "source_spans": [
+        "reviewed-proof:SPU6"
+      ],
+      "risk_flags": [
+        "large_lemma_compression"
+      ]
+    },
+    {
+      "id": "I7",
+      "spu_id": "SPU7",
+      "source_order": 7,
+      "rule_id": "R7",
+      "scope": "global",
+      "input_bindings": [
+        {
+          "fact_id": "F8",
+          "premise_role": "multiplicity"
+        },
+        {
+          "fact_id": "F2",
+          "premise_role": "definitions"
+        }
+      ],
+      "variable_bindings": {},
+      "output_fact_id": "F9",
+      "source_spans": [
+        "reviewed-proof:SPU7"
+      ],
+      "risk_flags": []
+    },
+    {
+      "id": "I8",
+      "spu_id": "SPU8",
+      "source_order": 8,
+      "rule_id": "R8",
+      "scope": "global",
+      "input_bindings": [
+        {
+          "fact_id": "F7",
+          "premise_role": "summed_bound"
+        },
+        {
+          "fact_id": "F9",
+          "premise_role": "count_identity"
+        }
+      ],
+      "variable_bindings": {},
+      "output_fact_id": "F10",
+      "source_spans": [
+        "reviewed-proof:SPU8"
+      ],
+      "risk_flags": []
+    },
+    {
+      "id": "I9",
+      "spu_id": "SPU9",
+      "source_order": 9,
+      "rule_id": "R9",
+      "scope": "global",
+      "input_bindings": [
+        {
+          "fact_id": "F4",
+          "premise_role": "expansion"
+        },
+        {
+          "fact_id": "F10",
+          "premise_role": "residual_bound"
+        }
+      ],
+      "variable_bindings": {},
+      "output_fact_id": "F11",
+      "source_spans": [
+        "reviewed-proof:SPU9"
+      ],
+      "risk_flags": []
+    },
+    {
+      "id": "I10",
+      "spu_id": "SPU10",
+      "source_order": 10,
+      "rule_id": "R10",
+      "scope": "global",
+      "input_bindings": [
+        {
+          "fact_id": "F3",
+          "premise_role": "equivalence"
+        },
+        {
+          "fact_id": "F11",
+          "premise_role": "scaled_result"
+        }
+      ],
+      "variable_bindings": {},
+      "output_fact_id": "F12",
+      "source_spans": [
+        "reviewed-proof:SPU10"
+      ],
+      "risk_flags": [
+        "hidden_domain_condition"
+      ]
+    }
+  ],
+  "provenance": {
+    "source": "data/algebra_skill_curriculum",
+    "current_annotation_level": "synthetic",
+    "requested_target_level": "silver_verified",
+    "achieved_annotation_level": "pending",
+    "promotion_profile": "algebra-reference-dag-v0.1",
+    "proof_review": {
+      "method": "human",
+      "status": "passed",
+      "reviewer": "Ruan Haochen (Eddie)",
+      "review_date": "2026-07-28"
+    },
+    "dag_semantic_review": {
+      "method": "human",
+      "status": "not_run",
+      "evidence": "dag_semantic_review.md"
+    },
+    "alternative_paths": {
+      "status": "none_claimed",
+      "notes": "No intermediate Fact has multiple producers."
+    }
+  }
+}

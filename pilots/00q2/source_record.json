@@ -1,0 +1,8 @@
+{
+  "problem_source": "HuggingFace:ShadenA/MathNet problem 00q2",
+  "solution_source": "human-reviewed blind proof in problem.md",
+  "source_record_id": "mathnet:all:train:22204:e577c87c164f",
+  "source_hash": "3f8d257b3e334d889b80dcbc81aca4684537329c0142168815e909ad5f58278d",
+  "candidate_reference_solution_hash": "dc4ac519e59f0ce29b25ee281a292bb175d141f14cfd48437459b0912a6f51bf",
+  "reviewed_solution_hash": "dc4ac519e59f0ce29b25ee281a292bb175d141f14cfd48437459b0912a6f51bf"
+}
