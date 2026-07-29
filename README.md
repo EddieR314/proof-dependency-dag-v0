@@ -132,10 +132,27 @@ The current problem dataset summary:
 
 ## Current Status
 
-The repository now has three runnable layers:
+The repository now has four runnable layers:
 
 1. A 5-sample manually checked SPU/dependency benchmark.
 2. DAG validation and first-break evaluation.
 3. A prototype synthetic wrong-solution generator.
+4. A frozen olympiad-algebra expert Skill with a statements-only 100-problem
+   proof-layer scale pilot.
 
-The next research step is not more wrapper code. It is to scale manually audited gold labels to more non-geometry problems, then test whether an LLM can produce stable SPU/dependency graphs before Lean is attached.
+The scale pilot currently has 91 schema-valid model predictions and 9 pending
+retries after the model service reported a usage limit. This is a partial
+engineering result, not a proof-accuracy result and not a completed 100-problem
+validation. References remain sealed until all 100 predictions are frozen.
+
+See:
+
+```text
+outputs/algebra_scale_pilot_100_v0.1/PROTOCOL.md
+outputs/algebra_scale_pilot_100_v0.1/STATUS.md
+outputs/algebra_scale_pilot_100_v0.1/MODEL_RUN_PARTIAL_REPORT.md
+```
+
+After the remaining predictions are complete, the preselected 30-problem
+double-review audit is the next gate. Only audited proof-layer results should
+be used to select the 12 downstream Proof DAG cases and 3 Lean-grounding cases.
