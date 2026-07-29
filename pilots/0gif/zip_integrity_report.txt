@@ -1,0 +1,9 @@
+{
+  "archive": "proof-dag-lean-0gif-pilot-v1.0.0-silver.zip",
+  "member_count": 49,
+  "duplicate_member_count": 0,
+  "missing_expected_members": [],
+  "unexpected_members": [],
+  "bad_member": null,
+  "status": "passed"
+}

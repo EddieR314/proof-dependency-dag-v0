@@ -1,0 +1,32 @@
+{
+  "artifact_id": "proof-dag-lean-0gif-pilot",
+  "problem_id": "0gif",
+  "version": "1.0.0",
+  "release_level": "silver_verified",
+  "source_hash": "3d0e9b57196b5f7df9b908c3591fc46648059d33206a29c75ec6dfc54a5b8f8b",
+  "reviewed_solution_hash": "92bfa0bd118e7bc20fbd5b4c47dd0b0658387c0206b9fdc61547055925dc2268",
+  "schema_version": "proof-dag-schema-v0.4",
+  "meta_standard_version": "proof-skill-standard-v0.3",
+  "git_commit": "4a6c220ade2bf2990a20310d0163df1b0de8986c",
+  "formal_backend": "lean",
+  "formal_coverage": "end_to_end",
+  "toolchain": "leanprover/lean4:v4.30.0-rc2",
+  "reviewers": [
+    "Ruan Haochen (Eddie)"
+  ],
+  "primary_files": [
+    "problem.md",
+    "source_record.json",
+    "proof_review.json",
+    "reference_dag.json",
+    "correct_evaluation.json",
+    "candidate_graph.json",
+    "candidate_evaluation.json",
+    "formal_mapping.json",
+    "ProofDag0gif/Basic.lean",
+    "verification_report.json",
+    "promotion_record.json",
+    "checksums.sha256",
+    "zip_integrity_report.txt"
+  ]
+}
