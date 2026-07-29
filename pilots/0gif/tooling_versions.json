@@ -1,0 +1,9 @@
+{
+  "artifact_version": "1.0.0",
+  "meta_standard": "proof-skill-standard-v0.3",
+  "dag_schema": "proof-dag-schema-v0.4",
+  "proof_dag_skill": "proof-dag-lean",
+  "python_minimum": "3.10",
+  "lean_toolchain": "leanprover/lean4:v4.30.0-rc2",
+  "mathlib_revision": "5450b53e5ddc75d46418fabb605edbf36bd0beb6"
+}

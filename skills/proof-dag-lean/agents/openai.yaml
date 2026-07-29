@@ -1,0 +1,4 @@
+interface:
+  display_name: "Proof DAG + Lean"
+  short_description: "Build and verify proof DAGs, including algebra pilots"
+  default_prompt: "Use $proof-dag-lean to turn a mathematical proof into a validated Fact-Inference DAG, apply the relevant algebra playbook when appropriate, and verify the claimed inferences in Lean."

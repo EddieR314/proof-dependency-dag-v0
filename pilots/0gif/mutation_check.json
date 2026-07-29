@@ -1,0 +1,9 @@
+{
+  "passed": true,
+  "errors": [],
+  "computed_first_break": {
+    "type": "inference",
+    "id": "I9"
+  },
+  "first_break_match": true
+}

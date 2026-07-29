@@ -1,0 +1,64 @@
+{
+  "problem_id": "0gif",
+  "graph_id": "0gif-reference-v0.1",
+  "verification_components": {
+    "proof_review": {
+      "method": "human",
+      "status": "passed",
+      "evidence": "proof_review.json"
+    },
+    "dag_schema": {
+      "method": "automatic",
+      "status": "passed",
+      "evidence": "validation_report.json"
+    },
+    "scope": {
+      "method": "automatic",
+      "status": "passed",
+      "evidence": "correct_evaluation.json"
+    },
+    "dag_derivability": {
+      "method": "automatic",
+      "status": "passed",
+      "evidence": "correct_evaluation.json"
+    },
+    "dag_semantics": {
+      "method": "human",
+      "status": "passed",
+      "evidence": "dag_semantic_review.md"
+    },
+    "mutation_structure": {
+      "method": "automatic",
+      "status": "passed",
+      "evidence": "candidate_validation_report.json; mutation_check.json"
+    },
+    "first_break": {
+      "method": "automatic",
+      "status": "passed",
+      "evidence": "candidate_evaluation.json"
+    },
+    "mutation_realism": {
+      "method": "human",
+      "status": "passed",
+      "evidence": "mutation_review.md"
+    },
+    "formal_mapping": {
+      "method": "automatic",
+      "status": "passed",
+      "evidence": "formal_mapping.json; verification_report.json"
+    },
+    "lean_build": {
+      "method": "automatic",
+      "status": "passed",
+      "evidence": "lake build; verification_report.json"
+    },
+    "lean_translation_review": {
+      "method": "human",
+      "status": "passed",
+      "evidence": "lean_translation_review.md"
+    }
+  },
+  "current_annotation_level": "synthetic",
+  "requested_annotation_level": "silver_verified",
+  "achieved_annotation_level": "silver_verified"
+}

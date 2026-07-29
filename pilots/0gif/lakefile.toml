@@ -1,0 +1,11 @@
+name = "proof_dag_0gif"
+version = "0.1.0"
+defaultTargets = ["ProofDag0gif"]
+
+[[require]]
+name = "mathlib"
+git = "https://github.com/leanprover-community/mathlib4"
+rev = "v4.30.0-rc2"
+
+[[lean_lib]]
+name = "ProofDag0gif"

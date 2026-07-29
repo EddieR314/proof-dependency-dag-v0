@@ -1,0 +1,80 @@
+{
+  "problem_id": "0gif",
+  "promotion_profile": "algebra-pilot-silver-v0.4",
+  "current_annotation_level": "synthetic",
+  "requested_annotation_level": "silver_verified",
+  "verification_components": {
+    "proof_review": {
+      "method": "human",
+      "status": "passed",
+      "evidence": "proof_review.json"
+    },
+    "dag_schema": {
+      "method": "automatic",
+      "status": "passed",
+      "evidence": "verification_report.json"
+    },
+    "dag_structural": {
+      "method": "automatic",
+      "status": "passed",
+      "evidence": "verification_report.json"
+    },
+    "dag_derivability": {
+      "method": "automatic",
+      "status": "passed",
+      "evidence": "verification_report.json"
+    },
+    "scope_structural": {
+      "method": "automatic",
+      "status": "passed",
+      "evidence": "verification_report.json"
+    },
+    "scope_semantic": {
+      "method": "human",
+      "status": "not_applicable",
+      "evidence": "dag_semantic_review.md",
+      "reason": "All Facts and Inferences are globally quantified; no local assumption is introduced, discharged, or promoted."
+    },
+    "formal_mapping_integrity": {
+      "method": "automatic",
+      "status": "passed",
+      "evidence": "verification_report.json"
+    },
+    "lean_build": {
+      "method": "automatic",
+      "status": "passed",
+      "evidence": "verification_report.json"
+    },
+    "mutation_structural": {
+      "method": "automatic",
+      "status": "passed",
+      "evidence": "verification_report.json"
+    },
+    "first_break": {
+      "method": "automatic",
+      "status": "passed",
+      "evidence": "verification_report.json"
+    },
+    "dag_semantic_faithfulness": {
+      "method": "human",
+      "status": "passed",
+      "evidence": "dag_semantic_review.md"
+    },
+    "formal_translation_faithfulness": {
+      "method": "human",
+      "status": "passed",
+      "evidence": "lean_translation_review.md"
+    },
+    "mutation_semantic_realism": {
+      "method": "human",
+      "status": "passed",
+      "evidence": "mutation_review.md"
+    }
+  },
+  "all_required_components_passed": true,
+  "achieved_annotation_level": "silver_verified",
+  "decision_method": "independent_promotion",
+  "decision_date": "2026-07-28",
+  "reviewer": "Ruan Haochen (Eddie)",
+  "reason": "The release level is derived from the listed automatic checks and named human reviews; it does not replace their independent statuses."
+}

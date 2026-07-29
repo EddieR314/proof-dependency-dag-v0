@@ -1,0 +1,1561 @@
+{
+  "schema_version": "proof-dag-schema-v0.4",
+  "graph_kind": "candidate",
+  "graph_id": "0gif-candidate-missing-bound-v0.1",
+  "problem_id": "0gif",
+  "target_fact_ids": [
+    "F23"
+  ],
+  "versions": {
+    "skill_standard": "0.3",
+    "dag_schema": "proof-dag-schema-v0.4",
+    "fact_schema": "fact-v0.4",
+    "inference_schema": "inference-v0.4",
+    "scope_schema": "scope-v0.4",
+    "mutation_schema": "mutation-v0.4",
+    "canonicalizer": "math-expression-v1",
+    "rule_registry": "functional-iteration-rules-v1",
+    "common_tooling": "proof-dag-lean-v0.4",
+    "domain_skill": "olympiad-algebra-expert-v0.1"
+  },
+  "source_record": {
+    "problem_source": "HuggingFace:ShadenA/MathNet problem 0gif",
+    "solution_source": "human-reviewed blind proof in problem.md",
+    "source_record_id": "mathnet:all:train:17595:2567d5bd3f85",
+    "source_hash": "3d0e9b57196b5f7df9b908c3591fc46648059d33206a29c75ec6dfc54a5b8f8b",
+    "candidate_reference_solution_hash": "92bfa0bd118e7bc20fbd5b4c47dd0b0658387c0206b9fdc61547055925dc2268",
+    "reviewed_solution_hash": "92bfa0bd118e7bc20fbd5b4c47dd0b0658387c0206b9fdc61547055925dc2268"
+  },
+  "scopes": [
+    {
+      "id": "global",
+      "parent_id": null,
+      "kind": "global"
+    }
+  ],
+  "rule_schemas": [
+    {
+      "rule_id": "positive_forward_orbit",
+      "name": "A positive self-map has positive forward iterates",
+      "category": "iteration",
+      "input_patterns": [
+        {
+          "premise_role": "positive_map",
+          "predicate": "PositiveMap"
+        },
+        {
+          "premise_role": "orbit_definition",
+          "predicate": "OrbitDefinition"
+        }
+      ],
+      "variables": [
+        "f",
+        "xseq",
+        "n"
+      ],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "PositiveOrbit",
+        "canonical_form": "PositiveOrbit(f,xseq)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "two_step_descent",
+      "name": "Substitute y=f(x) and cancel a positive common factor",
+      "category": "functional_inequality",
+      "input_patterns": [
+        {
+          "premise_role": "positive_map",
+          "predicate": "PositiveMap"
+        },
+        {
+          "premise_role": "condition",
+          "predicate": "OriginalCondition"
+        }
+      ],
+      "variables": [
+        "f",
+        "x"
+      ],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "TwoStepDescent",
+        "canonical_form": "TwoStepDescent(f)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "lift_descent_to_orbit",
+      "name": "Apply the two-step descent at every orbit point",
+      "category": "iteration",
+      "input_patterns": [
+        {
+          "premise_role": "orbit_definition",
+          "predicate": "OrbitDefinition"
+        },
+        {
+          "premise_role": "two_step_descent",
+          "predicate": "TwoStepDescent"
+        }
+      ],
+      "variables": [
+        "f",
+        "xseq",
+        "n"
+      ],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "OrbitTwoStepDescent",
+        "canonical_form": "OrbitTwoStepDescent(xseq)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "adjacent_drop_comparison",
+      "name": "Apply the original inequality to adjacent orbit terms",
+      "category": "functional_inequality",
+      "input_patterns": [
+        {
+          "premise_role": "positive_map",
+          "predicate": "PositiveMap"
+        },
+        {
+          "premise_role": "condition",
+          "predicate": "OriginalCondition"
+        },
+        {
+          "premise_role": "orbit_definition",
+          "predicate": "OrbitDefinition"
+        },
+        {
+          "premise_role": "positive_orbit",
+          "predicate": "PositiveOrbit"
+        }
+      ],
+      "variables": [
+        "f",
+        "xseq",
+        "n"
+      ],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "AdjacentDropInequality",
+        "canonical_form": "AdjacentDropInequality(xseq)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "drops_nonnegative",
+      "name": "Rewrite two-step descent using the drop definition",
+      "category": "ordered_algebra",
+      "input_patterns": [
+        {
+          "premise_role": "drop_definition",
+          "predicate": "DropDefinition"
+        },
+        {
+          "premise_role": "orbit_descent",
+          "predicate": "OrbitTwoStepDescent"
+        }
+      ],
+      "variables": [
+        "d",
+        "xseq",
+        "n"
+      ],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "NonnegativeDrops",
+        "canonical_form": "NonnegativeDrops(d)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "drops_nondecreasing",
+      "name": "Rewrite the adjacent comparison using the drop definition",
+      "category": "ordered_algebra",
+      "input_patterns": [
+        {
+          "premise_role": "drop_definition",
+          "predicate": "DropDefinition"
+        },
+        {
+          "premise_role": "adjacent_comparison",
+          "predicate": "AdjacentDropInequality"
+        }
+      ],
+      "variables": [
+        "d",
+        "xseq",
+        "n"
+      ],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "MonotoneDrops",
+        "canonical_form": "MonotoneDrops(d)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "even_telescoping",
+      "name": "Telescope the even orbit subsequence",
+      "category": "finite_sum",
+      "input_patterns": [
+        {
+          "premise_role": "orbit_definition",
+          "predicate": "OrbitDefinition"
+        },
+        {
+          "premise_role": "drop_definition",
+          "predicate": "DropDefinition"
+        }
+      ],
+      "variables": [
+        "xseq",
+        "d",
+        "N"
+      ],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "EvenTelescopingIdentity",
+        "canonical_form": "EvenTelescopingIdentity(xseq,d)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "positive_orbit_bounds_drop_sum",
+      "name": "Positivity bounds every even-indexed drop sum",
+      "category": "ordered_algebra",
+      "input_patterns": [
+        {
+          "premise_role": "positive_orbit",
+          "predicate": "PositiveOrbit"
+        },
+        {
+          "premise_role": "telescoping",
+          "predicate": "EvenTelescopingIdentity"
+        }
+      ],
+      "variables": [
+        "xseq",
+        "d",
+        "N"
+      ],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "EvenDropSumBound",
+        "canonical_form": "EvenDropSumBound(xseq,d)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "monotone_drops_vanish",
+      "name": "A bounded sum of nonnegative nondecreasing drops forces zero drops",
+      "category": "archimedean",
+      "input_patterns": [
+        {
+          "premise_role": "nonnegative",
+          "predicate": "NonnegativeDrops"
+        },
+        {
+          "premise_role": "nondecreasing",
+          "predicate": "MonotoneDrops"
+        },
+        {
+          "premise_role": "bounded_even_sum",
+          "predicate": "EvenDropSumBound"
+        }
+      ],
+      "variables": [
+        "d",
+        "n",
+        "N"
+      ],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "DropsVanish",
+        "canonical_form": "DropsVanish(d)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "drops_zero_implies_involution",
+      "name": "The zero initial drop is the composition identity",
+      "category": "iteration",
+      "input_patterns": [
+        {
+          "premise_role": "orbit_definition",
+          "predicate": "OrbitDefinition"
+        },
+        {
+          "premise_role": "drop_definition",
+          "predicate": "DropDefinition"
+        },
+        {
+          "premise_role": "drops_vanish",
+          "predicate": "DropsVanish"
+        }
+      ],
+      "variables": [
+        "f",
+        "xseq",
+        "d",
+        "x"
+      ],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "Involution",
+        "canonical_form": "Involution(f)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "condition_reduces_to_product_order",
+      "name": "Use involution in the original inequality",
+      "category": "ordered_algebra",
+      "input_patterns": [
+        {
+          "premise_role": "condition",
+          "predicate": "OriginalCondition"
+        },
+        {
+          "premise_role": "involution",
+          "predicate": "Involution"
+        }
+      ],
+      "variables": [
+        "f",
+        "x",
+        "y"
+      ],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "ProductOrder",
+        "canonical_form": "ProductOrder(f)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "swap_product_order",
+      "name": "Exchange the universally quantified variables",
+      "category": "quantifier_symmetry",
+      "input_patterns": [
+        {
+          "premise_role": "forward_order",
+          "predicate": "ProductOrder"
+        }
+      ],
+      "variables": [
+        "f",
+        "x",
+        "y"
+      ],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "ReverseProductOrder",
+        "canonical_form": "ReverseProductOrder(f)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "product_order_antisymmetry",
+      "name": "Combine the two product inequalities",
+      "category": "order_antisymmetry",
+      "input_patterns": [
+        {
+          "premise_role": "forward_order",
+          "predicate": "ProductOrder"
+        },
+        {
+          "premise_role": "reverse_order",
+          "predicate": "ReverseProductOrder"
+        }
+      ],
+      "variables": [
+        "f",
+        "x",
+        "y"
+      ],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "ProductConstantAcrossInputs",
+        "canonical_form": "ProductConstantAcrossInputs(f)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "extract_positive_constant",
+      "name": "Choose one input and name the common positive product",
+      "category": "existence",
+      "input_patterns": [
+        {
+          "premise_role": "positive_map",
+          "predicate": "PositiveMap"
+        },
+        {
+          "premise_role": "constant_product",
+          "predicate": "ProductConstantAcrossInputs"
+        }
+      ],
+      "variables": [
+        "f",
+        "c",
+        "x"
+      ],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "ReciprocalNecessity",
+        "canonical_form": "ReciprocalNecessity(f)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "candidate_positive",
+      "name": "A positive reciprocal translate maps positives to positives",
+      "category": "ordered_field",
+      "input_patterns": [
+        {
+          "premise_role": "candidate_definition",
+          "predicate": "CandidateDefinition"
+        }
+      ],
+      "variables": [
+        "g",
+        "c",
+        "x"
+      ],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "CandidatePositive",
+        "canonical_form": "CandidatePositive(g)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "candidate_involution",
+      "name": "The reciprocal candidate is an involution",
+      "category": "field_simplification",
+      "input_patterns": [
+        {
+          "premise_role": "candidate_definition",
+          "predicate": "CandidateDefinition"
+        }
+      ],
+      "variables": [
+        "g",
+        "c",
+        "x"
+      ],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "CandidateInvolution",
+        "canonical_form": "CandidateInvolution(g)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "candidate_verification",
+      "name": "Directly substitute the reciprocal candidate",
+      "category": "functional_inequality",
+      "input_patterns": [
+        {
+          "premise_role": "candidate_definition",
+          "predicate": "CandidateDefinition"
+        },
+        {
+          "premise_role": "candidate_positive",
+          "predicate": "CandidatePositive"
+        },
+        {
+          "premise_role": "candidate_involution",
+          "predicate": "CandidateInvolution"
+        }
+      ],
+      "variables": [
+        "g",
+        "c",
+        "x",
+        "y"
+      ],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "CandidateSatisfies",
+        "canonical_form": "CandidateSatisfies(g)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    },
+    {
+      "rule_id": "necessity_and_sufficiency",
+      "name": "Combine necessity with direct verification",
+      "category": "aggregation",
+      "input_patterns": [
+        {
+          "premise_role": "necessity",
+          "predicate": "ReciprocalNecessity"
+        },
+        {
+          "premise_role": "sufficiency",
+          "predicate": "CandidateSatisfies"
+        }
+      ],
+      "variables": [
+        "f",
+        "g",
+        "c",
+        "x"
+      ],
+      "variable_constraints": [],
+      "output_pattern": {
+        "predicate": "Classification",
+        "canonical_form": "Classification(f,g)"
+      },
+      "scope_constraints": [
+        "inputs_visible_from_inference_scope"
+      ],
+      "version": 1
+    }
+  ],
+  "facts": [
+    {
+      "id": "F1",
+      "statement": "f maps every positive real number to a positive real number.",
+      "canonical_form": "PositiveMap(f)",
+      "introduction_kind": "given",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "objects": [
+        "f"
+      ],
+      "source_spans": [
+        "problem"
+      ]
+    },
+    {
+      "id": "F2",
+      "statement": "For all positive x and y, x(f(x)+f(y)) >= (f(f(x))+y)f(y).",
+      "canonical_form": "OriginalCondition(f)",
+      "introduction_kind": "given",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "objects": [
+        "f",
+        "x",
+        "y"
+      ],
+      "source_spans": [
+        "problem"
+      ]
+    },
+    {
+      "id": "F3",
+      "statement": "For arbitrary x>0, x_0=x and x_(n+1)=f(x_n).",
+      "canonical_form": "OrbitDefinition(f,xseq)",
+      "introduction_kind": "constructed",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "objects": [
+        "f",
+        "x",
+        "xseq",
+        "n"
+      ],
+      "source_spans": [
+        "proof:definition-orbit"
+      ]
+    },
+    {
+      "id": "F4",
+      "statement": "For every n, d_n=x_n-x_(n+2).",
+      "canonical_form": "DropDefinition(d,xseq)",
+      "introduction_kind": "constructed",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "objects": [
+        "d",
+        "xseq",
+        "n"
+      ],
+      "source_spans": [
+        "proof:definition-drop"
+      ]
+    },
+    {
+      "id": "F5",
+      "statement": "For every c>0, define g_c(x)=c/x on the positive reals.",
+      "canonical_form": "CandidateDefinition(g,c)",
+      "introduction_kind": "constructed",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "objects": [
+        "g",
+        "c",
+        "x"
+      ],
+      "source_spans": [
+        "proof:candidate-definition"
+      ]
+    },
+    {
+      "id": "F6",
+      "statement": "Every forward-orbit term x_n is positive.",
+      "canonical_form": "PositiveOrbit(f,xseq)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "objects": [
+        "f",
+        "xseq",
+        "n"
+      ],
+      "source_spans": [
+        "proof:S1"
+      ]
+    },
+    {
+      "id": "F7",
+      "statement": "For every positive x, f(f(x)) <= x.",
+      "canonical_form": "TwoStepDescent(f)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "objects": [
+        "f",
+        "x"
+      ],
+      "source_spans": [
+        "proof:S2"
+      ]
+    },
+    {
+      "id": "F8",
+      "statement": "For every n>=0, x_(n+2) <= x_n.",
+      "canonical_form": "OrbitTwoStepDescent(xseq)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "objects": [
+        "xseq",
+        "n"
+      ],
+      "source_spans": [
+        "proof:S3"
+      ]
+    },
+    {
+      "id": "F9",
+      "statement": "For every n>=0, x_(n+1)+x_(n+2) >= x_n+x_(n+3).",
+      "canonical_form": "AdjacentDropInequality(xseq)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "objects": [
+        "xseq",
+        "n"
+      ],
+      "source_spans": [
+        "proof:S4"
+      ]
+    },
+    {
+      "id": "F10",
+      "statement": "For every n>=0, d_n>=0.",
+      "canonical_form": "NonnegativeDrops(d)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "objects": [
+        "d",
+        "n"
+      ],
+      "source_spans": [
+        "proof:S5"
+      ]
+    },
+    {
+      "id": "F11",
+      "statement": "For every n>=0, d_n<=d_(n+1).",
+      "canonical_form": "MonotoneDrops(d)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "objects": [
+        "d",
+        "n"
+      ],
+      "source_spans": [
+        "proof:S6"
+      ]
+    },
+    {
+      "id": "F12",
+      "statement": "For every N>=1, x_(2N)=x_0-sum_(j=0)^(N-1) d_(2j).",
+      "canonical_form": "EvenTelescopingIdentity(xseq,d)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "objects": [
+        "xseq",
+        "d",
+        "N",
+        "j"
+      ],
+      "source_spans": [
+        "proof:S7"
+      ]
+    },
+    {
+      "id": "F13",
+      "statement": "For every N>=1, sum_(j=0)^(N-1) d_(2j)<x_0.",
+      "canonical_form": "EvenDropSumBound(xseq,d)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "objects": [
+        "xseq",
+        "d",
+        "N",
+        "j"
+      ],
+      "source_spans": [
+        "proof:S8"
+      ]
+    },
+    {
+      "id": "F14",
+      "statement": "For every n>=0, d_n=0.",
+      "canonical_form": "DropsVanish(d)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "objects": [
+        "d",
+        "n"
+      ],
+      "source_spans": [
+        "proof:S9"
+      ]
+    },
+    {
+      "id": "F15",
+      "statement": "For every positive x, f(f(x))=x.",
+      "canonical_form": "Involution(f)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "objects": [
+        "f",
+        "x"
+      ],
+      "source_spans": [
+        "proof:S10"
+      ]
+    },
+    {
+      "id": "F16",
+      "statement": "For all positive x and y, x f(x)>=y f(y).",
+      "canonical_form": "ProductOrder(f)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "objects": [
+        "f",
+        "x",
+        "y"
+      ],
+      "source_spans": [
+        "proof:S11"
+      ]
+    },
+    {
+      "id": "F17",
+      "statement": "For all positive x and y, y f(y)>=x f(x).",
+      "canonical_form": "ReverseProductOrder(f)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "objects": [
+        "f",
+        "x",
+        "y"
+      ],
+      "source_spans": [
+        "proof:S12"
+      ]
+    },
+    {
+      "id": "F18",
+      "statement": "For all positive x and y, x f(x)=y f(y).",
+      "canonical_form": "ProductConstantAcrossInputs(f)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "objects": [
+        "f",
+        "x",
+        "y"
+      ],
+      "source_spans": [
+        "proof:S13"
+      ]
+    },
+    {
+      "id": "F19",
+      "statement": "There exists c>0 such that f(x)=c/x for every positive x.",
+      "canonical_form": "ReciprocalNecessity(f)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "objects": [
+        "f",
+        "c",
+        "x"
+      ],
+      "source_spans": [
+        "proof:S14"
+      ]
+    },
+    {
+      "id": "F20",
+      "statement": "For every c>0, g_c maps positive reals to positive reals.",
+      "canonical_form": "CandidatePositive(g)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "objects": [
+        "g",
+        "c",
+        "x"
+      ],
+      "source_spans": [
+        "proof:S15"
+      ]
+    },
+    {
+      "id": "F21",
+      "statement": "For every c>0 and x>0, g_c(g_c(x))=x.",
+      "canonical_form": "CandidateInvolution(g)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "objects": [
+        "g",
+        "c",
+        "x"
+      ],
+      "source_spans": [
+        "proof:S16"
+      ]
+    },
+    {
+      "id": "F22",
+      "statement": "Every g_c(x)=c/x with c>0 satisfies the original inequality.",
+      "canonical_form": "CandidateSatisfies(g)",
+      "introduction_kind": "derived",
+      "roles": [
+        "intermediate"
+      ],
+      "scope": "global",
+      "objects": [
+        "g",
+        "c",
+        "x",
+        "y"
+      ],
+      "source_spans": [
+        "proof:S17"
+      ]
+    },
+    {
+      "id": "F23",
+      "statement": "The solutions are exactly f(x)=c/x for constants c>0.",
+      "canonical_form": "Classification(f,g)",
+      "introduction_kind": "derived",
+      "roles": [
+        "goal"
+      ],
+      "scope": "global",
+      "objects": [
+        "f",
+        "g",
+        "c",
+        "x"
+      ],
+      "source_spans": [
+        "problem",
+        "proof:S18"
+      ]
+    }
+  ],
+  "inferences": [
+    {
+      "id": "I1",
+      "spu_id": "SPU1",
+      "source_order": 1,
+      "rule_id": "positive_forward_orbit",
+      "scope": "global",
+      "input_bindings": [
+        {
+          "fact_id": "F1",
+          "premise_role": "positive_map"
+        },
+        {
+          "fact_id": "F3",
+          "premise_role": "orbit_definition"
+        }
+      ],
+      "variable_bindings": {
+        "f": "f",
+        "xseq": "xseq",
+        "n": "n"
+      },
+      "output_fact_id": "F6",
+      "source_spans": [
+        "proof:S1"
+      ],
+      "risk_flags": []
+    },
+    {
+      "id": "I2",
+      "spu_id": "SPU2",
+      "source_order": 2,
+      "rule_id": "two_step_descent",
+      "scope": "global",
+      "input_bindings": [
+        {
+          "fact_id": "F1",
+          "premise_role": "positive_map"
+        },
+        {
+          "fact_id": "F2",
+          "premise_role": "condition"
+        }
+      ],
+      "variable_bindings": {
+        "f": "f",
+        "x": "x"
+      },
+      "output_fact_id": "F7",
+      "source_spans": [
+        "proof:S2"
+      ],
+      "risk_flags": [
+        "hidden_domain_condition",
+        "nonlinear_arithmetic"
+      ]
+    },
+    {
+      "id": "I3",
+      "spu_id": "SPU3",
+      "source_order": 3,
+      "rule_id": "lift_descent_to_orbit",
+      "scope": "global",
+      "input_bindings": [
+        {
+          "fact_id": "F3",
+          "premise_role": "orbit_definition"
+        },
+        {
+          "fact_id": "F7",
+          "premise_role": "two_step_descent"
+        }
+      ],
+      "variable_bindings": {
+        "f": "f",
+        "xseq": "xseq",
+        "n": "n"
+      },
+      "output_fact_id": "F8",
+      "source_spans": [
+        "proof:S3"
+      ],
+      "risk_flags": [
+        "quantifier_sensitive"
+      ]
+    },
+    {
+      "id": "I4",
+      "spu_id": "SPU4",
+      "source_order": 4,
+      "rule_id": "adjacent_drop_comparison",
+      "scope": "global",
+      "input_bindings": [
+        {
+          "fact_id": "F1",
+          "premise_role": "positive_map"
+        },
+        {
+          "fact_id": "F2",
+          "premise_role": "condition"
+        },
+        {
+          "fact_id": "F3",
+          "premise_role": "orbit_definition"
+        },
+        {
+          "fact_id": "F6",
+          "premise_role": "positive_orbit"
+        }
+      ],
+      "variable_bindings": {
+        "f": "f",
+        "xseq": "xseq",
+        "n": "n"
+      },
+      "output_fact_id": "F9",
+      "source_spans": [
+        "proof:S4"
+      ],
+      "risk_flags": [
+        "hidden_domain_condition",
+        "nonlinear_arithmetic"
+      ]
+    },
+    {
+      "id": "I5",
+      "spu_id": "SPU5",
+      "source_order": 5,
+      "rule_id": "drops_nonnegative",
+      "scope": "global",
+      "input_bindings": [
+        {
+          "fact_id": "F4",
+          "premise_role": "drop_definition"
+        },
+        {
+          "fact_id": "F8",
+          "premise_role": "orbit_descent"
+        }
+      ],
+      "variable_bindings": {
+        "d": "d",
+        "xseq": "xseq",
+        "n": "n"
+      },
+      "output_fact_id": "F10",
+      "source_spans": [
+        "proof:S5"
+      ],
+      "risk_flags": []
+    },
+    {
+      "id": "I6",
+      "spu_id": "SPU6",
+      "source_order": 6,
+      "rule_id": "drops_nondecreasing",
+      "scope": "global",
+      "input_bindings": [
+        {
+          "fact_id": "F4",
+          "premise_role": "drop_definition"
+        },
+        {
+          "fact_id": "F9",
+          "premise_role": "adjacent_comparison"
+        }
+      ],
+      "variable_bindings": {
+        "d": "d",
+        "xseq": "xseq",
+        "n": "n"
+      },
+      "output_fact_id": "F11",
+      "source_spans": [
+        "proof:S6"
+      ],
+      "risk_flags": []
+    },
+    {
+      "id": "I7",
+      "spu_id": "SPU7",
+      "source_order": 7,
+      "rule_id": "even_telescoping",
+      "scope": "global",
+      "input_bindings": [
+        {
+          "fact_id": "F3",
+          "premise_role": "orbit_definition"
+        },
+        {
+          "fact_id": "F4",
+          "premise_role": "drop_definition"
+        }
+      ],
+      "variable_bindings": {
+        "xseq": "xseq",
+        "d": "d",
+        "N": "N"
+      },
+      "output_fact_id": "F12",
+      "source_spans": [
+        "proof:S7"
+      ],
+      "risk_flags": [
+        "quantifier_sensitive"
+      ]
+    },
+    {
+      "id": "I8",
+      "spu_id": "SPU8",
+      "source_order": 8,
+      "rule_id": "positive_orbit_bounds_drop_sum",
+      "scope": "global",
+      "input_bindings": [
+        {
+          "fact_id": "F6",
+          "premise_role": "positive_orbit"
+        },
+        {
+          "fact_id": "F12",
+          "premise_role": "telescoping"
+        }
+      ],
+      "variable_bindings": {
+        "xseq": "xseq",
+        "d": "d",
+        "N": "N"
+      },
+      "output_fact_id": "F13",
+      "source_spans": [
+        "proof:S8"
+      ],
+      "risk_flags": [
+        "nonlinear_arithmetic"
+      ]
+    },
+    {
+      "id": "I9",
+      "spu_id": "SPU9",
+      "source_order": 9,
+      "rule_id": "monotone_drops_vanish",
+      "scope": "global",
+      "input_bindings": [
+        {
+          "fact_id": "F10",
+          "premise_role": "nonnegative"
+        },
+        {
+          "fact_id": "F11",
+          "premise_role": "nondecreasing"
+        }
+      ],
+      "variable_bindings": {
+        "d": "d",
+        "n": "n",
+        "N": "N"
+      },
+      "output_fact_id": "F14",
+      "source_spans": [
+        "proof:S9"
+      ],
+      "risk_flags": [
+        "quantifier_sensitive",
+        "large_lemma_compression"
+      ]
+    },
+    {
+      "id": "I10",
+      "spu_id": "SPU10",
+      "source_order": 10,
+      "rule_id": "drops_zero_implies_involution",
+      "scope": "global",
+      "input_bindings": [
+        {
+          "fact_id": "F3",
+          "premise_role": "orbit_definition"
+        },
+        {
+          "fact_id": "F4",
+          "premise_role": "drop_definition"
+        },
+        {
+          "fact_id": "F14",
+          "premise_role": "drops_vanish"
+        }
+      ],
+      "variable_bindings": {
+        "f": "f",
+        "xseq": "xseq",
+        "d": "d",
+        "x": "x"
+      },
+      "output_fact_id": "F15",
+      "source_spans": [
+        "proof:S10"
+      ],
+      "risk_flags": []
+    },
+    {
+      "id": "I11",
+      "spu_id": "SPU11",
+      "source_order": 11,
+      "rule_id": "condition_reduces_to_product_order",
+      "scope": "global",
+      "input_bindings": [
+        {
+          "fact_id": "F2",
+          "premise_role": "condition"
+        },
+        {
+          "fact_id": "F15",
+          "premise_role": "involution"
+        }
+      ],
+      "variable_bindings": {
+        "f": "f",
+        "x": "x",
+        "y": "y"
+      },
+      "output_fact_id": "F16",
+      "source_spans": [
+        "proof:S11"
+      ],
+      "risk_flags": [
+        "nonlinear_arithmetic"
+      ]
+    },
+    {
+      "id": "I12",
+      "spu_id": "SPU12",
+      "source_order": 12,
+      "rule_id": "swap_product_order",
+      "scope": "global",
+      "input_bindings": [
+        {
+          "fact_id": "F16",
+          "premise_role": "forward_order"
+        }
+      ],
+      "variable_bindings": {
+        "f": "f",
+        "x": "x",
+        "y": "y"
+      },
+      "output_fact_id": "F17",
+      "source_spans": [
+        "proof:S12"
+      ],
+      "risk_flags": [
+        "quantifier_sensitive"
+      ]
+    },
+    {
+      "id": "I13",
+      "spu_id": "SPU13",
+      "source_order": 13,
+      "rule_id": "product_order_antisymmetry",
+      "scope": "global",
+      "input_bindings": [
+        {
+          "fact_id": "F16",
+          "premise_role": "forward_order"
+        },
+        {
+          "fact_id": "F17",
+          "premise_role": "reverse_order"
+        }
+      ],
+      "variable_bindings": {
+        "f": "f",
+        "x": "x",
+        "y": "y"
+      },
+      "output_fact_id": "F18",
+      "source_spans": [
+        "proof:S13"
+      ],
+      "risk_flags": []
+    },
+    {
+      "id": "I14",
+      "spu_id": "SPU14",
+      "source_order": 14,
+      "rule_id": "extract_positive_constant",
+      "scope": "global",
+      "input_bindings": [
+        {
+          "fact_id": "F1",
+          "premise_role": "positive_map"
+        },
+        {
+          "fact_id": "F18",
+          "premise_role": "constant_product"
+        }
+      ],
+      "variable_bindings": {
+        "f": "f",
+        "c": "c",
+        "x": "x"
+      },
+      "output_fact_id": "F19",
+      "source_spans": [
+        "proof:S14"
+      ],
+      "risk_flags": [
+        "existence_witness",
+        "quantifier_sensitive"
+      ]
+    },
+    {
+      "id": "I15",
+      "spu_id": "SPU15",
+      "source_order": 15,
+      "rule_id": "candidate_positive",
+      "scope": "global",
+      "input_bindings": [
+        {
+          "fact_id": "F5",
+          "premise_role": "candidate_definition"
+        }
+      ],
+      "variable_bindings": {
+        "g": "g",
+        "c": "c",
+        "x": "x"
+      },
+      "output_fact_id": "F20",
+      "source_spans": [
+        "proof:S15"
+      ],
+      "risk_flags": [
+        "hidden_domain_condition"
+      ]
+    },
+    {
+      "id": "I16",
+      "spu_id": "SPU16",
+      "source_order": 16,
+      "rule_id": "candidate_involution",
+      "scope": "global",
+      "input_bindings": [
+        {
+          "fact_id": "F5",
+          "premise_role": "candidate_definition"
+        }
+      ],
+      "variable_bindings": {
+        "g": "g",
+        "c": "c",
+        "x": "x"
+      },
+      "output_fact_id": "F21",
+      "source_spans": [
+        "proof:S16"
+      ],
+      "risk_flags": [
+        "hidden_domain_condition",
+        "nonlinear_arithmetic"
+      ]
+    },
+    {
+      "id": "I17",
+      "spu_id": "SPU17",
+      "source_order": 17,
+      "rule_id": "candidate_verification",
+      "scope": "global",
+      "input_bindings": [
+        {
+          "fact_id": "F5",
+          "premise_role": "candidate_definition"
+        },
+        {
+          "fact_id": "F20",
+          "premise_role": "candidate_positive"
+        },
+        {
+          "fact_id": "F21",
+          "premise_role": "candidate_involution"
+        }
+      ],
+      "variable_bindings": {
+        "g": "g",
+        "c": "c",
+        "x": "x",
+        "y": "y"
+      },
+      "output_fact_id": "F22",
+      "source_spans": [
+        "proof:S17"
+      ],
+      "risk_flags": [
+        "nonlinear_arithmetic"
+      ]
+    },
+    {
+      "id": "I18",
+      "spu_id": "SPU18",
+      "source_order": 18,
+      "rule_id": "necessity_and_sufficiency",
+      "scope": "global",
+      "input_bindings": [
+        {
+          "fact_id": "F19",
+          "premise_role": "necessity"
+        },
+        {
+          "fact_id": "F22",
+          "premise_role": "sufficiency"
+        }
+      ],
+      "variable_bindings": {
+        "f": "f",
+        "g": "g",
+        "c": "c",
+        "x": "x"
+      },
+      "output_fact_id": "F23",
+      "source_spans": [
+        "proof:S18"
+      ],
+      "risk_flags": [
+        "quantifier_sensitive"
+      ]
+    }
+  ],
+  "provenance": {
+    "source": "controlled mutation of 0gif-reference-v0.1",
+    "current_annotation_level": "synthetic",
+    "requested_target_level": "silver_verified",
+    "achieved_annotation_level": "pending",
+    "promotion_profile": "algebra-candidate-mutation-v0.1",
+    "reference_dag_semantics": {
+      "method": "human",
+      "status": "passed",
+      "evidence": "dag_semantic_review.md"
+    },
+    "mutation_realism": {
+      "method": "human",
+      "status": "passed",
+      "reviewer": "Ruan Haochen (Eddie)",
+      "review_date": "2026-07-28",
+      "evidence": "mutation_review.md"
+    }
+  },
+  "mutation": {
+    "base_graph_id": "0gif-reference-v0.1",
+    "operation": "remove_required_premise",
+    "primary_site": {
+      "type": "edge",
+      "id": "F13->I9"
+    },
+    "injection_anchor": {
+      "type": "inference",
+      "id": "I9"
+    },
+    "declared_expected_first_break": {
+      "type": "inference",
+      "id": "I9"
+    },
+    "before": {
+      "input_fact_id": "F13",
+      "consumer_inference_id": "I9",
+      "premise_role": "bounded_even_sum",
+      "mathematical_content": "For every N>=1, the even-indexed drop sum is bounded above by x_0."
+    },
+    "after": {
+      "edge_removed": true,
+      "remaining_claim": "Nonnegative and nondecreasing drops are asserted to vanish without any boundedness premise."
+    },
+    "graph_changed": true,
+    "target_effect": "target_breaking",
+    "seed": 0,
+    "provenance": {
+      "generator": "pilots/0gif/build_candidate_mutation.py",
+      "intent": "single realistic missing-dependency error",
+      "source_reference_graph": "0gif-reference-v0.1"
+    }
+  }
+}

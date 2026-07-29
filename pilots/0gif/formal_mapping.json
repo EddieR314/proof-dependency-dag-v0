@@ -1,0 +1,141 @@
+{
+  "problem_id": "0gif",
+  "graph_id": "0gif-reference-v0.1",
+  "formal_backend": "lean",
+  "formal_backend_version": "4.30.0-rc2",
+  "formal_coverage": "end_to_end",
+  "source_file": "ProofDag0gif/Basic.lean",
+  "command": "lake build",
+  "exit_status": 0,
+  "result": "compiled",
+  "toolchain": "leanprover/lean4:v4.30.0-rc2",
+  "mathlib_revision": "5450b53e5ddc75d46418fabb605edbf36bd0beb6",
+  "mapping": [
+    {
+      "inference_id": "I1",
+      "output_fact_id": "F6",
+      "declaration": "ProofDag0gif.positive_forward_orbit",
+      "source_file": "ProofDag0gif/Basic.lean",
+      "expected_compile_result": "pass"
+    },
+    {
+      "inference_id": "I2",
+      "output_fact_id": "F7",
+      "declaration": "ProofDag0gif.two_step_descent",
+      "source_file": "ProofDag0gif/Basic.lean",
+      "expected_compile_result": "pass"
+    },
+    {
+      "inference_id": "I3",
+      "output_fact_id": "F8",
+      "declaration": "ProofDag0gif.iterate_two_step_descent",
+      "source_file": "ProofDag0gif/Basic.lean",
+      "expected_compile_result": "pass"
+    },
+    {
+      "inference_id": "I4",
+      "output_fact_id": "F9",
+      "declaration": "ProofDag0gif.adjacent_drop_comparison",
+      "source_file": "ProofDag0gif/Basic.lean",
+      "expected_compile_result": "pass"
+    },
+    {
+      "inference_id": "I5",
+      "output_fact_id": "F10",
+      "declaration": "ProofDag0gif.drops_nonnegative",
+      "source_file": "ProofDag0gif/Basic.lean",
+      "expected_compile_result": "pass"
+    },
+    {
+      "inference_id": "I6",
+      "output_fact_id": "F11",
+      "declaration": "ProofDag0gif.drops_nondecreasing",
+      "source_file": "ProofDag0gif/Basic.lean",
+      "expected_compile_result": "pass"
+    },
+    {
+      "inference_id": "I7",
+      "output_fact_id": "F12",
+      "declaration": "ProofDag0gif.even_telescoping",
+      "source_file": "ProofDag0gif/Basic.lean",
+      "expected_compile_result": "pass"
+    },
+    {
+      "inference_id": "I8",
+      "output_fact_id": "F13",
+      "declaration": "ProofDag0gif.even_drop_sum_bound",
+      "source_file": "ProofDag0gif/Basic.lean",
+      "expected_compile_result": "pass"
+    },
+    {
+      "inference_id": "I9",
+      "output_fact_id": "F14",
+      "declaration": "ProofDag0gif.monotone_drops_vanish",
+      "source_file": "ProofDag0gif/Basic.lean",
+      "expected_compile_result": "pass"
+    },
+    {
+      "inference_id": "I10",
+      "output_fact_id": "F15",
+      "declaration": "ProofDag0gif.composition_identity",
+      "source_file": "ProofDag0gif/Basic.lean",
+      "expected_compile_result": "pass"
+    },
+    {
+      "inference_id": "I11",
+      "output_fact_id": "F16",
+      "declaration": "ProofDag0gif.product_order",
+      "source_file": "ProofDag0gif/Basic.lean",
+      "expected_compile_result": "pass"
+    },
+    {
+      "inference_id": "I12",
+      "output_fact_id": "F17",
+      "declaration": "ProofDag0gif.reverse_product_order",
+      "source_file": "ProofDag0gif/Basic.lean",
+      "expected_compile_result": "pass"
+    },
+    {
+      "inference_id": "I13",
+      "output_fact_id": "F18",
+      "declaration": "ProofDag0gif.product_constant",
+      "source_file": "ProofDag0gif/Basic.lean",
+      "expected_compile_result": "pass"
+    },
+    {
+      "inference_id": "I14",
+      "output_fact_id": "F19",
+      "declaration": "ProofDag0gif.reciprocal_necessity",
+      "source_file": "ProofDag0gif/Basic.lean",
+      "expected_compile_result": "pass"
+    },
+    {
+      "inference_id": "I15",
+      "output_fact_id": "F20",
+      "declaration": "ProofDag0gif.candidate_positive",
+      "source_file": "ProofDag0gif/Basic.lean",
+      "expected_compile_result": "pass"
+    },
+    {
+      "inference_id": "I16",
+      "output_fact_id": "F21",
+      "declaration": "ProofDag0gif.candidate_involution",
+      "source_file": "ProofDag0gif/Basic.lean",
+      "expected_compile_result": "pass"
+    },
+    {
+      "inference_id": "I17",
+      "output_fact_id": "F22",
+      "declaration": "ProofDag0gif.candidate_satisfies",
+      "source_file": "ProofDag0gif/Basic.lean",
+      "expected_compile_result": "pass"
+    },
+    {
+      "inference_id": "I18",
+      "output_fact_id": "F23",
+      "declaration": "ProofDag0gif.all_solutions",
+      "source_file": "ProofDag0gif/Basic.lean",
+      "expected_compile_result": "pass"
+    }
+  ]
+}

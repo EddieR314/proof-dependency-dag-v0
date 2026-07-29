@@ -1,0 +1,69 @@
+{
+  "graph_id": "0gif-reference-v0.1",
+  "schema_version": "proof-dag-schema-v0.4",
+  "automatic_checks": {
+    "dag_schema_validation": {
+      "passed": true,
+      "errors": []
+    },
+    "dag_structural_validation": {
+      "passed": true,
+      "errors": []
+    },
+    "dag_derivability_validation": {
+      "passed": true,
+      "errors": []
+    },
+    "scope_structural_validation": {
+      "passed": true,
+      "scope_count": 1,
+      "local_scope_count": 0,
+      "violations": []
+    },
+    "formal_mapping": {
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "formal_backend": "lean",
+      "formal_coverage": "end_to_end",
+      "source_file": "C:\\Users\\RHC\\Documents\\Codex\\2026-07-01\\eddie-xjtlu-cs-ml-rl-2029\\pilots\\0gif\\ProofDag0gif\\Basic.lean",
+      "source_declaration_count": 22,
+      "mapped_inference_count": 18,
+      "total_inference_count": 18,
+      "inference_coverage": 1.0,
+      "unmapped_inference_ids": [],
+      "build": {
+        "ran": true,
+        "command": "lake build",
+        "exit_status": 0,
+        "passed": true,
+        "stdout_tail": "Build completed successfully (8315 jobs).\n",
+        "stderr_tail": "",
+        "declaration_check": {
+          "count": 18,
+          "exit_status": 0,
+          "passed": true
+        }
+      },
+      "semantic_translation_automatically_proved": false
+    },
+    "mutation_structural_validation": {
+      "passed": true,
+      "errors": [],
+      "computed_first_break": {
+        "type": "inference",
+        "id": "I9"
+      },
+      "first_break_match": true
+    }
+  },
+  "human_only_checks": {
+    "proof_review": "not automatically proved",
+    "dag_semantic_faithfulness_review": "not automatically proved",
+    "scope_semantic_review": "not automatically proved",
+    "formal_translation_review": "not automatically proved",
+    "mutation_semantic_review": "not automatically proved",
+    "student_text_graph_consistency_review": "not automatically proved"
+  },
+  "all_automatic_checks_passed": true
+}
