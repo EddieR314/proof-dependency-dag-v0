@@ -1811,9 +1811,9 @@
   ],
   "provenance": {
     "source": "data/algebra_skill_curriculum + reviewed problem.md",
-    "current_annotation_level": "synthetic",
+    "current_annotation_level": "silver_verified",
     "requested_target_level": "silver_verified",
-    "achieved_annotation_level": "pending",
+    "achieved_annotation_level": "silver_verified",
     "promotion_profile": "algebra-reference-dag-v0.1",
     "proof_review": {
       "method": "human",
@@ -1823,8 +1823,9 @@
     },
     "dag_semantic_review": {
       "method": "human",
-      "status": "not_run",
-      "evidence": "dag_semantic_review.md"
+      "status": "passed",
+      "reviewer": "Ruan Haochen (Eddie)",
+      "review_date": "2026-07-29"
     },
     "alternative_paths": {
       "status": "none_claimed",

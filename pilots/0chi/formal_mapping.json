@@ -1,0 +1,41 @@
+{
+  "problem_id": "0chi",
+  "graph_id": "0chi-reference-v0.4",
+  "formal_backend": "lean",
+  "formal_backend_version": "4.30.0-rc2",
+  "formal_coverage": "high_risk_and_end_to_end",
+  "source_file": "ProofDag0chi/Basic.lean",
+  "command": "lake build",
+  "exit_status": 0,
+  "result": "compiled",
+  "toolchain": "leanprover/lean4:v4.30.0-rc2",
+  "mathlib_revision": "5450b53e5ddc75d46418fabb605edbf36bd0beb6",
+  "mapping": [
+    {
+      "inference_id": "I1",
+      "output_fact_id": "F9",
+      "declaration": "ProofDag0chi.secondSymmetric_isReal",
+      "source_file": "ProofDag0chi/Basic.lean",
+      "expected_compile_result": "pass"
+    },
+    {
+      "inference_id": "I5",
+      "output_fact_id": "F13",
+      "declaration": "ProofDag0chi.powerSum_recurrence",
+      "source_file": "ProofDag0chi/Basic.lean",
+      "expected_compile_result": "pass"
+    },
+    {
+      "inference_id": "I6",
+      "output_fact_id": "F14",
+      "declaration": "ProofDag0chi.all_powerSums_real",
+      "source_file": "ProofDag0chi/Basic.lean",
+      "expected_compile_result": "pass"
+    }
+  ],
+  "candidate_counterexample": {
+    "inference_id": "I5",
+    "declaration": "ProofDag0chi.wrongSign_recurrence_counterexample",
+    "claim": "The candidate's minus-sign recurrence fails at a=b=c=1 and n=0."
+  }
+}

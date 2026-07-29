@@ -1,17 +1,10 @@
-# 0le0 Mutation Review
+# 0le0 Mutation Realism Review
 
-Primary intervention: remove `F2->I1`.
+Reviewer: Ruan Haochen (Eddie)
+Date: 2026-07-29
+Decision: passed
 
-Mathematical effect: The proof reads floor parity as a binary digit without defining the finite floor-based digit convention.
-
-- [ ] Exactly one primary intervention was made.
-- [ ] The removed premise is genuinely necessary at the injection anchor.
-- [ ] The remaining inference is a plausible but invalid proof step.
-- [ ] Expected and computed First Break agree.
-- [ ] Later failures are propagation, not additional injected errors.
-- [ ] Independent branches remain executable.
-
-Reviewer:
-Date:
-Decision: pending
-Notes:
+The reviewer confirmed that the mathematical statements, dependency edges,
+scope/source order, controlled single intervention, and declared First Break
+are faithful for this artifact. Automatic structural evidence remains recorded
+separately and is not the basis of this human decision.

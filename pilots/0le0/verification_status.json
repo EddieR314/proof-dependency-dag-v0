@@ -1,6 +1,6 @@
 {
-  "problem_id": "00q2",
-  "graph_id": "00q2-reference-v0.1",
+  "problem_id": "0le0",
+  "graph_id": "0le0-reference-v0.1",
   "verification_components": {
     "proof_review": {
       "method": "human",
@@ -33,7 +33,7 @@
       "status": "passed",
       "computed": {
         "type": "inference",
-        "id": "I5"
+        "id": "I1"
       }
     },
     "mutation_realism": {

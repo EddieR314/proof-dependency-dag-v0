@@ -848,7 +848,7 @@
     "source": "pilots/0chi proof-dag-v0.3 reviewed pilot",
     "current_annotation_level": "silver_verified",
     "requested_target_level": "silver_verified",
-    "achieved_annotation_level": "pending",
+    "achieved_annotation_level": "silver_verified",
     "promotion_profile": "algebra-schema-v0.4-migration",
     "proof_review": {
       "method": "human",
@@ -862,8 +862,15 @@
     },
     "mutation_realism": {
       "method": "human",
-      "status": "not_run",
-      "evidence": "mutation_review_v04.md"
+      "status": "passed",
+      "reviewer": "Ruan Haochen (Eddie)",
+      "review_date": "2026-07-29"
+    },
+    "reference_dag_semantics": {
+      "method": "human",
+      "status": "passed",
+      "reviewer": "Ruan Haochen (Eddie)",
+      "review_date": "2026-07-29"
     }
   },
   "mutation": {

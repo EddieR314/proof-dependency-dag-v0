@@ -104,12 +104,14 @@ Status invariants:
 
 ## Release Boundary
 
-The current multi-module package is `v0.2-rc1`, not a frozen release.
+Version `0.2` is frozen against `proof-skill-standard-v0.3` and
+`proof-dag-schema-v0.4`.
 
 - `0gif` is the sealed functional-iteration exemplar.
-- `00q2`, `06og`, `0ldq`, and `0le0` have machine-validated Reference and
-  Candidate DAGs but still require human DAG and mutation review.
-- `0chi` has migrated v0.4 DAGs and a passing Lean project, but the migrated
-  semantics and mutation still require human sign-off.
-- Heldout examples remain outside the calibration loop until the pending
-  reviews are complete and this Skill is frozen.
+- `00q2`, `06og`, `0ldq`, and `0le0` have reviewed proofs, validated
+  Reference/Candidate DAGs, reviewed mutations, and verified First Breaks.
+- `0chi` supplies the non-functional Lean exemplar. Its high-risk and
+  end-to-end mapping covers `I1`, `I5`, and `I6`; `I2-I4` are intentionally
+  recorded as unmapped rather than implied to be formally covered.
+- Heldout results belong to a separate post-freeze report and must not be used
+  to revise version `0.2`.

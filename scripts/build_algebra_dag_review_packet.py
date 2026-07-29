@@ -7,7 +7,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-OUTPUT = ROOT / "outputs" / "algebra_dag_human_review_packet_v0.2-rc1.md"
+OUTPUT = ROOT / "outputs" / "algebra_dag_human_review_packet_v0.2.md"
 PROBLEMS = [
     ("00q2", "polynomials", "candidate_evaluation.json", "mutation_check.json"),
     ("06og", "inequalities", "candidate_evaluation.json", "mutation_check.json"),
@@ -36,6 +36,8 @@ def render_problem(
     candidate = load(directory / "candidate_graph.json")
     evaluation = evaluation_payload(load(directory / evaluation_name))
     mutation_check = load(directory / mutation_check_name)
+    status = load(directory / "verification_status.json")
+    components = status["verification_components"]
     facts = {item["id"]: item for item in reference["facts"]}
 
     lines = [
@@ -105,13 +107,13 @@ def render_problem(
             "- [ ] The mutation introduces exactly one real and plausible primary error.",
             "- [ ] The declared First Break is the earliest invalid inference.",
             "",
-            "Reviewer:",
+            f"Reviewer: {components['dag_semantics'].get('reviewer', '')}",
             "",
-            "Date:",
+            f"Date: {components['dag_semantics'].get('review_date', '')}",
             "",
-            "DAG semantics: `pending / passed / failed`",
+            f"DAG semantics: `{components['dag_semantics']['status']}`",
             "",
-            "Mutation realism: `pending / passed / failed`",
+            f"Mutation realism: `{components['mutation_realism']['status']}`",
             "",
             "Notes:",
             "",
@@ -124,9 +126,9 @@ def main() -> None:
     parts = [
         "# Algebra DAG Human Review Packet v0.2-rc1",
         "",
-        "This packet covers only human semantic checks that automatic validators",
-        "cannot establish. Mathematical proof review for all five source proofs",
-        "has already passed.",
+        "This packet records the completed human semantic checks that automatic",
+        "validators cannot establish. Mathematical proof review, DAG semantic",
+        "review, and mutation realism review have passed for all five artifacts.",
         "",
     ]
     for row in PROBLEMS:

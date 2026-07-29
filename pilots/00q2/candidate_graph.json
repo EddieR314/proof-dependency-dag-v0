@@ -1807,19 +1807,21 @@
   ],
   "provenance": {
     "source": "controlled mutation of 00q2-reference-v0.1",
-    "current_annotation_level": "synthetic",
+    "current_annotation_level": "silver_verified",
     "requested_target_level": "silver_verified",
-    "achieved_annotation_level": "pending",
+    "achieved_annotation_level": "silver_verified",
     "promotion_profile": "algebra-candidate-mutation-v0.1",
     "reference_dag_semantics": {
       "method": "human",
-      "status": "not_run",
-      "evidence": "dag_semantic_review.md"
+      "status": "passed",
+      "reviewer": "Ruan Haochen (Eddie)",
+      "review_date": "2026-07-29"
     },
     "mutation_realism": {
       "method": "human",
-      "status": "not_run",
-      "evidence": "mutation_review.md"
+      "status": "passed",
+      "reviewer": "Ruan Haochen (Eddie)",
+      "review_date": "2026-07-29"
     }
   },
   "mutation": {

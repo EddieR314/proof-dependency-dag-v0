@@ -1,6 +1,6 @@
 {
-  "problem_id": "00q2",
-  "graph_id": "00q2-reference-v0.1",
+  "problem_id": "0chi",
+  "graph_id": "0chi-reference-v0.4",
   "verification_components": {
     "proof_review": {
       "method": "human",
@@ -43,16 +43,16 @@
       "review_date": "2026-07-29"
     },
     "formal_mapping": {
-      "method": "not_applicable",
-      "status": "not_applicable"
+      "method": "automatic_and_human",
+      "status": "passed"
     },
     "lean_build": {
-      "method": "not_applicable",
-      "status": "not_applicable"
+      "method": "automatic",
+      "status": "passed"
     },
     "lean_translation_review": {
-      "method": "not_applicable",
-      "status": "not_applicable"
+      "method": "human",
+      "status": "passed"
     }
   },
   "current_annotation_level": "silver_verified",

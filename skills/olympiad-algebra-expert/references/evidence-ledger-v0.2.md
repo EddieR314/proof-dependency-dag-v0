@@ -1,4 +1,4 @@
-# Algebra Expert Evidence Ledger v0.2-rc1
+# Algebra Expert Evidence Ledger v0.2
 
 This ledger separates mathematical proof review, DAG structure, DAG semantic
 faithfulness, mutation checks, formal mapping, and Lean compilation.
@@ -6,11 +6,11 @@ faithfulness, mutation checks, formal mapping, and Lean compilation.
 | Problem | Primary module | Proof review | Reference DAG automatic | Candidate + First Break automatic | DAG semantic review | Mutation realism review | Lean |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | `0gif` | functional equations / iteration | passed | passed | passed | passed | passed | passed |
-| `00q2` | polynomials | passed | passed | passed, `I5` | pending | pending | deferred |
-| `06og` | inequalities | passed | passed | passed, `I8` | pending | pending | deferred |
-| `0ldq` | recurrences and sequences | passed | passed | passed, `I7` | pending | pending | deferred |
-| `0le0` | discrete algebra | passed | passed, including two local scopes | passed, `I1` | pending | pending | deferred |
-| `0chi` | complex algebra | passed | migrated v0.4 passed | passed, `I5` | pending for migration | pending for migration | passed |
+| `00q2` | polynomials | passed | passed | passed, `I5` | passed | passed | deferred |
+| `06og` | inequalities | passed | passed | passed, `I8` | passed | passed | deferred |
+| `0ldq` | recurrences and sequences | passed | passed | passed, `I7` | passed | passed | deferred |
+| `0le0` | discrete algebra | passed | passed, including two local scopes | passed, `I1` | passed | passed | deferred |
+| `0chi` | complex algebra | passed | migrated v0.4 passed | passed, `I5` | passed | passed | passed; 3/6 high-risk/end-to-end mapping |
 
 ## Controlled Errors
 
@@ -24,13 +24,9 @@ faithfulness, mutation checks, formal mapping, and Lean compilation.
 - `0chi`: change the recurrence term `+B*C_n` to `-B*C_n`; Lean contains a
   counterexample to this exact mutation.
 
-## Freeze Gate
+## Freeze Record
 
-Do not freeze `v0.2` until:
-
-1. all five pending DAG semantic reviews are signed;
-2. all five pending mutation realism reviews are signed;
-3. review decisions are copied into component-level status records;
-4. the Skill, Schema, checker, and evidence manifest receive immutable version
-   identifiers and checksums;
-5. heldout is run only after that freeze.
+- Human DAG semantic and mutation reviews: passed on 2026-07-29.
+- Component-level status records: stored in each pilot.
+- Frozen Skill version: `0.2`.
+- Heldout policy: results are recorded separately and cannot modify `0.2`.
