@@ -1,0 +1,12 @@
+{
+  "skill": "olympiad-algebra-expert",
+  "version": "0.2",
+  "freeze_date": "2026-07-29",
+  "source_commit": "14f9661",
+  "branch": "codex/proof-dag-lean-pilot",
+  "archive": "algebra-expert-v0.2-frozen.zip",
+  "archive_sha256": "03f4ac6e7fcd5ed4dc530c96f70f3e32940cf19ec83baa96cba0c08490f6b9fa",
+  "archive_entry_count": 165,
+  "heldout_used_before_freeze": false,
+  "heldout_results_may_modify_this_version": false
+}
