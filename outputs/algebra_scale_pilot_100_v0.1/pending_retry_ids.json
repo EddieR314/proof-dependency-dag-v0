@@ -1,0 +1,23 @@
+{
+  "status": "pending_usage_reset",
+  "retry_after_local": "2026-08-05T14:07:00+08:00",
+  "count": 9,
+  "problem_ids": [
+    "06y4",
+    "06qx",
+    "046d",
+    "00ht",
+    "06p9",
+    "0dg9",
+    "040g",
+    "04v7",
+    "0et7"
+  ],
+  "required_constraints": {
+    "same_skill": "olympiad-algebra-expert-v0.2",
+    "same_model": "gpt-5.6-terra",
+    "same_prompt": "scale-pilot-proof-v0.3-state-machine",
+    "reference_access": "forbidden",
+    "concurrency": 1
+  }
+}
