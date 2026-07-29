@@ -1,0 +1,157 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "problem_id",
+    "pilot_id",
+    "prediction_status",
+    "routing",
+    "candidate_answer",
+    "proof_result",
+    "proof",
+    "unresolved_gap",
+    "risk_flags",
+    "spu_outline",
+    "dag_lean_handoff_readiness",
+    "component_status"
+  ],
+  "properties": {
+    "problem_id": {
+      "type": "string"
+    },
+    "pilot_id": {
+      "type": "string"
+    },
+    "prediction_status": {
+      "type": "string",
+      "const": "completed"
+    },
+    "routing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "primary_module",
+        "secondary_modules",
+        "confidence"
+      ],
+      "properties": {
+        "primary_module": {
+          "type": "string",
+          "enum": [
+            "functional_equations",
+            "inequalities",
+            "polynomials",
+            "recurrences_sequences",
+            "complex_algebra",
+            "discrete_algebra"
+          ]
+        },
+        "secondary_modules": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "functional_equations",
+              "inequalities",
+              "polynomials",
+              "recurrences_sequences",
+              "complex_algebra",
+              "discrete_algebra"
+            ]
+          }
+        },
+        "confidence": {
+          "type": "string",
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ]
+        }
+      }
+    },
+    "candidate_answer": {
+      "type": "string"
+    },
+    "proof_result": {
+      "type": "string",
+      "enum": [
+        "passed",
+        "blocked",
+        "failed"
+      ]
+    },
+    "proof": {
+      "type": "string"
+    },
+    "unresolved_gap": {
+      "type": "string"
+    },
+    "risk_flags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "spu_outline": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "dag_lean_handoff_readiness": {
+      "type": "string",
+      "enum": [
+        "blocked",
+        "candidate",
+        "reviewed"
+      ]
+    },
+    "component_status": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "proof_review",
+        "dag",
+        "formal_mapping",
+        "lean_build"
+      ],
+      "properties": {
+        "proof_review": {
+          "type": "string",
+          "enum": [
+            "not_run",
+            "passed",
+            "failed",
+            "partial"
+          ]
+        },
+        "dag": {
+          "type": "string",
+          "enum": [
+            "not_run",
+            "candidate",
+            "validated"
+          ]
+        },
+        "formal_mapping": {
+          "type": "string",
+          "enum": [
+            "not_run",
+            "candidate",
+            "validated"
+          ]
+        },
+        "lean_build": {
+          "type": "string",
+          "enum": [
+            "not_run",
+            "passed",
+            "failed"
+          ]
+        }
+      }
+    }
+  }
+}

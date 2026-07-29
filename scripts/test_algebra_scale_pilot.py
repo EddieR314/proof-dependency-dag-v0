@@ -7,6 +7,11 @@ import tempfile
 import unittest
 from pathlib import Path
 
+from run_algebra_scale_predictions import (
+    validate_prediction,
+    validate_schema_for_api,
+)
+
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "outputs" / "algebra_scale_pilot_100_v0.1"
@@ -82,6 +87,7 @@ class ScalePilotTests(unittest.TestCase):
                     "candidate_answer": "",
                     "proof_result": "failed",
                     "proof": "",
+                    "unresolved_gap": "Synthetic smoke-test failure.",
                     "risk_flags": [],
                     "spu_outline": [],
                     "dag_lean_handoff_readiness": "blocked",
@@ -131,6 +137,40 @@ class ScalePilotTests(unittest.TestCase):
                 capture_output=True,
                 text=True,
             )
+
+    def test_api_schema_and_prediction_state_machine(self) -> None:
+        schema = json.loads(
+            (OUTPUT / "prediction.schema.json").read_text(encoding="utf-8")
+        )
+        validate_schema_for_api(schema)
+        statement = self.statements[0]
+        prediction = {
+            "problem_id": statement["problem_id"],
+            "pilot_id": statement["pilot_id"],
+            "prediction_status": "completed",
+            "routing": {
+                "primary_module": "functional_equations",
+                "secondary_modules": [],
+                "confidence": "low",
+            },
+            "candidate_answer": "Candidate",
+            "proof_result": "passed",
+            "proof": "Complete candidate proof.",
+            "unresolved_gap": "",
+            "risk_flags": [],
+            "spu_outline": [],
+            "dag_lean_handoff_readiness": "candidate",
+            "component_status": {
+                "proof_review": "partial",
+                "dag": "not_run",
+                "formal_mapping": "not_run",
+                "lean_build": "not_run",
+            },
+        }
+        validate_prediction(prediction, statement)
+        prediction["unresolved_gap"] = "Contradictory gap."
+        with self.assertRaisesRegex(ValueError, "nonempty unresolved_gap"):
+            validate_prediction(prediction, statement)
 
 
 if __name__ == "__main__":

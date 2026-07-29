@@ -1,0 +1,23 @@
+{
+  "run_id": "algebra-scale-pilot-100-v0.1-terra-medium",
+  "skill_version": "olympiad-algebra-expert-v0.2",
+  "prompt_version": "scale-pilot-proof-v0.3-state-machine",
+  "model": "gpt-5.6-terra",
+  "reasoning_effort": "medium",
+  "service_tier": "priority",
+  "sandbox": "read-only",
+  "ephemeral_sessions": true,
+  "ignore_user_config": true,
+  "web_search": false,
+  "dry_run_count": 5,
+  "dry_run_concurrency": 3,
+  "full_run_concurrency": 3,
+  "max_attempts_per_problem": 2,
+  "reference_access": "forbidden_until_prediction_freeze",
+  "budget_guard": {
+    "dry_run_max_problems": 5,
+    "full_run_max_problems": 100,
+    "monetary_limit": "not_available_under_chatgpt_login",
+    "stop_on_auth_or_usage_limit": true
+  }
+}
