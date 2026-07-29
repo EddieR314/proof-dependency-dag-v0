@@ -28,38 +28,51 @@ def read_jsonl(path: Path) -> list[dict]:
         return [json.loads(line) for line in handle if line.strip()]
 
 
-def validate_prediction(row: dict, expected_id: str) -> list[str]:
+def validate_prediction(
+    row: dict, expected_id: str, expected_pilot_id: str
+) -> list[str]:
     errors: list[str] = []
     if row.get("problem_id") != expected_id:
         errors.append("problem_id_mismatch")
+    if row.get("pilot_id") != expected_pilot_id:
+        errors.append("pilot_id_mismatch")
     if row.get("prediction_status") != "completed":
         errors.append("prediction_not_completed")
+    if not json.dumps(row, ensure_ascii=False).isascii():
+        errors.append("non_ascii_prediction")
 
     routing = row.get("routing", {})
     if routing.get("primary_module") not in MODULES:
         errors.append("invalid_primary_module")
-    if any(module not in MODULES for module in routing.get("secondary_modules", [])):
+    secondary = routing.get("secondary_modules", [])
+    if any(module not in MODULES for module in secondary):
         errors.append("invalid_secondary_module")
+    if len(secondary) != len(set(secondary)):
+        errors.append("duplicate_secondary_module")
     if routing.get("confidence") not in CONFIDENCE:
         errors.append("invalid_confidence")
 
-    if row.get("proof_result") not in PROOF_RESULTS:
+    proof_result = row.get("proof_result")
+    if proof_result not in PROOF_RESULTS:
         errors.append("invalid_proof_result")
     if not isinstance(row.get("risk_flags"), list):
         errors.append("risk_flags_not_list")
     if not isinstance(row.get("spu_outline"), list):
         errors.append("spu_outline_not_list")
-    if row.get("proof_result") == "passed" and not row.get("proof", "").strip():
+    if proof_result == "passed" and not row.get("proof", "").strip():
         errors.append("passed_without_proof")
-    if row.get("proof_result") == "blocked" and not row.get(
-        "unresolved_gap", ""
-    ).strip():
+    unresolved_gap = row.get("unresolved_gap", "").strip()
+    if proof_result == "passed" and unresolved_gap:
+        errors.append("passed_with_gap")
+    if proof_result in {"blocked", "failed"} and not unresolved_gap:
         errors.append("blocked_without_gap")
 
-    if row.get("dag_lean_handoff_readiness") not in READINESS:
+    readiness = row.get("dag_lean_handoff_readiness")
+    if readiness not in READINESS:
         errors.append("invalid_handoff_readiness")
     components = row.get("component_status", {})
-    if components.get("proof_review") not in PROOF_STATUS:
+    proof_review = components.get("proof_review")
+    if proof_review not in PROOF_STATUS:
         errors.append("invalid_proof_review_status")
     if components.get("dag") not in DAG_STATUS:
         errors.append("invalid_dag_status")
@@ -67,6 +80,27 @@ def validate_prediction(row: dict, expected_id: str) -> list[str]:
         errors.append("invalid_formal_status")
     if components.get("lean_build") not in LEAN_STATUS:
         errors.append("invalid_lean_status")
+    if proof_result == "passed":
+        if proof_review != "partial":
+            errors.append("passed_without_partial_review")
+        if readiness != "candidate":
+            errors.append("passed_without_candidate_handoff")
+    elif proof_result == "blocked":
+        if proof_review not in {"partial", "not_run"}:
+            errors.append("blocked_with_invalid_review")
+        if readiness != "blocked":
+            errors.append("blocked_without_blocked_handoff")
+    elif proof_result == "failed":
+        if proof_review != "failed":
+            errors.append("failed_without_failed_review")
+        if readiness != "blocked":
+            errors.append("failed_without_blocked_handoff")
+    if components.get("dag") != "not_run":
+        errors.append("model_run_claims_dag_validation")
+    if components.get("formal_mapping") != "not_run":
+        errors.append("model_run_claims_formal_validation")
+    if components.get("lean_build") != "not_run":
+        errors.append("model_run_claims_lean_build")
     return errors
 
 
@@ -80,6 +114,7 @@ def main() -> None:
     statements = read_jsonl(args.statements)
     predictions = read_jsonl(args.predictions)
     expected_ids = [row["problem_id"] for row in statements]
+    expected_by_id = {row["problem_id"]: row for row in statements}
     prediction_by_id = {
         row.get("problem_id"): row
         for row in predictions
@@ -105,7 +140,10 @@ def main() -> None:
         prediction = prediction_by_id.get(problem_id)
         if prediction is None:
             continue
-        errors = validate_prediction(prediction, problem_id)
+        expected = expected_by_id[problem_id]
+        errors = validate_prediction(
+            prediction, problem_id, expected["pilot_id"]
+        )
         if errors:
             row_errors[problem_id] = errors
 

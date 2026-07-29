@@ -11,6 +11,9 @@ from run_algebra_scale_predictions import (
     validate_prediction,
     validate_schema_for_api,
 )
+from validate_algebra_scale_predictions import (
+    validate_prediction as validate_frozen_prediction,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -168,9 +171,25 @@ class ScalePilotTests(unittest.TestCase):
             },
         }
         validate_prediction(prediction, statement)
+        self.assertEqual(
+            validate_frozen_prediction(
+                prediction,
+                statement["problem_id"],
+                statement["pilot_id"],
+            ),
+            [],
+        )
         prediction["unresolved_gap"] = "Contradictory gap."
         with self.assertRaisesRegex(ValueError, "nonempty unresolved_gap"):
             validate_prediction(prediction, statement)
+        self.assertIn(
+            "passed_with_gap",
+            validate_frozen_prediction(
+                prediction,
+                statement["problem_id"],
+                statement["pilot_id"],
+            ),
+        )
 
 
 if __name__ == "__main__":
