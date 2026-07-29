@@ -1,0 +1,31 @@
+{
+  "protocol": "postfreeze-heldout-v0.1",
+  "skill_version": "0.2",
+  "source": "data\\algebra_skill_curriculum\\heldout.jsonl",
+  "num_samples": 21,
+  "module_counts_from_source_labels": {
+    "complex_algebra": 4,
+    "discrete_algebra": 1,
+    "functional_equations": 4,
+    "inequalities": 4,
+    "polynomials": 4,
+    "recurrences_sequences": 4
+  },
+  "removed_reference_fields": [
+    "dag_status",
+    "final_answer",
+    "formal_status",
+    "proof_review_status",
+    "solution"
+  ],
+  "statements_only_sha256": "5a89900ad2729c95e5e29ff3e4d7171de60f7a2e11e95e43bdd1b6d700143e17",
+  "known_reference_exposure": {
+    "problem_ids": [
+      "03te",
+      "0get",
+      "0404"
+    ],
+    "policy": "Exclude these records from blind-proof metrics."
+  },
+  "result_policy": "Store results outside the frozen Skill. Do not revise v0.2 from this run."
+}

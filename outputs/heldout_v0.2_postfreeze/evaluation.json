@@ -1,0 +1,97 @@
+{
+  "protocol": "postfreeze-heldout-v0.1",
+  "skill_version": "olympiad-algebra-expert-v0.2",
+  "test_date": "2026-07-29",
+  "frozen_skill_modified": false,
+  "artifacts": {
+    "statements_only_sha256": "5a89900ad2729c95e5e29ff3e4d7171de60f7a2e11e95e43bdd1b6d700143e17",
+    "routing_predictions_sha256": "cf36b87046e3885e51a5186f5a95aeb314a00f73f93f7c656df52abae14e8d2f",
+    "proof_predictions_frozen_sha256": "0a5f31b30ad3c7189c5601caa0fdc39ad08373790fa95b481c212b85620aa49b"
+  },
+  "routing_test": {
+    "records": 21,
+    "source_label_agreement": 15,
+    "source_label_disagreements": [
+      "03te",
+      "0get",
+      "047w",
+      "047t",
+      "0g45",
+      "04bw"
+    ],
+    "interpretation": "Disagreement is not an error metric because source labels are heuristic and several are demonstrably surface-based."
+  },
+  "input_hygiene": {
+    "clean": 18,
+    "partially_corrupted_duplicate_translation": 1,
+    "mojibake_but_recoverable_french": 2,
+    "excluded_from_blind_proof_metrics": [
+      {
+        "problem_id": "03te",
+        "reason": "reference exposed before prediction freeze"
+      },
+      {
+        "problem_id": "0get",
+        "reason": "reference exposed before prediction freeze and duplicated translation is corrupted"
+      },
+      {
+        "problem_id": "0404",
+        "reason": "reference exposed before prediction freeze"
+      },
+      {
+        "problem_id": "05xl",
+        "reason": "statement encoding corruption"
+      },
+      {
+        "problem_id": "0601",
+        "reason": "statement encoding corruption"
+      }
+    ]
+  },
+  "proof_forward_test": {
+    "selection": "five clean unexposed problems chosen to cover tractable representatives of discrete algebra, functional equations, inequalities, polynomials, and recurrences",
+    "records": 5,
+    "reference_matched_or_independently_verified": 4,
+    "blocked": 1,
+    "candidate_pass_rate": 0.8,
+    "results": [
+      {
+        "problem_id": "00fr",
+        "result": "passed",
+        "reference_comparison": "answer and residue-class counting mechanism agree"
+      },
+      {
+        "problem_id": "06r0",
+        "result": "blocked",
+        "reference_comparison": "candidate found the shared-fiber structure but did not complete the equivalence-class argument"
+      },
+      {
+        "problem_id": "0663",
+        "result": "passed",
+        "reference_comparison": "Jensen proof and equality case agree"
+      },
+      {
+        "problem_id": "04bk",
+        "result": "passed_reference_defect_found",
+        "reference_comparison": "candidate equivalently reduces to x^2-a*x+1=0; supplied reference makes an arithmetic error in the auxiliary discriminant"
+      },
+      {
+        "problem_id": "09vy",
+        "result": "passed",
+        "reference_comparison": "invariant interval, period three, and denominator exclusions agree"
+      }
+    ]
+  },
+  "nonblind_audit": {
+    "problem_id": "03te",
+    "result": "passed",
+    "metric_inclusion": false
+  },
+  "limitations": [
+    "The five proof problems were deliberately selected for coverage and tractability, not randomly sampled.",
+    "No heldout Proof DAG, mutation, or Lean artifact was built in this test.",
+    "No claim is made for the two corrupted statements or the three reference-exposed records.",
+    "The frozen Skill must remain unchanged; findings may inform only a later version."
+  ],
+  "conclusion": "v0.2 passes a small post-freeze proof-layer forward test with one honest blocked case and detects one defective reference solution. This is evidence of usefulness, not evidence of 20,000-problem scalability."
+}
