@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DAG suitability screening result v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "problem_id",
+    "screening_version",
+    "algebra_module",
+    "input_quality",
+    "scores",
+    "estimated_inference_count",
+    "structure_flags",
+    "decision",
+    "reason_codes",
+    "repair_actions",
+    "confidence",
+    "human_review_status",
+    "notes"
+  ],
+  "properties": {
+    "problem_id": {"type": "string", "minLength": 1},
+    "screening_version": {"const": "dag-suitability-v0.1"},
+    "algebra_module": {"enum": ["functional_equations", "inequalities", "polynomials", "recurrences_sequences", "complex_algebra", "discrete_algebra", "unclassified_algebra"]},
+    "input_quality": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["statement_readable", "proof_present", "proof_integrity"],
+      "properties": {
+        "statement_readable": {"type": "boolean"},
+        "proof_present": {"type": "boolean"},
+        "proof_integrity": {"enum": ["clean", "suspect", "corrupt"]}
+      }
+    },
+    "scores": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_integrity", "proof_completeness", "atomic_decomposability", "dependency_explicitness", "scope_traceability", "external_context_burden", "structural_richness"],
+      "properties": {
+        "source_integrity": {"type": "integer", "minimum": 0, "maximum": 2},
+        "proof_completeness": {"type": "integer", "minimum": 0, "maximum": 2},
+        "atomic_decomposability": {"type": "integer", "minimum": 0, "maximum": 2},
+        "dependency_explicitness": {"type": "integer", "minimum": 0, "maximum": 2},
+        "scope_traceability": {"type": "integer", "minimum": 0, "maximum": 2},
+        "external_context_burden": {"type": "integer", "minimum": 0, "maximum": 2},
+        "structural_richness": {"type": "integer", "minimum": 0, "maximum": 2}
+      }
+    },
+    "estimated_inference_count": {"type": "integer", "minimum": 0},
+    "structure_flags": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["has_case_scope", "has_multi_premise_inference", "has_alternative_path"],
+      "properties": {
+        "has_case_scope": {"type": "boolean"},
+        "has_multi_premise_inference": {"type": "boolean"},
+        "has_alternative_path": {"type": "boolean"}
+      }
+    },
+    "decision": {"enum": ["suitable", "borderline", "unsuitable"]},
+    "reason_codes": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"enum": ["complete_proof", "clear_inference_units", "traceable_dependencies", "scope_clear", "case_structure", "multi_premise_merge", "alternative_paths", "clean_linear_proof", "missing_solution", "answer_only", "proof_corrupted", "proof_truncated", "source_mojibake", "excessive_repetition", "image_required", "unresolved_reference", "opaque_large_jump", "pure_computation", "scope_ambiguous", "too_short_for_dag", "too_long_unstructured", "non_proof_content"]}
+    },
+    "repair_actions": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"enum": ["none", "recover_source", "recover_image", "remove_repetition", "resolve_reference", "expand_omitted_step", "clarify_scope", "normalize_notation", "human_math_review"]}
+    },
+    "confidence": {"enum": ["low", "medium", "high"]},
+    "human_review_status": {"enum": ["not_reviewed", "confirmed", "overridden"]},
+    "notes": {"type": "string"}
+  }
+}

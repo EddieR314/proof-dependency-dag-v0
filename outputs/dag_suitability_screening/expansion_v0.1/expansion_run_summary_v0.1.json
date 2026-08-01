@@ -1,0 +1,80 @@
+{
+  "records": 215,
+  "decision_counts": {
+    "suitable": 151,
+    "borderline": 51,
+    "unsuitable": 13
+  },
+  "confidence_counts": {
+    "high": 171,
+    "medium": 44
+  },
+  "module_by_decision": {
+    "complex_algebra": {
+      "borderline": 3,
+      "suitable": 4
+    },
+    "discrete_algebra": {
+      "suitable": 6,
+      "unsuitable": 2
+    },
+    "functional_equations": {
+      "suitable": 39,
+      "unsuitable": 3,
+      "borderline": 16
+    },
+    "inequalities": {
+      "suitable": 52,
+      "unsuitable": 3,
+      "borderline": 12
+    },
+    "polynomials": {
+      "suitable": 25,
+      "borderline": 10,
+      "unsuitable": 2
+    },
+    "recurrences_sequences": {
+      "suitable": 25,
+      "unsuitable": 3,
+      "borderline": 9
+    },
+    "unclassified_algebra": {
+      "borderline": 1
+    }
+  },
+  "reason_counts": {
+    "complete_proof": 157,
+    "clear_inference_units": 158,
+    "traceable_dependencies": 148,
+    "scope_clear": 118,
+    "case_structure": 116,
+    "multi_premise_merge": 101,
+    "alternative_paths": 74,
+    "source_mojibake": 17,
+    "opaque_large_jump": 42,
+    "proof_truncated": 7,
+    "proof_corrupted": 16,
+    "excessive_repetition": 5,
+    "pure_computation": 3,
+    "unresolved_reference": 4,
+    "scope_ambiguous": 8,
+    "clean_linear_proof": 2,
+    "too_long_unstructured": 3
+  },
+  "audit_rows": 108,
+  "audit_model_decision_counts": {
+    "borderline": 51,
+    "suitable": 44,
+    "unsuitable": 13
+  },
+  "audit_module_counts": {
+    "inequalities": 23,
+    "functional_equations": 29,
+    "recurrences_sequences": 22,
+    "discrete_algebra": 7,
+    "polynomials": 19,
+    "complex_algebra": 7,
+    "unclassified_algebra": 1
+  },
+  "status": "agent_screening_complete_human_audit_pending"
+}

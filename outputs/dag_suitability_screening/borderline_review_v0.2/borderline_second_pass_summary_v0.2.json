@@ -1,0 +1,16 @@
+{
+  "total_reviewed": 59,
+  "promote_after_cleanup": 13,
+  "keep_borderline": 44,
+  "downgrade_unsuitable": 2,
+  "important_metadata_corrections": [
+    {
+      "problem_id": "05xg",
+      "issue": "notes report pervasive mojibake but reason_codes omit source_mojibake"
+    },
+    {
+      "problem_id": "0fm4",
+      "issue": "borderline conflicts with proof_completeness=0 and dependency_explicitness=0"
+    }
+  ]
+}

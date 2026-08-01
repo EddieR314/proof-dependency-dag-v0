@@ -1,0 +1,46 @@
+{
+  "total_borderline": 59,
+  "by_set": {
+    "expansion": 51,
+    "calibration": 8
+  },
+  "by_module": {
+    "functional_equations": 17,
+    "inequalities": 15,
+    "polynomials": 12,
+    "recurrences_sequences": 10,
+    "complex_algebra": 3,
+    "discrete_algebra": 1,
+    "unclassified_algebra": 1
+  },
+  "by_bucket": {
+    "source_recovery": 28,
+    "bounded_proof_repair": 21,
+    "scope_clarification": 8,
+    "hard_source_failure": 1,
+    "low_dag_yield": 1
+  },
+  "by_recommendation": {
+    "keep_borderline": 58,
+    "downgrade_unsuitable": 1
+  },
+  "reason_counts": {
+    "opaque_large_jump": 41,
+    "case_structure": 18,
+    "source_mojibake": 15,
+    "clear_inference_units": 12,
+    "complete_proof": 8,
+    "proof_corrupted": 8,
+    "scope_ambiguous": 8,
+    "alternative_paths": 6,
+    "scope_clear": 6,
+    "traceable_dependencies": 6,
+    "multi_premise_merge": 5,
+    "unresolved_reference": 5,
+    "excessive_repetition": 4,
+    "clean_linear_proof": 2,
+    "proof_truncated": 2,
+    "pure_computation": 1,
+    "too_long_unstructured": 1
+  }
+}

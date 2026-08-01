@@ -1,0 +1,4 @@
+interface:
+  display_name: "Algebra DAG Suitability Screener"
+  short_description: "Triage algebra proofs before DAG annotation"
+  default_prompt: "Use $dag-suitability-screening to screen only the olympiad-algebra proof records, validate the structured results, and prepare a stratified human-audit packet."

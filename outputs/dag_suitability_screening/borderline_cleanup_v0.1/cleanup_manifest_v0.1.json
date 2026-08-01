@@ -1,0 +1,159 @@
+{
+  "version": "borderline-cleanup-v0.1",
+  "input": "data/dag_suitability_screening/prepared_algebra_v0.1.jsonl",
+  "output": "outputs/dag_suitability_screening/borderline_cleanup_v0.1/cleaned_promotable_borderlines_v0.1.jsonl",
+  "record_count": 13,
+  "content_changed_count": 11,
+  "unchanged_false_positive_count": 2,
+  "post_second_pass_screening_counts": {
+    "suitable": 186,
+    "borderline": 44,
+    "unsuitable": 20,
+    "total": 250,
+    "derivation": "173/59/18 before second pass; 13 promoted after cleanup, 44 retained borderline, and 2 downgraded."
+  },
+  "validation": {
+    "passed": true,
+    "checks": [
+      "target IDs unique and complete",
+      "statement and solution nonempty",
+      "original and cleaned SHA-256 hashes consistent",
+      "no residual ???? or Unicode replacement-character placeholders",
+      "expected changed/unchanged records match the cleanup plan"
+    ]
+  },
+  "boundary": "Source cleanup only; it does not certify proof correctness or DAG semantics.",
+  "records": [
+    {
+      "problem_id": "040g",
+      "source_language": "en",
+      "content_changed": true,
+      "original_solution_sha256": "af5b97353425cd9f9434e2282b9cfa7d90f418c28887022d28258cea563450ef",
+      "cleaned_solution_sha256": "7bc4f39271253b9cb5440ac756f7cd70fffc3dbbfcf2666706bd64106d08fb22",
+      "transformations": [
+        "Removed a duplicated proof copy after the first complete proof."
+      ]
+    },
+    {
+      "problem_id": "0fs7",
+      "source_language": "de",
+      "content_changed": true,
+      "original_solution_sha256": "27647f156268d221f19e07554d510e3bcfb73b7b04cbe916a0f10d46e6fb69e3",
+      "cleaned_solution_sha256": "c986d37f25f386240f57f36dd4dd9d747ffffb2adf161e6deecf4f37cb7c601b",
+      "transformations": [
+        "Retained the first complete German solution and removed nine alternatives.",
+        "Adjusted the multi-solution preamble to match the retained single route."
+      ]
+    },
+    {
+      "problem_id": "09s9",
+      "source_language": "nl",
+      "content_changed": true,
+      "original_solution_sha256": "bead9709cdae2d6e0be50a7408bc0587912d5b69051f87d7693d39bf916c434a",
+      "cleaned_solution_sha256": "5c00a0086ad6ea971ba553d88dd7a8835a8505ced53bb877f7941d399c46cdac",
+      "transformations": [
+        "Retained the first complete Dutch solution and removed later alternatives."
+      ]
+    },
+    {
+      "problem_id": "0cud",
+      "source_language": "en",
+      "content_changed": true,
+      "original_solution_sha256": "d932a7dcb1bb110c7510d3e96e39ae8f59d909860a1f49207b8a26d7b5c34afb",
+      "cleaned_solution_sha256": "79936b428b2475e39509469d51eee0fd1045d22ef4d91a5b539fa73bab8672db",
+      "transformations": [
+        "Retained the complete English proof and removed the duplicated Russian route."
+      ]
+    },
+    {
+      "problem_id": "0etl",
+      "source_language": "en",
+      "content_changed": false,
+      "original_solution_sha256": "da474a2dbe35f753ce9a83b2fd1259e1090ad44db9f7f96e4fb092d384749c6b",
+      "cleaned_solution_sha256": "da474a2dbe35f753ce9a83b2fd1259e1090ad44db9f7f96e4fb092d384749c6b",
+      "transformations": [
+        "No content change; prior source-corruption flag was a false positive."
+      ]
+    },
+    {
+      "problem_id": "07vf",
+      "source_language": "en",
+      "content_changed": true,
+      "original_solution_sha256": "48a038457a5006faafeb0768f1e97c96c978fe85c79b097b98c7f76fcd0410f6",
+      "cleaned_solution_sha256": "b91abe53cfd90ba61f60f9c9922078a7438796c1b309ca763d6ac71dea02e501",
+      "transformations": [
+        "Removed the earlier matrix-placeholder route and retained the later self-contained route."
+      ]
+    },
+    {
+      "problem_id": "0get",
+      "source_language": "en",
+      "content_changed": true,
+      "original_solution_sha256": "2ab520038ad74e66bbed2c0286dfb2b7fcbcd00347fabee696afbc7d07accf08",
+      "cleaned_solution_sha256": "075255044114c4d4f7aa090560de2334eca65c4b26fba65cb931c085ad66718c",
+      "transformations": [
+        "Retained Solution 1 and removed two alternative solutions."
+      ]
+    },
+    {
+      "problem_id": "03wf",
+      "source_language": "en",
+      "content_changed": true,
+      "original_solution_sha256": "23e28dbda730c64ccce9cf8b12b28dad718a36ba72c5fb15ddb47b01b814252a",
+      "cleaned_solution_sha256": "2746c90f1fa6fc4bf8a38a1dbd406c21fa56b16d96238cfc710b2297bcd1d283",
+      "transformations": [
+        "Normalized the mixed equation label to LaTeX tag (1)."
+      ]
+    },
+    {
+      "problem_id": "0fxf",
+      "source_language": "de",
+      "content_changed": true,
+      "original_solution_sha256": "1af4136951b76c0b5b4f0d3205c94e696b9762f5e591fd84b6b88d030900dad7",
+      "cleaned_solution_sha256": "cfffc4896c92a74b0630ad8e1e8e79a841642f82407a1cb483f4d2f18e49e955",
+      "transformations": [
+        "Retained the first complete German solution and removed three alternatives."
+      ]
+    },
+    {
+      "problem_id": "01xk",
+      "source_language": "en",
+      "content_changed": true,
+      "original_solution_sha256": "4569d59fc9b7a4da39d361938eda23da836175a2b2f21d87f9af17ebe41a9723",
+      "cleaned_solution_sha256": "c98224c1ddd654b26c5597097309ebe2a561d1f96d6bb1b8b0105dfb158814b6",
+      "transformations": [
+        "Corrected the final unambiguous typo x=1 to x=-1, consistent with the stated answer and preceding derivation."
+      ]
+    },
+    {
+      "problem_id": "03un",
+      "source_language": "en",
+      "content_changed": true,
+      "original_solution_sha256": "a7ba6c3d83914ed62e73a2417335282f44628777564cafea714ac47fc82aff34",
+      "cleaned_solution_sha256": "09f418a03792d22ca5c4d94c448016c00e86ae423129df441c78b9172c60f290",
+      "transformations": [
+        "Retained the first complete proof and removed the alternative route."
+      ]
+    },
+    {
+      "problem_id": "03xn",
+      "source_language": "en",
+      "content_changed": true,
+      "original_solution_sha256": "867f2cf4426da48ad4914b74012d7fd5d1764f35ac4a6aca366089e4352d7ee9",
+      "cleaned_solution_sha256": "ebedb33e24d4034268f1183709a04f1eb149139410c6a3e18cc050592979ee62",
+      "transformations": [
+        "Normalized mixed circled equation labels to LaTeX tags and ASCII prose references."
+      ]
+    },
+    {
+      "problem_id": "0g8l",
+      "source_language": "en",
+      "content_changed": false,
+      "original_solution_sha256": "6c676ecde0a580ae2e521132d70bbbbaf91104eed7d30073e0b78ccc4864a61b",
+      "cleaned_solution_sha256": "6c676ecde0a580ae2e521132d70bbbbaf91104eed7d30073e0b78ccc4864a61b",
+      "transformations": [
+        "No content change; prior source-corruption flag was a false positive."
+      ]
+    }
+  ]
+}

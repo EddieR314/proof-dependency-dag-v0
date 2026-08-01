@@ -1,0 +1,44 @@
+{
+  "review_version": "human-cleanup-review-v0.1",
+  "review_date": "2026-08-01",
+  "reviewer": "Ruan Haochen (Eddie)",
+  "review_scope": "The 13 source-cleaned algebra proof candidates in cleaned_promotable_borderlines_v0.1.jsonl",
+  "record_count": 13,
+  "problem_ids": [
+    "040g",
+    "0fs7",
+    "09s9",
+    "0cud",
+    "0etl",
+    "07vf",
+    "0get",
+    "03wf",
+    "0fxf",
+    "01xk",
+    "03un",
+    "03xn",
+    "0g8l"
+  ],
+  "checks": {
+    "cleaned_proof_complete": "passed",
+    "cleaned_proof_mathematically_correct": "passed",
+    "cleanup_preserves_intended_proof_route": "passed",
+    "source_language_preserved": "passed"
+  },
+  "decision": "approved_for_dag_suitability_pool",
+  "screening_effect": {
+    "promoted_to_suitable": 13,
+    "final_counts": {
+      "suitable": 186,
+      "borderline": 44,
+      "unsuitable": 20,
+      "total": 250
+    }
+  },
+  "not_reviewed_here": [
+    "Fact-Inference DAG decomposition",
+    "DAG semantic faithfulness",
+    "controlled mutation and First Break",
+    "Lean translation and compilation"
+  ]
+}

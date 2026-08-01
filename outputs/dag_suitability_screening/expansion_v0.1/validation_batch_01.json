@@ -1,0 +1,11 @@
+{
+  "num_rows": 19,
+  "valid": true,
+  "decision_counts": {
+    "suitable": 18,
+    "borderline": 1
+  },
+  "duplicate_ids": [],
+  "id_set_difference": [],
+  "row_errors": {}
+}

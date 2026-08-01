@@ -1,0 +1,25 @@
+{
+  "protocol": "algebra-dag-suitability-calibration-v0.1",
+  "records": 35,
+  "schema_valid": true,
+  "decision_counts": {
+    "borderline": 8,
+    "suitable": 22,
+    "unsuitable": 5
+  },
+  "confidence_counts": {
+    "high": 30,
+    "medium": 5
+  },
+  "known_anchor_suitability_accuracy": 1.0,
+  "known_anchor_route_accuracy": 0.8333333333333334,
+  "known_anchor_route_errors": [
+    {
+      "problem_id": "00q2",
+      "predicted": "complex_algebra",
+      "reviewed": "polynomials"
+    }
+  ],
+  "human_review_required": 35,
+  "status": "model_screening_complete_human_calibration_pending"
+}

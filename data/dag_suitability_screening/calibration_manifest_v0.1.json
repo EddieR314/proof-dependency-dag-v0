@@ -1,0 +1,158 @@
+{
+  "protocol": "algebra-dag-suitability-calibration-v0.1",
+  "source": "data\\dag_suitability_screening\\prepared_algebra_v0.1.jsonl",
+  "seed": 20260801,
+  "num_records": 35,
+  "reviewed_positive_anchors": {
+    "0gif": "functional_equations",
+    "00q2": "polynomials",
+    "06og": "inequalities",
+    "0ldq": "recurrences_sequences",
+    "0le0": "discrete_algebra",
+    "0chi": "complex_algebra"
+  },
+  "anchor_evidence": "Each anchor already has a human-reviewed Reference DAG in pilots/. This establishes suitability only, not a negative class.",
+  "selection": [
+    {
+      "problem_id": "042l",
+      "reason": "clean_stratum:complex_algebra"
+    },
+    {
+      "problem_id": "0kwo",
+      "reason": "clean_stratum:complex_algebra"
+    },
+    {
+      "problem_id": "0l51",
+      "reason": "clean_stratum:complex_algebra"
+    },
+    {
+      "problem_id": "040g",
+      "reason": "clean_stratum:discrete_algebra"
+    },
+    {
+      "problem_id": "04v7",
+      "reason": "clean_stratum:discrete_algebra"
+    },
+    {
+      "problem_id": "06p9",
+      "reason": "clean_stratum:discrete_algebra"
+    },
+    {
+      "problem_id": "046j",
+      "reason": "clean_stratum:functional_equations"
+    },
+    {
+      "problem_id": "05xg",
+      "reason": "clean_stratum:functional_equations"
+    },
+    {
+      "problem_id": "07e6",
+      "reason": "clean_stratum:functional_equations"
+    },
+    {
+      "problem_id": "01tp",
+      "reason": "clean_stratum:inequalities"
+    },
+    {
+      "problem_id": "04ws",
+      "reason": "clean_stratum:inequalities"
+    },
+    {
+      "problem_id": "0fs7",
+      "reason": "clean_stratum:inequalities"
+    },
+    {
+      "problem_id": "09o6",
+      "reason": "clean_stratum:polynomials"
+    },
+    {
+      "problem_id": "09s9",
+      "reason": "clean_stratum:polynomials"
+    },
+    {
+      "problem_id": "0kab",
+      "reason": "clean_stratum:polynomials"
+    },
+    {
+      "problem_id": "02m4",
+      "reason": "clean_stratum:recurrences_sequences"
+    },
+    {
+      "problem_id": "06p8",
+      "reason": "clean_stratum:recurrences_sequences"
+    },
+    {
+      "problem_id": "07wd",
+      "reason": "clean_stratum:recurrences_sequences"
+    },
+    {
+      "problem_id": "039z",
+      "reason": "clean_stratum:unclassified_algebra"
+    },
+    {
+      "problem_id": "09kh",
+      "reason": "clean_stratum:unclassified_algebra"
+    },
+    {
+      "problem_id": "0bwd",
+      "reason": "clean_stratum:unclassified_algebra"
+    },
+    {
+      "problem_id": "01zo",
+      "reason": "machine_risk_flag"
+    },
+    {
+      "problem_id": "0359",
+      "reason": "machine_risk_flag"
+    },
+    {
+      "problem_id": "06sc",
+      "reason": "machine_risk_flag"
+    },
+    {
+      "problem_id": "077k",
+      "reason": "machine_risk_flag"
+    },
+    {
+      "problem_id": "0bej",
+      "reason": "machine_risk_flag"
+    },
+    {
+      "problem_id": "0cht",
+      "reason": "machine_risk_flag"
+    },
+    {
+      "problem_id": "0d8b",
+      "reason": "machine_risk_flag"
+    },
+    {
+      "problem_id": "0krt",
+      "reason": "machine_risk_flag"
+    },
+    {
+      "problem_id": "00q2",
+      "reason": "reviewed_positive_anchor"
+    },
+    {
+      "problem_id": "06og",
+      "reason": "reviewed_positive_anchor"
+    },
+    {
+      "problem_id": "0chi",
+      "reason": "reviewed_positive_anchor"
+    },
+    {
+      "problem_id": "0gif",
+      "reason": "reviewed_positive_anchor"
+    },
+    {
+      "problem_id": "0ldq",
+      "reason": "reviewed_positive_anchor"
+    },
+    {
+      "problem_id": "0le0",
+      "reason": "reviewed_positive_anchor"
+    }
+  ],
+  "integrity_warning": "All non-anchor decisions remain unlabelled until human review. Prefilter flags are not gold labels."
+}

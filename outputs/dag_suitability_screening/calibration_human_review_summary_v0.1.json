@@ -1,0 +1,24 @@
+{
+  "protocol": "algebra-dag-suitability-calibration-v0.1",
+  "reviewer": "Ruan Haochen (Eddie)",
+  "review_status": "complete",
+  "num_records": 35,
+  "decision_agreement": 1.0,
+  "module_agreement": 0.9714285714285714,
+  "confirmed_count": 34,
+  "overridden_count": 1,
+  "overrides": [
+    {
+      "problem_id": "00q2",
+      "field": "algebra_module",
+      "model": "complex_algebra",
+      "human": "polynomials"
+    }
+  ],
+  "decision_counts": {
+    "suitable": 22,
+    "borderline": 8,
+    "unsuitable": 5
+  },
+  "next_gate": "Calibrated for expansion screening; human sampling remains required on the remaining 215 records."
+}
